@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Protobuf">
+      <UniqueIdentifier>{f910e9f5-8c1f-4119-9985-855f654e8753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Protofiles">
+      <UniqueIdentifier>{cd5a422c-b0df-45a3-9f34-c3212cb8e4c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Packet">
+      <UniqueIdentifier>{bf792f4a-d834-4f7e-a6bd-dcf05a735c21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Protobuf\Common">
+      <UniqueIdentifier>{d6e794f9-0fc5-4d29-9f90-b9e08ed6c86c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxyPacketId.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\ProxyLoginReq.pb.cc">
+      <Filter>Source Files\Protobuf\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\PlayerInfo.pb.cc">
+      <Filter>Source Files\Protobuf\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\BuyChamReq.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\ChampCreatedEvent.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\ChampRemovedEvent.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\ChampRemovedFromShop.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\ChampStat.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\GoldUpdatedEvent.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\LocatedOnBenchEvent.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\LocatedOnFieldEvent.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\LoginRequest.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\LoginResponse.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\MatchCancelResponse.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\MatchRequest.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\MatchRequestResponse.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\HostCreateRequest.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\HostCreateResponse.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\MatchCreatedSend.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketId_CL_AG.h">
+      <Filter>Source Files\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="ProxyPacketId.h" />
+    <ClInclude Include="PacketId_AG_MT.h">
+      <Filter>Source Files\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketId_MT_GM.h">
+      <Filter>Source Files\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketId_AG_GM.h">
+      <Filter>Source Files\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketId_CL_GM.h">
+      <Filter>Source Files\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketId_Common.h">
+      <Filter>Source Files\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\ProxyLoginReq.pb.h">
+      <Filter>Source Files\Protobuf\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\PlayerInfo.pb.h">
+      <Filter>Source Files\Protobuf\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\BuyChamReq.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\MatchRequestResponse.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\ChampCreatedEvent.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\ChampRemovedEvent.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\ChampRemovedFromShop.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\ChampStat.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\GoldUpdatedEvent.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\LocatedOnBenchEvent.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\LocatedOnFieldEvent.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\LoginRequest.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\LoginResponse.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\MatchCancelResponse.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\MatchRequest.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\HostCreateRequest.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\HostCreateResponse.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\MatchCreatedSend.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
