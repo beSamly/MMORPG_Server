@@ -155,13 +155,16 @@
     <ClInclude Include="IController.h" />
     <ClInclude Include="IGameState.h" />
     <ClInclude Include="IInGameEvent.h" />
+    <ClInclude Include="ILogger.h" />
     <ClInclude Include="InGameEventHandler.h" />
     <ClInclude Include="InGameMatch.h" />
     <ClInclude Include="InGameMatchPool.h" />
     <ClInclude Include="InGamePlayer.h" />
+    <ClInclude Include="InputController.h" />
     <ClInclude Include="IOperation.h" />
     <ClInclude Include="IPacketController.h" />
     <ClInclude Include="LibraryHeader.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="MatchHistory.h" />
     <ClInclude Include="MatchServerPacketController.h" />
     <ClInclude Include="NetworkSystem.h" />
@@ -216,8 +219,10 @@
     <ClCompile Include="InGameMatch.cpp" />
     <ClCompile Include="InGameMatchPool.cpp" />
     <ClCompile Include="InGamePlayer.cpp" />
+    <ClCompile Include="InputController.cpp" />
     <ClCompile Include="IOperation.cpp" />
     <ClCompile Include="IPacketController.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MatchHistory.cpp" />
     <ClCompile Include="MatchServerPacketController.cpp" />

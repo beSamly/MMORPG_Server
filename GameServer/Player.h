@@ -1,16 +1,30 @@
 #pragma once
-
-class GameHost;
+#include "TransformController.h"
+#include "InputController.h"
 
 class Player
 {
 private:
-	wptr<GameHost> currentGame;
 	int playerId;
+
+private:
+	sptr<InputController> inputController;
+	sptr<TransformController> transformController;
+
 public:
+	template<class T>
+	std::shared_ptr<T> GetController();
+
+	template<>
+	sptr<InputController> GetController() { return inputController; };
+	sptr<TransformController> GetController() { return transformController; };
+
+public:
+	Player() { Init(); };
+	void Init();
 	int GetPlayerId() { return playerId; }
 	void SetPlayerId(int id) { playerId = id; }
-	// Player(){};
-	void SetCurrentGameHost(wptr<GameHost> gameHost) { currentGame = gameHost; }
-	wptr<GameHost> GetCurrentGameHost() { return currentGame; }
+
+	void Update(float deltaTime);
+
 };

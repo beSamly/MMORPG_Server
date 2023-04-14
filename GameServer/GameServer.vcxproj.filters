@@ -84,6 +84,9 @@
     <Filter Include="Source Files\Interface">
       <UniqueIdentifier>{43b64ac3-2f3e-4acf-bea2-8651770262e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Logger">
+      <UniqueIdentifier>{9a93da21-f5f4-4a17-a87b-3955e87455a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -257,6 +260,15 @@
     <ClInclude Include="RoundEndedState.h">
       <Filter>Source Files\GameSystem\GameState</Filter>
     </ClInclude>
+    <ClInclude Include="ILogger.h">
+      <Filter>Source Files\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Source Files\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="InputController.h">
+      <Filter>Source Files\GameSystem\Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -417,6 +429,12 @@
     </ClCompile>
     <ClCompile Include="RoundEndedState.cpp">
       <Filter>Source Files\GameSystem\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source Files\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="InputController.cpp">
+      <Filter>Source Files\GameSystem\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
