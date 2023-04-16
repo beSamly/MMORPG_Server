@@ -3,15 +3,18 @@
 #include <Packet.h>
 #include "LoginReq.pb.h"
 #include <NetworkResponseCode.h>
+#include "RequestValidator.h"
 
+using Command::CommandPlayerLogIn;
 using PacketDef::PACKET_GROUP_ID;
 using PacketDef::PACKET_ID_AUTH;
-using Command::CommandPlayerLogIn;
 
 AuthController::AuthController(sptr<GameSystem> paramGameSystem, sptr<Logger> paramLogger) : gameSystem(paramGameSystem), logger(paramLogger)
 {
+    INetworkController::AddValidator([&](sptr<ClientSession>& session) -> bool { return RequestValidator::IsPlayerInScene(gameSystem, session); });
+
     mapProcessFunc.emplace(PACKET_ID_AUTH::LOGIN_REQ, TO_BASE_PACKET_PROCESS_FUNC(ProcessLoginReq));
-    //mapProcessFunc[PACKET_ID_AUTH::LOGIN_REQ] = TO_BASE_PACKET_PROCESS_FUNC(ProcessLoginReq);
+    // mapProcessFunc[PACKET_ID_AUTH::LOGIN_REQ] = TO_BASE_PACKET_PROCESS_FUNC(ProcessLoginReq);
 }
 
 int AuthController::Process(sptr<ClientSession>& session, BYTE* buffer, int32 len)

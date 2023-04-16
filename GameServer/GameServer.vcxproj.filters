@@ -105,6 +105,9 @@
     <Filter Include="Source Files\Common">
       <UniqueIdentifier>{a41c18ee-91a8-41dc-b169-0621e1450d8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\NetworkSystem\Controller\RequestValidator">
+      <UniqueIdentifier>{595c3109-680a-4a78-8c62-312841d9a96c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -236,6 +239,9 @@
     </ClInclude>
     <ClInclude Include="CommandProcessCommon.h">
       <Filter>Source Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="RequestValidator.h">
+      <Filter>Source Files\NetworkSystem\Controller\RequestValidator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

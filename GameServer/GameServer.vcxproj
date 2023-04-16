@@ -162,6 +162,7 @@
     <ClInclude Include="PhysicalDamage.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="RequestValidator.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneCommandControllerContainer.h" />
     <ClInclude Include="NavigationMeshAgentManager.h" />
