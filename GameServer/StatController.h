@@ -1,6 +1,5 @@
 #pragma once
 #include "StatModifier.h"
-#include "ChampRelatedStruct.h"
 
 namespace {
     const int MAX_STAT_TYPE = 8;
@@ -24,7 +23,6 @@ private:
     vector<vector<int>> cashedStat[MAX_STAT_TYPE];
 
 private:
-    ChampStatData baseStatData;
     /*int currentHp;
     int currentMp;*/
 
@@ -34,6 +32,5 @@ public:
 
 public:
     StatController() {};
-    void SetBaseStat(ChampStatData p_statData) { baseStatData = p_statData; }
     void Update(float deltaTime);
 };

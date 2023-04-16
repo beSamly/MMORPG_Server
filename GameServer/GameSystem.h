@@ -1,9 +1,12 @@
 #pragma once
-#include "GameHost.h"
 #include "Command.h"
 #include "DataSystem.h"
+#include "SceneManager.h"
+#include "PlayerManager.h"
+#include "SceneCommandControllerContainer.h"
+#include "GameSystemCommandControllerContainer.h"
 
-using namespace Command;
+using Command::CommandBase;
 
 class GameSystem
 {
@@ -11,30 +14,34 @@ public:
     GameSystem(sptr<DataSystem> p_dataSystem);
 
 public:
-    void Run();
-    void PushCommand(sptr<ICommand> command);
-    sptr<GameHost> GetGameHostByPlayerId(int playerId);
+    void Update(float deltaTime);
+    void PushCommand(sptr<CommandBase> command);
+    void PushCommandToScene(int playerId, sptr<CommandBase> command);
+    sptr<Scene> GetSceneByPlayerId(int playerId);
+
+    void UpdateScene(int threadId, float deltaTime);
+    uptr<PlayerManager> playerManager;
+    uptr<SceneManager> sceneManager;
 
 private:
     USE_LOCK;
-    int hostId = 1; // temp
-    map<int, sptr<GameHost>> gameHostMap;
+
+    sptr<Logger> logger;
+    map<int, string> mapPlayerIdSceneName;
+
     map<int, int> mapPlayerIdToMatchId;
 
     /* Command related */
-    queue<sptr<ICommand>> commandQueue;
-    map<int, function<void(sptr<ICommand>)>> commandHandler;
+    queue<sptr<CommandBase>> commandQueue;
+    uptr<GameSystemCommandControllerContainer> gameSystemCommandControllerContainer;
+    uptr<SceneCommandControllerContainer> sceneCommandControllerContainer;
 
     /* GameData related */
     sptr<DataSystem> dataSystem;
 
 private:
-    void Update(float deltaTime);
 
     /* Command related */
-    queue<sptr<ICommand>> FlushQueue();
+    queue<sptr<CommandBase>> FlushQueue();
     void ProcessCommand();
-
-    /* Command handlers */
-    void HandleHostCreate(sptr<ICommand> command);
 };

@@ -1,20 +1,23 @@
 #pragma once
-#include "IController.h"
-#include "ClientSession.h"
-#include "TempClientManager.h"
+#include "INetworkController.h"
+#include "PacketDef.h"
+#include "Packet.h"
+#include "Logger.h"
 #include "GameSystem.h"
 
-class AuthController : public IController
+using PacketDef::PACKET_ID_AUTH;
+
+class AuthController : public INetworkController
 {
 private:
-    sptr<TempClientManager> tempClientManager;
+    sptr<Logger> logger;
     sptr<GameSystem> gameSystem;
-    sptr<ProxyManager> proxyManager;
+    map<PACKET_ID_AUTH, BasePacketProcessFunc> mapProcessFunc;
 
 public:
-    AuthController(sptr<GameSystem> paramGameSystem, sptr<TempClientManager> paramTempClientManager, sptr<ProxyManager> paramProxyManager);
+    AuthController(sptr<GameSystem> gameSystem, sptr<Logger> logger);
+    virtual int Process(sptr<ClientSession>& session, BYTE* buffer, int32 len) override;
 
 private:
-    void HandleLoginRequest(sptr<ClientSession>& session, BYTE* buffer, int32 len);
-    void HandleProxyLoginRequest(sptr<ClientSession>& session, BYTE* buffer, int32 len);
+    int ProcessLoginReq(sptr<ClientSession>& session, BYTE* buffer, int32 len);
 };

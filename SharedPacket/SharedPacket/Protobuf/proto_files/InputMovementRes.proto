@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package Protocol;
+
+message InputMovementRes{
+    int32 result = 1;
+	bool up = 2;
+	bool down = 3;
+	bool left = 4;
+	bool right = 5;
+}

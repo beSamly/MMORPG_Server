@@ -9,7 +9,7 @@ void Packet::WriteData() {
     PacketHeader* header = reinterpret_cast<PacketHeader*>(send_buffer->Buffer());
 
     header->size = packetSize;
-    header->prefix = prefix;
+    header->groupId = groupId;
     header->id = packetId;
 
     send_buffer->Close(packetSize);

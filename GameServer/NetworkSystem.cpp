@@ -2,11 +2,8 @@
 #include "NetworkSystem.h"
 #include "spdlog/spdlog.h"
 #include "Packet.h"
-#include "ProxyManager.h"
-#include "ClientPacketController.h"
-#include "ProxyLoginReq.pb.h"
-#include "PacketId_Common.h"
-#include "PlayerPacketController.h"
+#include "Logger.h"
+#include "NetworkControllerContainer.h"
 
 namespace
 {
@@ -19,10 +16,10 @@ NetworkSystem::NetworkSystem(sptr<DataSystem> paramDataSystem, sptr<GameSystem> 
 {
     context = make_shared<asio::io_context>();
     socketServer = make_shared<SocketServer>(context, PORT);
-    proxyManager = make_shared<ProxyManager>(SERVER_TYPE::GAME);
-    clientPacketController = make_unique<ClientPacketController>(dataSystem, gameSystem, proxyManager);
-    playerPacketController = make_unique<PlayerPacketController>(gameSystem);
-    matchServerPacketController = make_unique<MatchServerPacketController>(gameSystem);
+    clientManager = make_unique<ClientManager>();
+    logger = make_shared<Logger>("Dummy file path");
+
+    networkControllerContainer = make_shared<NetworkControllerContainer>(gameSystem, logger);
 }
 
 void NetworkSystem::StartSocketServer()
@@ -38,15 +35,6 @@ void NetworkSystem::StartSocketServer()
     spdlog::info("Server listening on {}", PORT);
 }
 
-void NetworkSystem::StartProxy()
-{
-    proxyManager->SetHandleRecv([&](sptr<Proxy> session, BYTE* buffer, int len)
-                                { HandleProxyRecv(session, buffer, len); });
-    proxyManager->SetOnConnect([&](sptr<Proxy> proxy, SERVER_TYPE type) { OnProxyConnect(proxy, type); });
-}
-
-void NetworkSystem::RunProxyIoContext() { proxyManager->RunIoContext(); }
-
 void NetworkSystem::RunIoContext() { socketServer->RunIoContext(); }
 
 void NetworkSystem::OnClientAccept(sptr<AsioSession> client)
@@ -59,7 +47,7 @@ void NetworkSystem::OnClientAccept(sptr<AsioSession> client)
         return;
     }
 
-    dataSystem->GetTempClientManager()->AddClient(clientSession);
+    clientManager->AddClient(clientSession);
     return;
 }
 
@@ -72,14 +60,25 @@ void NetworkSystem::OnClientRecv(sptr<AsioSession> client, BYTE* buffer, int len
         return;
     }
 
-    if (clientSession->isAuthenticated)
+    PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
+    sptr<INetworkController> controller = networkControllerContainer->GetController(header->groupId);
+    if (controller)
     {
-        playerPacketController->HandleClientPacket(clientSession, buffer, len);
+        controller->Process(clientSession, buffer, len);
     }
     else
     {
-        clientPacketController->HandleClientPacket(clientSession, buffer, len);
+        logger->Error("NetworkControllerContainer has no controller for groupId = {}", header->groupId);
     }
+
+    // if (clientSession->isAuthenticated)
+    //{
+    //     playerPacketController->HandleClientPacket(clientSession, buffer, len);
+    // }
+    // else
+    //{
+    //     clientPacketController->HandleClientPacket(clientSession, buffer, len);
+    // }
 }
 
 void NetworkSystem::OnClientDisconnect(sptr<AsioSession> client)
@@ -102,31 +101,4 @@ void NetworkSystem::OnClientDisconnect(sptr<AsioSession> client)
     // Packet pck((int)PacketId::Prefix::AUTH, (int)PacketId::Auth::LOGOUT_REQ);
     // pck.WriteData();
     // packetController->HandlePacket(clientSession, pck.GetByteBuffer(), pck.GetSize());
-}
-
-void NetworkSystem::OnProxyConnect(sptr<Proxy> proxy, SERVER_TYPE type)
-{
-    spdlog::debug("[NetworkSystem] proxy client connected type = {}", (int)type);
-
-    // 서버 로그인
-    Protocol::ProxyLoginReq req;
-    req.set_servertype((int)SERVER_TYPE::MATCH);
-
-    Packet packet((int)PacketId_Common::Prefix::AUTH, (int)PacketId_Common::Auth::PROXY_LOGIN_REQ);
-    packet.WriteData<Protocol::ProxyLoginReq>(req);
-    proxy->Send(packet.GetSendBuffer());
-}
-
-void NetworkSystem::HandleProxyRecv(sptr<Proxy> session, BYTE* buffer, int len)
-{
-    switch (session->GetServerType())
-    {
-        case SERVER_TYPE::MATCH:
-            matchServerPacketController->HandleProxyPacket(session, buffer, len);
-            break;
-
-        default:
-            // error
-            break;
-    }
 }

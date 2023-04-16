@@ -1,126 +1,82 @@
 #pragma once
 #include "ClientSession.h"
 #include "ProxyManager.h"
+#include "Player.h"
+
+namespace CommandResult
+{
+    const int COMMAND_RESULT_SUCCESS = 0;
+    const int SCENE_NOT_FOUND = -1;
+    const int PLAYER_NOT_FOUND = -2;
+    const int PROCESS_FUNC_NOT_FOUND = -3;
+    const int COMMAND_TYPE_MISMATCH = -4;
+} // namespace CommandResult
 
 namespace Command
 {
-	class ICommand
-	{
-	public:
-		wptr<ClientSession> client;
-		wptr<Proxy> proxy;
-		int commandId;
+    enum COMMAND_GROUP_ID : int
+    {
+        GAME_SYSTEM_GLOBAL = 1,
+        SCENE_GLOBAL,
+        INPUT
+    };
 
-	public:
-		ICommand() {};
-		ICommand(wptr<ClientSession> p_client) : client(p_client) {};
-		ICommand(wptr<Proxy> paramProxy) : proxy(paramProxy) {};
-		virtual int GetCommandId() abstract;
-	};
+    enum COMMAND_ID_GAME_SYSTEM_GLOBAL : int
+    {
+        PLAYER_LOG_IN = 1
+    };
 
-	/*-----------------------------------
-			NetworkSystem To GameSystem
-	-------------------------------------*/
-	namespace N2G
-	{
-		enum CommandId
-		{
-			BUY_COMMAND = 1,
-			CREATE_HOST,
-			CREATE_DEBUG_MODE_HOST,
-			CHAMP_BUY,
-			CHAMP_SELL,
-			CHAMP_LOCATE,
-		};
+    enum COMMAND_ID_SCENE_GLOBAL : int
+    {
+        ENTER_SCENE = 1
+    };
 
-		class BuyChampCommand : public ICommand
-		{
-		public:
-			BuyChampCommand(wptr<ClientSession> p_client, int p_champUid) : champUid(p_champUid), ICommand(p_client)
-			{
-			};
+    enum COMMAND_ID_INPUT : int
+    {
+        MOVEMENT = 1
+    };
 
-			virtual int GetCommandId() override {
-				return CommandId::BUY_COMMAND;
-			};
+    struct CommandBase
+    {
+    public:
+        int playerId = 0;
+        COMMAND_GROUP_ID commandGroupId;
+        int commandId = 0;
 
-		public:
-			int champUid;
-		};
+    public:
+        CommandBase(COMMAND_GROUP_ID paramCommandGroupId, int paramCommandId) : commandGroupId(paramCommandGroupId), commandId(paramCommandId){};
+        // CommandBase(int paramPlayerId, COMMAND_ID paramCommandId) : playerId(paramPlayerId),
+        // commandId(paramCommandId){};
+        virtual int GetCommandId() { return commandId; };
+    };
 
+    class CommandPlayerLogIn : public CommandBase
+    {
+    public:
+        CommandPlayerLogIn() : CommandBase(COMMAND_GROUP_ID::GAME_SYSTEM_GLOBAL, COMMAND_ID_GAME_SYSTEM_GLOBAL::PLAYER_LOG_IN){};
 
-		enum LOCATION_TYPE : int {
-			BENCH = 1,
-			FIELD
-		};
+        string sceneName;
+        sptr<Player> player;
+    };
 
-		class LocateChampCommand : public ICommand
-		{
-		public:
-			int index;
-			int champUid;
-			LOCATION_TYPE from;
-			LOCATION_TYPE to;
+    class CommandEnterScene : public CommandBase
+    {
+    public:
+        CommandEnterScene() : CommandBase(COMMAND_GROUP_ID::SCENE_GLOBAL, COMMAND_ID_SCENE_GLOBAL::ENTER_SCENE){};
 
-		public:
-			LocateChampCommand(wptr<ClientSession> p_client, LOCATION_TYPE paramFrom, LOCATION_TYPE paramTo, int paramIndex, int uid)
-				: from(paramFrom), to(paramTo), index(paramIndex), champUid(uid), ICommand(p_client) {};
+        string sceneName;
+        sptr<Player> player;
+    };
 
-			virtual int GetCommandId() override {
-				return CommandId::CHAMP_LOCATE;
-			};
-		};
+    class CommandInputMovement : public CommandBase
+    {
+    public:
+        CommandInputMovement() : CommandBase(COMMAND_GROUP_ID::INPUT, COMMAND_ID_INPUT::MOVEMENT){};
 
-		//class LocateToFieldCommand : public ICommand
-		//{
-		//public:
-		//	int fieldIndex;
-		//	int champUid;
-
-		//public:
-		//	LocateToFieldCommand(wptr<ClientSession> p_client, int paramFieldIndex, int uid)
-		//		: fieldIndex(paramFieldIndex), champUid(uid), ICommand(p_client) {};
-		//	virtual int GetCommandId() override {
-		//		return CommandId::CHAMP_LOCATE_TO_FIELD;
-		//	};
-		//};
-
-		//class LocateToBenchCommand : public ICommand
-		//{
-		//public:
-		//	int benchIndex;
-		//	int champUid;
-
-		//public:
-		//	LocateToBenchCommand(wptr<ClientSession> p_client, int p_benchIndex, int uid)
-		//		: benchIndex(p_benchIndex), champUid(uid), ICommand(p_client) {};
-		//	virtual int GetCommandId() override {
-		//		return CommandId::CHAMP_LOCATE_TO_BENCH;
-		//	};
-		//};
-
-		//class CreateDebugModeHostCommand : public ICommand
-		//{
-
-		//public:
-		//	CreateDebugModeHostCommand(wptr<ClientSession> p_client) : ICommand(p_client) {};
-		//};
-
-		class HostCreateCommand : public ICommand
-		{
-		public:
-			vector<int> vecPlayerId;
-			int matchId;
-
-		public:
-			HostCreateCommand(int paramMatchId, vector<int> paramVecPlayerId, wptr<Proxy> paramProxy)
-				: matchId(paramMatchId), vecPlayerId(paramVecPlayerId), ICommand(paramProxy)
-			{};
-
-			virtual int GetCommandId() override {
-				return CommandId::CREATE_HOST;
-			};
-		};
-	} // namespace N2G
+        bool up;
+        bool down;
+        bool left;
+        bool right;
+    };
 
 } // namespace Command

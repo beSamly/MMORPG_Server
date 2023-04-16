@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package Protocol;
+
+message InputMovementReq{
+	bool up = 1;
+	bool down = 2;
+	bool left = 3;
+	bool right = 4;
+}

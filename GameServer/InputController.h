@@ -1,23 +1,23 @@
 #pragma once
 
-const int TOTAL_KEY_INPUT = 4;
+enum MOVEMENT_INPUT : int
+{
+    UP = 0,
+    DOWN,
+    LEFT,
+    RIGHT
+};
 
 class InputController
 {
-	enum KEY_INPUT : int {
-		UP = 0,
-		DOWN,
-		LEFT,
-		RIGHT
-	};
+    const static int TOTAL_KEY_INPUT = 4;
 
 private:
-	bool keyInput[TOTAL_KEY_INPUT] = { false, };
+    bool keyInput[TOTAL_KEY_INPUT] = {
+        false,
+    };
 
 public:
-
-	void HandleInput(KEY_INPUT input);
-
-	bool IsKeyDown(KEY_INPUT input);
+    void HandleInputMovement(MOVEMENT_INPUT input, bool value) { keyInput[input] = value; };
+    bool IsKeyDown(MOVEMENT_INPUT input) { return keyInput[static_cast<int>(input)]; };
 };
-

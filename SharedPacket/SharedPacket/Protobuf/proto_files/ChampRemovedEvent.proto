@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package Protocol;
-
-message ChampionRemovedEvent {
-  repeated int32 championUid = 1;
-}

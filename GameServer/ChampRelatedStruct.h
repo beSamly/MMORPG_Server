@@ -1,4 +1,7 @@
 #pragma once
+#include "pch.h"
+
+using std::string;
 
 struct ChampData
 {

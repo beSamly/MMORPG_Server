@@ -3,7 +3,6 @@
 
 DataSystem::DataSystem()
 {
-    tempClientManager = make_shared<TempClientManager>();
-    champDataFactory = make_shared<ChampDataFactory>();
-    champDataFactory->LoadJsonData();
 }
+
+void DataSystem::LoadJsonData() { navigationMeshAgentManager.LoadJsonData(); }

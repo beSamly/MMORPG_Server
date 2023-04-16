@@ -1,30 +1,39 @@
 #pragma once
 #include "TransformController.h"
 #include "InputController.h"
+#include "ClientSession.h"
 
 class Player
 {
 private:
-	int playerId;
+    int playerId;
 
 private:
-	sptr<InputController> inputController;
-	sptr<TransformController> transformController;
+    wptr<ClientSession> tcpSession;
+
+    sptr<InputController> inputController;
+    sptr<TransformController> transformController;
 
 public:
-	template<class T>
-	std::shared_ptr<T> GetController();
-
-	template<>
-	sptr<InputController> GetController() { return inputController; };
-	sptr<TransformController> GetController() { return transformController; };
+    Player() { Init(); };
+    void Init();
+    void Send(std::shared_ptr<SendBuffer> buffer);
+    int GetPlayerId() { return playerId; }
+    void SetPlayerId(int id) { playerId = id; }
+    void Update(float deltaTime);
 
 public:
-	Player() { Init(); };
-	void Init();
-	int GetPlayerId() { return playerId; }
-	void SetPlayerId(int id) { playerId = id; }
+    template <class T>
+    std::shared_ptr<T> GetController();
 
-	void Update(float deltaTime);
-
+    template <>
+    sptr<InputController> GetController()
+    {
+        return inputController;
+    };
+    template <>
+    sptr<TransformController> GetController()
+    {
+        return transformController;
+    };
 };
