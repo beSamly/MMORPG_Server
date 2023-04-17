@@ -36,32 +36,57 @@ void NavigationMeshAgentManager::LoadSceneData()
     vector<PhysicsEngine::Mesh> vecMesh;
 
     json listMesh = d["listMesh"];
-    for (auto& mesh : listMesh)
+    for (auto& jsonMesh : listMesh)
     {
-        PhysicsEngine::Mesh PEMesh;
-        PEMesh.name = mesh["meshName"];
+        PhysicsEngine::Mesh mesh;
+        mesh.name = jsonMesh["meshName"];
 
-        json listTriangle = mesh["listTriangle"];
-        for (auto& triangle : listTriangle)
+        json listTriangle = jsonMesh["listTriangle"];
+        for (auto& jsonTriangle : listTriangle)
         {
-            PhysicsEngine::Triangle t;
-            t.name = triangle["triangleName"];
+            PhysicsEngine::Triangle triangle;
+            triangle.name = jsonTriangle["triangleName"];
 
-            json vertices = mesh["vertices"];
-            for (auto& vertex : vertices)
+            json vertices = jsonMesh["vertices"];
+            for (auto& jsonVertex : vertices)
             {
-                PhysicsEngine::Vector3 vec3;
-                vec3.x = vertex['x'];
-                vec3.y = vertex['y'];
-                vec3.z = vertex['z'];
+                PhysicsEngine::Vector3 vertex;
+                vertex.x = jsonVertex['x'];
+                vertex.y = jsonVertex['y'];
+                vertex.z = jsonVertex['z'];
 
-                t.vertices.push_back(vec3);
+                triangle.vertices.push_back(vertex);
             }
 
-            PEMesh.vecTriangle.push_back(t);
+            mesh.vecTriangle.push_back(triangle);
         }
 
-        navigationAgent->AddMesh(PEMesh);
+        navigationAgent->AddMesh(mesh);
+    }
+
+    vector<PhysicsEngine::GridInfo> vecGridInfo;
+
+    json listGridInfo = d["listGridInfo"];
+    for (auto& jsonGridInfo : listGridInfo)
+    {
+        PhysicsEngine::GridInfo gridInfo;
+        gridInfo.gridIndex = jsonGridInfo["gridIndex"];
+
+        json listAdjacentTriangleInfo = jsonGridInfo["vecAdjacentMeshInfo"];
+        for (auto& jsonAdjacentTriangleInfo : listAdjacentTriangleInfo)
+        {
+            PhysicsEngine::AdjacentMeshInfo adjacentMeshInfo;
+            adjacentMeshInfo.meshName = jsonAdjacentTriangleInfo["meshName"];
+
+            json listAdjacentTriangleIndices = jsonAdjacentTriangleInfo["adjacentTriangleIndices"];
+            for (auto& index : listAdjacentTriangleIndices)
+            {
+                adjacentMeshInfo.adjacentTriangleIndices.push_back(index);
+            }
+            gridInfo.vecAdjacentMeshInfo.push_back(adjacentMeshInfo);
+        }
+
+        navigationAgent->AddGridInfo(gridInfo);
     }
 
     mapNavigationMeshAgent.emplace(navigationAgent->sceneName, navigationAgent);

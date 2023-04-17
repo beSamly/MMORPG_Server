@@ -136,20 +136,17 @@
     <ClInclude Include="ChampRelatedStruct.h" />
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="ClientSession.h" />
-    <ClInclude Include="Command.h" />
+    <ClInclude Include="GameSystemReq.h" />
     <ClInclude Include="Data.h" />
-    <ClInclude Include="GameSystemCommandControllerContainer.h" />
     <ClInclude Include="DataSystem.h" />
     <ClInclude Include="GameSystem.h" />
-    <ClInclude Include="GameSystemGlobalCommandController.h" />
     <ClInclude Include="CommandProcessCommon.h" />
-    <ClInclude Include="IGameSystemCommandController.h" />
     <ClInclude Include="ILogger.h" />
     <ClInclude Include="INetworkController.h" />
-    <ClInclude Include="InputCommandController.h" />
+    <ClInclude Include="GameSystemInputController.h" />
     <ClInclude Include="InputController.h" />
     <ClInclude Include="IOperation.h" />
-    <ClInclude Include="ISceneCommandController.h" />
+    <ClInclude Include="IGameSystemController.h" />
     <ClInclude Include="InputReqController.h" />
     <ClInclude Include="JsonSceneData.h" />
     <ClInclude Include="LibraryHeader.h" />
@@ -164,7 +161,7 @@
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="RequestValidator.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneCommandControllerContainer.h" />
+    <ClInclude Include="GameSystemReqControllerContainer.h" />
     <ClInclude Include="NavigationMeshAgentManager.h" />
     <ClInclude Include="SceneGlobalCommandController.h" />
     <ClInclude Include="SceneManager.h" />
@@ -182,13 +179,10 @@
   <ItemGroup>
     <ClCompile Include="ClientManager.cpp" />
     <ClCompile Include="ClientSession.cpp" />
-    <ClCompile Include="Command.cpp" />
     <ClCompile Include="Data.cpp" />
-    <ClCompile Include="GameSystemCommandControllerContainer.cpp" />
     <ClCompile Include="DataSystem.cpp" />
     <ClCompile Include="GameSystem.cpp" />
-    <ClCompile Include="GameSystemGlobalCommandController.cpp" />
-    <ClCompile Include="InputCommandController.cpp" />
+    <ClCompile Include="GameSystemInputController.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="IOperation.cpp" />
     <ClCompile Include="InputReqController.cpp" />
@@ -203,7 +197,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneCommandControllerContainer.cpp" />
+    <ClCompile Include="GameSystemReqControllerContainer.cpp" />
     <ClCompile Include="NavigationMeshAgentManager.cpp" />
     <ClCompile Include="SceneGlobalCommandController.cpp" />
     <ClCompile Include="SceneManager.cpp" />

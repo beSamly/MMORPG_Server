@@ -45,7 +45,7 @@ void ServerApp::StartSocketServer()
 void ServerApp::StartGameSystem()
 {
     //게임시스템 쓰레드
-    threadSystem->Launch(
+    /*threadSystem->Launch(
         [&]()
         {
             DWORD startTime = 0;
@@ -68,7 +68,7 @@ void ServerApp::StartGameSystem()
                 float deltaTimeInSec = elapsedMils / 1000;
                 gameSystem->Update(deltaTimeInSec);
             }
-        });
+        });*/
 
     // TODO 나중에 삭제하기
     // threadSystem->Launch(
@@ -104,7 +104,6 @@ void ServerApp::StartGameSystem()
                     }
 
                     DWORD elapsedMils = currentTime - startTime;
-                    DWORD elapsedSec = elapsedMils / 1000;
 
                     deltaTime = currentTime - prevTime;
                     prevTime = currentTime;

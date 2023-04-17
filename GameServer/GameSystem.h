@@ -1,12 +1,11 @@
 #pragma once
-#include "Command.h"
+#include "GameSystemReq.h"
 #include "DataSystem.h"
 #include "SceneManager.h"
 #include "PlayerManager.h"
-#include "SceneCommandControllerContainer.h"
-#include "GameSystemCommandControllerContainer.h"
+#include "GameSystemReqControllerContainer.h"
 
-using Command::CommandBase;
+using GameSystemReq::BaseReq;
 
 class GameSystem
 {
@@ -15,8 +14,8 @@ public:
 
 public:
     void Update(float deltaTime);
-    void PushCommand(sptr<CommandBase> command);
-    void PushCommandToScene(int playerId, sptr<CommandBase> command);
+    //void PushCommand(sptr<BaseReq> command);
+    //void PushCommandToScene(int playerId, sptr<BaseReq> command);
     sptr<Scene> GetSceneByPlayerId(int playerId);
 
     void UpdateScene(int threadId, float deltaTime);
@@ -32,16 +31,10 @@ private:
     map<int, int> mapPlayerIdToMatchId;
 
     /* Command related */
-    queue<sptr<CommandBase>> commandQueue;
-    uptr<GameSystemCommandControllerContainer> gameSystemCommandControllerContainer;
-    uptr<SceneCommandControllerContainer> sceneCommandControllerContainer;
+    uptr<GameSystemReqControllerContainer> reqControllerContainer;
 
     /* GameData related */
     sptr<DataSystem> dataSystem;
 
-private:
-
     /* Command related */
-    queue<sptr<CommandBase>> FlushQueue();
-    void ProcessCommand();
 };

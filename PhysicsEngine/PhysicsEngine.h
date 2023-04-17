@@ -139,7 +139,7 @@ class Mesh {
 class GridInfo {
  public:
   string gridIndex;
-  vector<AdjacentMeshInfo> listAdjacentMeshInfo;
+  vector<AdjacentMeshInfo> vecAdjacentMeshInfo;
 };
 
 class CollisionInfo {
@@ -491,9 +491,9 @@ class NavigationMeshAgent {
 
     GridInfo gridInfo = mapGridInfo[gridIndex];
 
-    vector<CollisionInfo> listTotalCollisionInfo;
+    vector<CollisionInfo> vecTotalCollisionInfo;
 
-    for (AdjacentMeshInfo& adjacentMeshInfo : gridInfo.listAdjacentMeshInfo) {
+    for (AdjacentMeshInfo& adjacentMeshInfo : gridInfo.vecAdjacentMeshInfo) {
       string meshName = adjacentMeshInfo.meshName;
       Mesh mesh = mapMesh[meshName];
 
@@ -505,23 +505,23 @@ class NavigationMeshAgent {
             mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
 
         if (terrainCollisionInfo.IsCollided()) {
-          listTotalCollisionInfo.push_back(terrainCollisionInfo);
+          vecTotalCollisionInfo.push_back(terrainCollisionInfo);
         }
       } else {
-        vector<CollisionInfo> listCollisionInfo =
+        vector<CollisionInfo> vecCollisionInfo =
             GetBestCollisionInfo_From_Object(
                 mesh, adjacentMeshInfo.adjacentTriangleIndices, position,
                 radius);
 
-        for (CollisionInfo& collisionInfo : listCollisionInfo) {
-          listTotalCollisionInfo.push_back(collisionInfo);
+        for (CollisionInfo& collisionInfo : vecCollisionInfo) {
+          vecTotalCollisionInfo.push_back(collisionInfo);
         }
       }
     }
 
     Vector3 addPosition;
 
-    for (CollisionInfo& collisionInfo : listTotalCollisionInfo) {
+    for (CollisionInfo& collisionInfo : vecTotalCollisionInfo) {
       addPosition = addPosition + (collisionInfo.penetrationNormal *
                                    collisionInfo.penetrationDepth);
     }
@@ -534,7 +534,7 @@ class NavigationMeshAgent {
   CollisionInfo GetBestCollisionInfo_From_Terrain(
       Mesh mesh, vector<int> triangleIndicesToCheck, Vector3 position,
       float radius) {
-    vector<CollisionInfo> listCollisionInfo;
+    vector<CollisionInfo> vecCollisionInfo;
 
     for (int triangleIndex : triangleIndicesToCheck) {
       Triangle triangle = mesh.vecTriangle[triangleIndex];
@@ -546,11 +546,11 @@ class NavigationMeshAgent {
         collisionInfo.fromMeshName = mesh.name;
         collisionInfo.fromTriangle = triangle;
 
-        listCollisionInfo.push_back(collisionInfo);
+        vecCollisionInfo.push_back(collisionInfo);
       }
     }
 
-    if (listCollisionInfo.size() == 0) {
+    if (vecCollisionInfo.size() == 0) {
       return CollisionInfo();
     }
 
@@ -558,7 +558,7 @@ class NavigationMeshAgent {
     CollisionInfo finalCollisionInfo;  // 가장 정확한 충돌 정보
 
     // 가장 정확한 충돌은 penetrationDepth 가 가장 큰 충돌이다.
-    for (CollisionInfo& collisionInfo : listCollisionInfo) {
+    for (CollisionInfo& collisionInfo : vecCollisionInfo) {
       if (maxPenetraion < collisionInfo.penetrationDepth) {
         maxPenetraion = collisionInfo.penetrationDepth;
         finalCollisionInfo = collisionInfo;
@@ -580,9 +580,9 @@ class NavigationMeshAgent {
       Mesh mesh, vector<int>& triangleIndicesToCheck, Vector3 position,
       float radius) {
     // Ver1 - Vector3(1,0,0) 와 DotProduct를 계산해서 음수, 0, 양수에 해당하는
-    // normal들의 충돌 정보를 List 에 모은다.(비슷한 방향에서 발생한 충돌 정보
+    // normal들의 충돌 정보를 vec 에 모은다.(비슷한 방향에서 발생한 충돌 정보
     // 중 가장 정확한 것만 적용하기 위함
-    map<DotProductType, vector<CollisionInfo>> map_direction_to_listCollision;
+    map<DotProductType, vector<CollisionInfo>> map_direction_to_vecCollision;
 
     Vector3 criteria;
 
@@ -618,16 +618,16 @@ class NavigationMeshAgent {
         DotProductType type = CollisionTestUtil::GetDotProductTypeBetween(
             criteria, collisionInfo.penetrationNormal);
 
-        map_direction_to_listCollision[type].push_back(collisionInfo);
+        map_direction_to_vecCollision[type].push_back(collisionInfo);
       }
     }
 
-    vector<CollisionInfo> listCollisionInfo;
+    vector<CollisionInfo> vecCollisionInfo;
 
     // 같은 방향(normal)으로 충돌한 정보 중 가장 정확한 정보만 찾는다.(같은
     // 방향(normal)으로 충돌이 발생 했을 경우 가장 정확한 충돌 방향은
     // penetrationDepth가 가장 큰 값일 때 이다)
-    for (auto& [_, vecCollisionInfo] : map_direction_to_listCollision) {
+    for (auto& [_, vecCollisionInfo] : map_direction_to_vecCollision) {
       float maxPenetraion = (std::numeric_limits<float>::min)();
       CollisionInfo finalCollisionInfo;  // 가장 정확한 충돌 정보
 
@@ -646,10 +646,10 @@ class NavigationMeshAgent {
       }
 
       // 이 normal의 충돌 정보 중 가장 정확한 정보만 리턴 값에 넣어준다.
-      listCollisionInfo.push_back(finalCollisionInfo);
+      vecCollisionInfo.push_back(finalCollisionInfo);
     }
 
-    return listCollisionInfo;
+    return vecCollisionInfo;
   }
 };
 }  // namespace PhysicsEngine

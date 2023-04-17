@@ -7,22 +7,21 @@
 #include "EnterSceneRes.pb.h"
 #include "Vector3.pb.h"
 
-using namespace Command;
-using namespace CommandResult;
-
+using GameSystemReq::EnterSceneReq;
 using PacketDef::PACKET_GROUP_ID;
 using PacketDef::PACKET_ID_SCENE;
+using GameSystemReq::RESULT_TYPE;
 
 SceneGlobalCommandController::SceneGlobalCommandController(sptr<Logger> paramLogger) : logger(paramLogger)
 {
-    mapProcessFunc.emplace(COMMAND_ID_SCENE_GLOBAL::ENTER_SCENE, TO_BASE_COMMAND_PROCESS_FUNC(ProcessEnterScene));
+    mapProcessFunc.emplace(REQ_ID_GLOBAL::ENTER_SCENE, TO_BASE_COMMAND_PROCESS_FUNC(ProcessEnterScene));
 
     //mapProcessFunc[COMMAND_ID_GAME_SYSTEM_GLOBAL::PLAYER_LOG_IN] = TO_BASE_COMMAND_PROCESS_FUNC(ProcessEnterScene);
 }
 
-int SceneGlobalCommandController::Process(GameSystem& gameSystem, sptr<Scene>& scene, sptr<CommandBase>& command)
+int SceneGlobalCommandController::Process(GameSystem& gameSystem, sptr<Scene>& scene, sptr<BaseReq>& command)
 {
-    COMMAND_ID_SCENE_GLOBAL commandId = static_cast<COMMAND_ID_SCENE_GLOBAL>(command->commandId);
+    REQ_ID_GLOBAL commandId = static_cast<REQ_ID_GLOBAL>(command->commandId);
     BaseCommandProcessFunc func = mapProcessFunc[commandId];
     if (func)
     {
@@ -31,19 +30,19 @@ int SceneGlobalCommandController::Process(GameSystem& gameSystem, sptr<Scene>& s
     else
     {
         logger->Error("SceneGlobalCommandController has no process function for commandId = {}", command->commandId);
-        return CommandResult::PROCESS_FUNC_NOT_FOUND;
+        return RESULT_TYPE::PROCESS_FUNC_NOT_FOUND;
     }
 }
 
-int SceneGlobalCommandController::ProcessEnterScene(GameSystem& gameSystem, sptr<Scene>& scene, sptr<CommandBase>& command)
+int SceneGlobalCommandController::ProcessEnterScene(GameSystem& gameSystem, sptr<Scene>& scene, sptr<BaseReq>& command)
 {
-    sptr<CommandEnterScene> commandEnterScene = dynamic_pointer_cast<CommandEnterScene>(command);
-    if (commandEnterScene == nullptr)
+    sptr<EnterSceneReq> enterSceneReq = dynamic_pointer_cast<EnterSceneReq>(command);
+    if (enterSceneReq == nullptr)
     {
-        return COMMAND_TYPE_MISMATCH;
+        return RESULT_TYPE::STRUCT_TYPE_MISMATCH;
     }
 
-    sptr<Player> player = commandEnterScene->player;
+    sptr<Player> player = enterSceneReq->player;
     scene->AddPlayer(player);
 
     //씬에 접속 완료했다면 클라에게 보내준다
@@ -59,5 +58,5 @@ int SceneGlobalCommandController::ProcessEnterScene(GameSystem& gameSystem, sptr
 
     player->Send(packet.GetSendBuffer());
 
-    return COMMAND_RESULT_SUCCESS;
+    return RESULT_TYPE::SUCCESS;
 }

@@ -1,15 +1,15 @@
 #pragma once
 #include <string>
-#include "Command.h"
+#include "GameSystemReq.h"
 
-using Command::CommandBase;
+using GameSystemReq::BaseReq;
 using std::string;
 
 class Scene
 {
 private:
     USE_LOCK;
-    queue<sptr<CommandBase>> commandQueue;
+    queue<sptr<BaseReq>> commandQueue;
 
     map<int, sptr<Player>> mapPlayer;
 
@@ -17,8 +17,8 @@ public:
     string sceneName;
     Scene(string paramSceneName) : sceneName(paramSceneName) {}
 
-    void PushCommand(sptr<CommandBase> command);
-    queue<sptr<CommandBase>> FlushQueue();
+    void PushCommand(sptr<BaseReq> command);
+    queue<sptr<BaseReq>> FlushQueue();
 
     void Update(float deltaTime);
     void AddPlayer(sptr<Player> player) { mapPlayer[player->GetPlayerId()] = player; }

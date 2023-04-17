@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "GameSystem.h"
-#include "SceneCommandControllerContainer.h"
+#include "GameSystemReqControllerContainer.h"
 #include "SceneGlobalCommandController.h"
 
-SceneCommandControllerContainer::SceneCommandControllerContainer(sptr<Logger> logger)
+GameSystemReqControllerContainer::GameSystemReqControllerContainer(sptr<Logger> logger)
 {
     sptr<SceneGlobalCommandController> sceneGlobalCommandController = make_shared<SceneGlobalCommandController>(logger);
-    mapController.emplace(COMMAND_GROUP_ID::SCENE_GLOBAL, sceneGlobalCommandController);
+    mapController.emplace(REQ_GROUP_ID::GLOBAL, sceneGlobalCommandController);
 }
 
-sptr<ISceneCommandController> SceneCommandControllerContainer::GetController(COMMAND_GROUP_ID groupId)
+sptr<IGameSystemController> GameSystemReqControllerContainer::GetController(REQ_GROUP_ID groupId)
 {
     if (mapController.count(groupId))
     {

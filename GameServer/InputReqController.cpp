@@ -4,7 +4,7 @@
 #include <Packet.h>
 #include "KeyInputMovementReq.pb.h"
 
-using Command::CommandInputMovement;
+using GameSystemReq::InputMovementReq;
 
 InputReqController::InputReqController(sptr<GameSystem> paramGameSystem, sptr<Logger> paramLogger)
     : gameSystem(paramGameSystem), logger(paramLogger)
@@ -40,12 +40,12 @@ int InputReqController::ProcessInputMovement(sptr<ClientSession>& session, BYTE*
     if (pkt.ParseFromArray(buffer + sizeof(PacketHeader), len - sizeof(PacketHeader)) == false)
         return NetworkResponseCode::CODE_PROTOBUF_PARSE_FAIL;
 
-    sptr<CommandInputMovement> command = make_shared<CommandInputMovement>();
+    sptr<InputMovementReq> command = make_shared<InputMovementReq>();
     command->playerId = session->playerId;
     command->up = pkt.up();
     command->down = pkt.down();
     command->left = pkt.left();
     command->right = pkt.right();
 
-    gameSystem->PushCommandToScene(command->playerId, command);
+    //gameSystem->PushCommandToScene(command->playerId, command);
 }

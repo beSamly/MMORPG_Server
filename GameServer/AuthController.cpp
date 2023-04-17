@@ -5,7 +5,6 @@
 #include <NetworkResponseCode.h>
 #include "RequestValidator.h"
 
-using Command::CommandPlayerLogIn;
 using PacketDef::PACKET_GROUP_ID;
 using PacketDef::PACKET_ID_AUTH;
 
@@ -55,11 +54,11 @@ int AuthController::ProcessLoginReq(sptr<ClientSession>& session, BYTE* buffer, 
     session->isAuthenticated = true;
 
     // Scene에 넣어준다.
-    sptr<CommandPlayerLogIn> command = make_shared<CommandPlayerLogIn>();
-    command->sceneName = sceneName;
-    command->player = player;
+    //sptr<CommandPlayerLogIn> command = make_shared<CommandPlayerLogIn>();
+    //command->sceneName = sceneName;
+    //command->player = player;
 
-    gameSystem->PushCommand(command);
+    //gameSystem->PushCommand(command);
 
     using NetworkResponseCode::CODE_SUCCESS;
 }

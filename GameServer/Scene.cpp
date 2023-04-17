@@ -1,16 +1,16 @@
 #include "pch.h"
 #include "Scene.h"
 
-void Scene::PushCommand(sptr<CommandBase> command)
+void Scene::PushCommand(sptr<BaseReq> command)
 {
     WRITE_LOCK;
     commandQueue.push(command);
 }
 
-queue<sptr<CommandBase>> Scene::FlushQueue()
+queue<sptr<BaseReq>> Scene::FlushQueue()
 {
     WRITE_LOCK;
-    queue<sptr<CommandBase>> copied(commandQueue);
+    queue<sptr<BaseReq>> copied(commandQueue);
     return copied;
 }
 

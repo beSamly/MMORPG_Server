@@ -18,18 +18,23 @@ public:
     template <typename... Args>
     void Info(format_string_t<Args...> fmt, Args&&... args)
     {
+        spdlog::error(fmt, std::forward<Args>(args)...);
         //spdlog::info(fmt, std::forward<Args>(args)...);
     };
 
     template <typename... Args>
-    inline void Error(format_string_t<Args...> fmt, Args&&... args)
+    void Error(format_string_t<Args...> fmt, Args&&... args)
     {
-        //spdlog::error(fmt, std::forward<Args>(args)...);
+        //spdlog::info(fmt, std::forward<Args>(args)...);
+
+        // spdlog::error(fmt, std::forward<Args>(args)...);
+
+        // spdlog::error(fmt, std::forward<Args>(args)...);
     }
 
     template <typename... Args>
-    inline void Debug(format_string_t<Args...> fmt, Args&&... args)
+    void Debug(format_string_t<Args...> fmt, Args&&... args)
     {
-        //spdlog::debug(fmt, std::forward<Args>(args)...);
+        // spdlog::debug(fmt, std::forward<Args>(args)...);
     }
 };
