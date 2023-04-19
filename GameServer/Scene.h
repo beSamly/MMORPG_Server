@@ -11,16 +11,18 @@ private:
 	USE_LOCK;
 	queue<sptr<BaseReq>> commandQueue;
 	std::set<int> setPlayer;
+
+public:
 	string sceneName;
+    sptr<PhysicsEngine::NavigationMeshAgent> navigationMeshAgent;
 
 public:
 	Scene(string paramSceneName) : sceneName(paramSceneName) {}
-	string GetSceneName() { return sceneName; }
-	void SetSceneName(string name) { sceneName = name; }
+
 	void PushCommand(sptr<BaseReq> command);
 	queue<sptr<BaseReq>> FlushQueue();
 	void Update(float deltaTime);
 
-	set<int> GetAllPlayerId() { return setPlayer; }
+	std::set<int> GetAllPlayerId() { return setPlayer; }
 	void AddPlayerId(int playerId) { setPlayer.insert(playerId); }
 };

@@ -18,6 +18,19 @@ ServerApp::ServerApp()
 	networkSystem = make_shared<NetworkSystem>(dataSystem, gameSystem);
 }
 
+void ServerApp::InitSystems() { 
+	dataSystem->LoadJsonData();
+    gameSystem->Init();
+
+}
+
+void ServerApp::StartSystems()
+{
+    StartSocketServer();
+    StartGameSystem();
+    JoinThread();
+}
+
 void ServerApp::StartSocketServer()
 {
 	spdlog::set_level(spdlog::level::debug); // Set global log level to debug
@@ -41,6 +54,8 @@ void ServerApp::StartSocketServer()
 			});
 	}
 }
+
+void ServerApp::InitGameSystem() {}
 
 void ServerApp::StartGameSystem()
 {

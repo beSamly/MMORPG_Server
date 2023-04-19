@@ -10,23 +10,28 @@ using GameSystemReq::BaseReq;
 class GameSystem
 {
 public:
-	GameSystem(sptr<DataSystem> p_dataSystem);
+    GameSystem(sptr<DataSystem> p_dataSystem);
 
 public:
-	void UpdateScene(int threadId, float deltaTime);
-	uptr<PlayerManager> playerManager;
-	uptr<SceneManager> sceneManager;
+    void UpdateScene(int threadId, float deltaTime);
+    uptr<PlayerManager> playerManager;
+    uptr<SceneManager> sceneManager;
+
+    void Init();
 
 private:
-	USE_LOCK;
+    USE_LOCK;
 
-	sptr<Logger> logger;
+    sptr<Logger> logger;
 
-	/* Command related */
-	uptr<GameSystemControllerContainer> reqControllerContainer;
+    /* Command related */
+    uptr<GameSystemControllerContainer> reqControllerContainer;
 
-	/* GameData related */
-	sptr<DataSystem> dataSystem;
+    /* GameData related */
+    sptr<DataSystem> dataSystem;
 
-	/* Command related */
+    /* Command related */
+
+private:
+    void InitSceneManager();
 };

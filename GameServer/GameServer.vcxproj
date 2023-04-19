@@ -148,7 +148,6 @@
     <ClInclude Include="IOperation.h" />
     <ClInclude Include="IGameSystemController.h" />
     <ClInclude Include="InputReqController.h" />
-    <ClInclude Include="JsonSceneData.h" />
     <ClInclude Include="LibraryHeader.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="AuthController.h" />
@@ -164,6 +163,8 @@
     <ClInclude Include="GameSystemControllerContainer.h" />
     <ClInclude Include="NavigationMeshAgentManager.h" />
     <ClInclude Include="GameGlobalController.h" />
+    <ClInclude Include="SceneInfo.h" />
+    <ClInclude Include="SceneInfoManager.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ServerApp.h" />
     <ClInclude Include="SkillController.h" />
@@ -186,7 +187,6 @@
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="IOperation.cpp" />
     <ClCompile Include="InputReqController.cpp" />
-    <ClCompile Include="JsonSceneData.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AuthController.cpp" />
@@ -200,6 +200,7 @@
     <ClCompile Include="GameSystemControllerContainer.cpp" />
     <ClCompile Include="NavigationMeshAgentManager.cpp" />
     <ClCompile Include="GameGlobalController.cpp" />
+    <ClCompile Include="SceneInfoManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ServerApp.cpp" />
     <ClCompile Include="SkillController.cpp" />
@@ -217,6 +218,8 @@
     <None Include="json\ChampData.json" />
     <None Include="json\ChampSkillData.json" />
     <None Include="json\ChampStatData.json" />
+    <None Include="json\NavigationMeshAgentData.json" />
+    <None Include="json\SceneInfo.json" />
     <None Include="json\SkillData.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

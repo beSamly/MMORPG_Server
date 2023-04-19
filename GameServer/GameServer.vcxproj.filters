@@ -197,9 +197,6 @@
     <ClInclude Include="NavigationMeshAgentManager.h">
       <Filter>Source Files\DataSystem\StaticData</Filter>
     </ClInclude>
-    <ClInclude Include="JsonSceneData.h">
-      <Filter>Source Files\DataSystem\Data</Filter>
-    </ClInclude>
     <ClInclude Include="ClientManager.h">
       <Filter>Source Files\NetworkSystem\Manager</Filter>
     </ClInclude>
@@ -215,6 +212,12 @@
     </ClInclude>
     <ClInclude Include="GameSystemReq.h">
       <Filter>Source Files\GameSystem\ReqController</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneInfoManager.h">
+      <Filter>Source Files\DataSystem\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneInfo.h">
+      <Filter>Source Files\DataSystem\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -308,9 +311,6 @@
     <ClCompile Include="NavigationMeshAgentManager.cpp">
       <Filter>Source Files\DataSystem\StaticData</Filter>
     </ClCompile>
-    <ClCompile Include="JsonSceneData.cpp">
-      <Filter>Source Files\DataSystem\Data</Filter>
-    </ClCompile>
     <ClCompile Include="ClientManager.cpp">
       <Filter>Source Files\NetworkSystem\Manager</Filter>
     </ClCompile>
@@ -319,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="ClientSession.cpp">
       <Filter>Source Files\NetworkSystem\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneInfoManager.cpp">
+      <Filter>Source Files\DataSystem\StaticData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -335,5 +338,11 @@
       <Filter>Source Files\DataSystem\JsonFile</Filter>
     </None>
     <None Include=".clang-format" />
+    <None Include="json\NavigationMeshAgentData.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\SceneInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
   </ItemGroup>
 </Project>

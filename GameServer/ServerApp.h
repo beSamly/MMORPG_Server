@@ -18,8 +18,13 @@ public:
 
 public:
 	ServerApp();
+    void InitSystems();
+    void StartSystems();
 
-public:
+private:
+    void InitGameSystem();
+
+
 	void StartSocketServer();
 	void StartGameSystem();
 	void JoinThread() { threadSystem->Join(); };

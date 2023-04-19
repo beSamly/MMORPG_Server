@@ -3,14 +3,12 @@
 
 DataSystem::DataSystem()
 {
+    navigationMeshAgentManager = make_unique<NavigationMeshAgentManager>();
+    sceneInfoManager = make_unique<SceneInfoManager>();
 }
 
-void DataSystem::LoadJsonData() {
-
-
-
-	navigationMeshAgentManager.LoadJsonData();
-
-
-
+void DataSystem::LoadJsonData()
+{
+    navigationMeshAgentManager->LoadJsonData();
+    sceneInfoManager->LoadJsonData();
 }
