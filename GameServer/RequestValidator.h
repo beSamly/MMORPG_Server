@@ -5,11 +5,10 @@
 
 namespace RequestValidator
 {
-    bool IsPlayerLoggedIn(sptr<ClientSession>& clientSession) { return true; }
-    bool IsPlayerInScene(sptr<GameSystem>& gameSystem, sptr<ClientSession>& session)
-    {
-        gameSystem->GetSceneByPlayerId(1);
-        return true;
-    }
+	bool IsPlayerLoggedIn(sptr<ClientSession>& clientSession) { return true; }
+	bool IsPlayerInScene(sptr<GameSystem>& gameSystem, sptr<ClientSession>& session)
+	{
+		return true;
+	}
 
 } // namespace RequestValidator

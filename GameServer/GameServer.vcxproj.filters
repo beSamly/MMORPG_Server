@@ -182,16 +182,16 @@
     <ClInclude Include="Scene.h">
       <Filter>Source Files\GameSystem\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="GameSystemReqControllerContainer.h">
+    <ClInclude Include="GameSystemControllerContainer.h">
       <Filter>Source Files\GameSystem\ReqController\Container</Filter>
     </ClInclude>
-    <ClInclude Include="SceneGlobalCommandController.h">
+    <ClInclude Include="GameGlobalController.h">
       <Filter>Source Files\GameSystem\ReqController\Global</Filter>
     </ClInclude>
     <ClInclude Include="IGameSystemController.h">
       <Filter>Source Files\GameSystem\ReqController\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="GameSystemInputController.h">
+    <ClInclude Include="GameInputController.h">
       <Filter>Source Files\GameSystem\ReqController\Input</Filter>
     </ClInclude>
     <ClInclude Include="NavigationMeshAgentManager.h">
@@ -296,13 +296,13 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\GameSystem\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="GameSystemReqControllerContainer.cpp">
+    <ClCompile Include="GameSystemControllerContainer.cpp">
       <Filter>Source Files\GameSystem\ReqController\Container</Filter>
     </ClCompile>
-    <ClCompile Include="SceneGlobalCommandController.cpp">
+    <ClCompile Include="GameGlobalController.cpp">
       <Filter>Source Files\GameSystem\ReqController\Global</Filter>
     </ClCompile>
-    <ClCompile Include="GameSystemInputController.cpp">
+    <ClCompile Include="GameInputController.cpp">
       <Filter>Source Files\GameSystem\ReqController\Input</Filter>
     </ClCompile>
     <ClCompile Include="NavigationMeshAgentManager.cpp">

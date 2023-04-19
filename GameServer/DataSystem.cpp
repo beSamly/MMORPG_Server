@@ -5,4 +5,12 @@ DataSystem::DataSystem()
 {
 }
 
-void DataSystem::LoadJsonData() { navigationMeshAgentManager.LoadJsonData(); }
+void DataSystem::LoadJsonData() {
+
+
+
+	navigationMeshAgentManager.LoadJsonData();
+
+
+
+}

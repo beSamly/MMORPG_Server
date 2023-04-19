@@ -3,38 +3,30 @@
 #include "DataSystem.h"
 #include "SceneManager.h"
 #include "PlayerManager.h"
-#include "GameSystemReqControllerContainer.h"
+#include "GameSystemControllerContainer.h"
 
 using GameSystemReq::BaseReq;
 
 class GameSystem
 {
 public:
-    GameSystem(sptr<DataSystem> p_dataSystem);
+	GameSystem(sptr<DataSystem> p_dataSystem);
 
 public:
-    void Update(float deltaTime);
-    //void PushCommand(sptr<BaseReq> command);
-    //void PushCommandToScene(int playerId, sptr<BaseReq> command);
-    sptr<Scene> GetSceneByPlayerId(int playerId);
-
-    void UpdateScene(int threadId, float deltaTime);
-    uptr<PlayerManager> playerManager;
-    uptr<SceneManager> sceneManager;
+	void UpdateScene(int threadId, float deltaTime);
+	uptr<PlayerManager> playerManager;
+	uptr<SceneManager> sceneManager;
 
 private:
-    USE_LOCK;
+	USE_LOCK;
 
-    sptr<Logger> logger;
-    map<int, string> mapPlayerIdSceneName;
+	sptr<Logger> logger;
 
-    map<int, int> mapPlayerIdToMatchId;
+	/* Command related */
+	uptr<GameSystemControllerContainer> reqControllerContainer;
 
-    /* Command related */
-    uptr<GameSystemReqControllerContainer> reqControllerContainer;
+	/* GameData related */
+	sptr<DataSystem> dataSystem;
 
-    /* GameData related */
-    sptr<DataSystem> dataSystem;
-
-    /* Command related */
+	/* Command related */
 };

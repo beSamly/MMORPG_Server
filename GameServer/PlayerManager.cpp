@@ -2,15 +2,26 @@
 #include "PlayerManager.h"
 #include "Player.h"
 
-void PlayerManager::AddPlayer(sptr<ClientSession> client)
+void PlayerManager::AddPlayer(sptr<Player> player)
 {
 	WRITE_LOCK;
-	clientMap->emplace(tempPlayerId, client);
+	mapPlayer.emplace(tempPlayerId, player);
 	tempPlayerId++;
 	return;
 }
 
-void PlayerManager::RemovePlayer(int playerId) { clientMap->erase(playerId); }
+sptr<Player> PlayerManager::GetPlayer(int playerId)
+{
+	map<int, sptr<Player>>::iterator iter = mapPlayer.find(playerId);
+	if (iter != mapPlayer.end()) {
+		return iter->second;
+	}
+	else {
+		return nullptr;
+	}
+}
+
+void PlayerManager::RemovePlayer(int playerId) { mapPlayer.erase(playerId); }
 
 void PlayerManager::Update()
 {

@@ -8,19 +8,19 @@ using std::string;
 class Scene
 {
 private:
-    USE_LOCK;
-    queue<sptr<BaseReq>> commandQueue;
-
-    map<int, sptr<Player>> mapPlayer;
+	USE_LOCK;
+	queue<sptr<BaseReq>> commandQueue;
+	std::set<int> setPlayer;
+	string sceneName;
 
 public:
-    string sceneName;
-    Scene(string paramSceneName) : sceneName(paramSceneName) {}
+	Scene(string paramSceneName) : sceneName(paramSceneName) {}
+	string GetSceneName() { return sceneName; }
+	void SetSceneName(string name) { sceneName = name; }
+	void PushCommand(sptr<BaseReq> command);
+	queue<sptr<BaseReq>> FlushQueue();
+	void Update(float deltaTime);
 
-    void PushCommand(sptr<BaseReq> command);
-    queue<sptr<BaseReq>> FlushQueue();
-
-    void Update(float deltaTime);
-    void AddPlayer(sptr<Player> player) { mapPlayer[player->GetPlayerId()] = player; }
-    sptr<Player> GetPlayer(int playerId);
+	set<int> GetAllPlayerId() { return setPlayer; }
+	void AddPlayerId(int playerId) { setPlayer.insert(playerId); }
 };

@@ -13,16 +13,11 @@ DWORD intervalTick = 1000; // 3초에 한 번씩
 
 GameSystem::GameSystem(sptr<DataSystem> p_dataSystem) : dataSystem(p_dataSystem)
 {
-    playerManager = make_unique<PlayerManager>();
-    sceneManager = make_unique<SceneManager>();
-    logger = make_shared<Logger>("dummy path");
-    logger = make_shared<Logger>("dummy path");
-    reqControllerContainer = make_unique<GameSystemReqControllerContainer>(logger);
-}
-
-void GameSystem::Update(float deltaTime)
-{
-    // GameSystem이 처리해야할 패킷 먼저 처리
+	playerManager = make_unique<PlayerManager>();
+	sceneManager = make_unique<SceneManager>();
+	logger = make_shared<Logger>("dummy path");
+	logger = make_shared<Logger>("dummy path");
+	reqControllerContainer = make_unique<GameSystemControllerContainer>(logger);
 }
 
 //void GameSystem::PushCommand(sptr<BaseReq> command)
@@ -44,48 +39,48 @@ void GameSystem::Update(float deltaTime)
 //    scene->PushCommand(command);
 //}
 
-sptr<Scene> GameSystem::GetSceneByPlayerId(int playerId)
-{
-    map<int, string>::iterator iter = mapPlayerIdSceneName.find(playerId);
-
-    if (iter == mapPlayerIdSceneName.end())
-    {
-        return nullptr;
-    }
-
-    string& sceneName = iter->second;
-    return sceneManager->GetScene(sceneName);
-}
 
 void GameSystem::UpdateScene(int threadId, float deltaTime)
 {
-    // Scene 몇개 찾아서
-    // loop 돌면서
-    //  scene->flushqueue()
-    //  GameSystemReqControllerContainer->process(command) 느낌으로 갈까?
+	// Scene 몇개 찾아서
+	// loop 돌면서
+	//  scene->flushqueue()
+	//  GameSystemControllerContainer->process(command) 느낌으로 갈까?
 
-    for (auto& [sceneName, scene] : *sceneManager->GetAllScene())
-    {
-        // 커맨드 먼저 처리
-        queue<sptr<BaseReq>> copied = scene->FlushQueue();
-        while (!copied.empty())
-        {
-            sptr<BaseReq> command = copied.front();
-            int commandId = command->GetCommandId();
+	for (auto& [sceneName, scene] : *sceneManager->GetAllScene())
+	{
+		// 커맨드 먼저 처리
+		queue<sptr<BaseReq>> copied = scene->FlushQueue();
+		while (!copied.empty())
+		{
+			sptr<BaseReq> command = copied.front();
+			int commandId = command->GetCommandId();
 
-            sptr<IGameSystemController> controller = reqControllerContainer->GetController(command->commandGroupId);
-            if (controller)
-            {
-                controller->Process(*this, scene, command);
-            }
-            else
-            {
-                logger->Error("GameSystemReqControllerContainer has no controller for commandGroupId = {}", command->commandGroupId);
-            }
-            copied.pop();
-        }
+			sptr<IGameSystemController> controller = reqControllerContainer->GetController(command->commandGroupId);
+			if (controller)
+			{
+				controller->Process(*this, scene, command);
+			}
+			else
+			{
+				logger->Error("GameSystemControllerContainer has no controller for commandGroupId = " + command->commandGroupId);
+			}
+			copied.pop();
+		}
 
-        //씬 업데이트
-        scene->Update(deltaTime);
-    };
+		//씬의 Player 업데이트
+		std::set<int> playerIds = scene->GetAllPlayerId();
+
+		for (const int& playerId : playerIds) {
+
+			sptr<Player> player = playerManager->GetPlayer(playerId);
+
+			if (player == nullptr) {
+				//!! ERROR
+				continue;
+			}
+
+			player->Update(deltaTime);
+		}
+	};
 }

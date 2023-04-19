@@ -165,21 +165,23 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Protobuf\EnterSceneRes.pb.cc" />
-    <ClCompile Include="Protobuf\KeyInputMovementReq.pb.cc" />
-    <ClCompile Include="Protobuf\KeyInputMovementRes.pb.cc" />
+    <ClCompile Include="Protobuf\InputMovementReq.pb.cc" />
+    <ClCompile Include="Protobuf\InputMovementRes.pb.cc" />
     <ClCompile Include="Protobuf\LoginReq.pb.cc" />
     <ClCompile Include="Protobuf\LoginRes.pb.cc" />
     <ClCompile Include="Protobuf\PlayerInfo.pb.cc" />
+    <ClCompile Include="Protobuf\PositionUpdate.pb.cc" />
     <ClCompile Include="Protobuf\Vector3.pb.cc" />
     <ClCompile Include="ProxyPacketId.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NetworkResponseCode.h" />
+    <ClInclude Include="Protobuf\InputMovementReq.pb.h" />
+    <ClInclude Include="Protobuf\InputMovementRes.pb.h" />
+    <ClInclude Include="Protobuf\PositionUpdate.pb.h" />
+    <ClInclude Include="ResponseCode.h" />
     <ClInclude Include="PacketDef.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Protobuf\EnterSceneRes.pb.h" />
-    <ClInclude Include="Protobuf\KeyInputMovementReq.pb.h" />
-    <ClInclude Include="Protobuf\KeyInputMovementRes.pb.h" />
     <ClInclude Include="Protobuf\LoginReq.pb.h" />
     <ClInclude Include="Protobuf\LoginRes.pb.h" />
     <ClInclude Include="Protobuf\PlayerInfo.pb.h" />

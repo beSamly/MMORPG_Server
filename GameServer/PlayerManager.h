@@ -5,15 +5,16 @@
 class PlayerManager
 {
 public:
-    PlayerManager();
+	PlayerManager();
 
 private:
-    USE_LOCK;
-    uptr<map<int, sptr<ClientSession>>> clientMap = make_unique<map<int, sptr<ClientSession>>>();
-    int tempPlayerId = 1;
+	USE_LOCK;
+	map<int, sptr<Player>> mapPlayer;
+	int tempPlayerId = 1;
 
 public:
-    void AddPlayer(sptr<ClientSession> client);
-    void RemovePlayer(int playerId);
-    void Update();
+	void AddPlayer(sptr<Player> client);
+	sptr<Player> GetPlayer(int playerId);
+	void RemovePlayer(int playerId);
+	void Update();
 };

@@ -40,10 +40,13 @@
     <ClCompile Include="Protobuf\Vector3.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\KeyInputMovementReq.pb.cc">
+    <ClCompile Include="Protobuf\PositionUpdate.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\KeyInputMovementRes.pb.cc">
+    <ClCompile Include="Protobuf\InputMovementReq.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\InputMovementRes.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
   </ItemGroup>
@@ -55,7 +58,7 @@
     <ClInclude Include="PacketDef.h">
       <Filter>Source Files\Packet</Filter>
     </ClInclude>
-    <ClInclude Include="NetworkResponseCode.h">
+    <ClInclude Include="ResponseCode.h">
       <Filter>Source Files\Packet</Filter>
     </ClInclude>
     <ClInclude Include="Protobuf\EnterSceneRes.pb.h">
@@ -73,10 +76,13 @@
     <ClInclude Include="Protobuf\Vector3.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\KeyInputMovementRes.pb.h">
+    <ClInclude Include="Protobuf\PositionUpdate.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\KeyInputMovementReq.pb.h">
+    <ClInclude Include="Protobuf\InputMovementReq.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\InputMovementRes.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
   </ItemGroup>
