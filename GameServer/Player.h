@@ -2,41 +2,33 @@
 #include "TransformController.h"
 #include "InputController.h"
 #include "ClientSession.h"
+#include "StatController.h"
 
 class Player
 {
 private:
-	int playerId;
 
 private:
-	wptr<ClientSession> tcpSession;
-	sptr<InputController> inputController;
-	sptr<TransformController> transformController;
-	sptr<StatController> statController;
-	string currentSceneName;
+    wptr<ClientSession> tcpSession;
 
 public:
-	Player() { Init(); };
-	void Init();
-	void Send(std::shared_ptr<SendBuffer> buffer);
-	int GetPlayerId() { return playerId; }
-	void SetPlayerId(int id) { playerId = id; }
-	string GetCurrentSceneName() { return currentSceneName; }
-	void SetCurrentSceneName(string sceneName) { currentSceneName = sceneName; }
-	void Update(float deltaTime);
+    uptr<InputController> inputController;
+    uptr<TransformController> transformController;
+    uptr<StatController> statController;
+    string currentSceneName;
+    int playerId;
+
 
 public:
-	template <class T>
-	std::shared_ptr<T> GetController();
+    Player() { Init(); };
+    void Init();
+    void SetSession(wptr<ClientSession> session) { tcpSession = session; }
+    void Send(std::shared_ptr<SendBuffer> buffer);
+    void Update(float deltaTime);
 
-	template <>
-	sptr<InputController> GetController()
-	{
-		return inputController;
-	};
-	template <>
-	sptr<TransformController> GetController()
-	{
-		return transformController;
-	};
+public:
+    int GetStat(STAT_TYPE statType);
+
+private:
+    void UpdatePosition(float deltaTime);
 };

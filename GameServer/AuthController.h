@@ -12,10 +12,11 @@ class AuthController : public INetworkController
 private:
     sptr<Logger> logger;
     sptr<GameSystem> gameSystem;
+    sptr<DataSystem> dataSystem;
     map<PACKET_ID_AUTH, BasePacketProcessFunc> mapProcessFunc;
 
 public:
-    AuthController(sptr<GameSystem> gameSystem, sptr<Logger> logger);
+    AuthController(sptr<GameSystem> gameSystem, sptr<DataSystem> paramDataSystem, sptr<Logger> logger);
     virtual int Process(sptr<ClientSession>& session, BYTE* buffer, int32 len) override;
 
 private:

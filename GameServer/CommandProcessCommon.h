@@ -6,20 +6,13 @@
 
 using GameSystemReq::BaseReq;
 
-namespace SceneCommandProcessCommon
+namespace GameSystemReqProcessCommon
 {
-    typedef function<int(GameSystem& gameSystem, sptr<Scene>& scene, sptr<BaseReq>& command)> BaseCommandProcessFunc;
-    typedef function<int(GameSystem& gameSystem, sptr<Scene>& scene, sptr<Player>& player, sptr<BaseReq>& command)> PlayerCommandProcessFunc;
+    typedef function<int(sptr<Scene>& scene, sptr<BaseReq>& command)> BaseCommandProcessFunc;
+    typedef function<int(sptr<Scene>& scene, sptr<Player>& player, sptr<BaseReq>& command)> PlayerCommandProcessFunc;
 
-#define TO_BASE_COMMAND_PROCESS_FUNC(FUNC) [&](GameSystem& gameSystem, sptr<Scene>& scene, sptr<BaseReq>& command) { return FUNC(gameSystem, scene, command); }
-#define TO_PLAYER_COMMAND_PROCESS_FUNC(FUNC) [&](GameSystem& gameSystem, sptr<Scene>& scene, sptr<Player>& player, sptr<BaseReq>& command) { return FUNC(gameSystem, scene, player, command); }
+#define TO_BASE_COMMAND_PROCESS_FUNC(FUNC) [&](sptr<Scene>& scene, sptr<BaseReq>& command) { return FUNC(scene, command); }
+#define TO_PLAYER_COMMAND_PROCESS_FUNC(FUNC) [&](sptr<Scene>& scene, sptr<Player>& player, sptr<BaseReq>& command) { return FUNC(scene, player, command); }
 
-} // namespace SceneCommandProcessCommon
+} // namespace GameSystemReqProcessCommon
 
-namespace GameSystemCommandProcessCommon
-{
-    typedef function<int(GameSystem& gameSystem, sptr<BaseReq>& command)> BaseCommandProcessFun;
-
-#define TO_BASE_PROCESS_FUNC(FUNC) [&](GameSystem& gameSystem, sptr<BaseReq>& command) { return FUNC(gameSystem, command); }
-
-} // namespace GameSystemCommandProcessCommon

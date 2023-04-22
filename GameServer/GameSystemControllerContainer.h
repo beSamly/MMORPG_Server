@@ -11,6 +11,6 @@ private:
 	map<REQ_GROUP_ID, sptr<IGameSystemController>> mapController;
 
 public:
-	GameSystemControllerContainer(sptr<Logger> logger);
+	GameSystemControllerContainer(sptr<GameSystem> gameSystem, sptr<Logger> logger);
 	sptr<IGameSystemController> GetController(REQ_GROUP_ID packetGroupId);
 };

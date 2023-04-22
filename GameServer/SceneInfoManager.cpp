@@ -16,7 +16,7 @@ void SceneInfoManager::LoadJsonData() {
     {
         SceneInfo sceneInfo;
 
-        sceneInfo.sceneName = jsonSceneInfo["sceneName"];
+        sceneInfo.sceneName = jsonSceneInfo["SceneName"];
 
         vecSceneInfo.push_back(sceneInfo);
     }

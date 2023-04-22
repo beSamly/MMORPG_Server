@@ -1,19 +1,10 @@
 #pragma once
 #include "StatModifier.h"
+#include "BaseStatInfo.h"
+#include "StatType.h"
 
 namespace {
     const int MAX_STAT_TYPE = 8;
-
-    enum STAT_TYPE {
-        MAX_HP = 0,
-        MAX_MP,
-        ATTACK_DAMAGE,
-        ABILITY_POWER,
-        ARMOR,
-        MAGIC_RESISTANCE,
-        ATTACK_SPEED,
-        MOVE_SPEED,
-    };
 }
 
 class StatController
@@ -21,6 +12,7 @@ class StatController
 private:
     vector<vector<StatModifier>> modifiers[MAX_STAT_TYPE];
     vector<vector<int>> cashedStat[MAX_STAT_TYPE];
+    BaseStatInfo baseStat;
 
 private:
     /*int currentHp;
@@ -29,7 +21,8 @@ private:
 
 public:
     /* Stat related */
-
+    void SetBaseStat(BaseStatInfo paramBaseStat) { baseStat = paramBaseStat; }
+    int GetBaseStat(STAT_TYPE statType);
 public:
     StatController() {};
     void Update(float deltaTime);

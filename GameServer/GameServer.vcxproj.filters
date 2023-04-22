@@ -90,6 +90,9 @@
     <Filter Include="Source Files\GameSystem\Player\Opereation">
       <UniqueIdentifier>{63dac1f9-32a4-4e05-8f85-a06a470d1eaf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameSystem\Object">
+      <UniqueIdentifier>{cacd833b-8a09-41af-a0ad-5a50376b35d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -130,9 +133,6 @@
     </ClInclude>
     <ClInclude Include="TransformController.h">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Source Files\GameSystem\Common</Filter>
     </ClInclude>
     <ClInclude Include="StatModifier.h">
       <Filter>Source Files\GameSystem\Player\Modifier</Filter>
@@ -219,6 +219,15 @@
     <ClInclude Include="SceneInfo.h">
       <Filter>Source Files\DataSystem\Data</Filter>
     </ClInclude>
+    <ClInclude Include="BaseStatManager.h">
+      <Filter>Source Files\DataSystem\StaticData</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseStatInfo.h">
+      <Filter>Source Files\GameSystem\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="StatType.h">
+      <Filter>Source Files\GameSystem\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -253,9 +262,6 @@
     </ClCompile>
     <ClCompile Include="TransformController.cpp">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Source Files\GameSystem\Common</Filter>
     </ClCompile>
     <ClCompile Include="StatModifier.cpp">
       <Filter>Source Files\GameSystem\Player\Modifier</Filter>
@@ -323,6 +329,9 @@
     <ClCompile Include="SceneInfoManager.cpp">
       <Filter>Source Files\DataSystem\StaticData</Filter>
     </ClCompile>
+    <ClCompile Include="BaseStatManager.cpp">
+      <Filter>Source Files\DataSystem\StaticData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="json\ChampStatData.json">
@@ -342,6 +351,21 @@
       <Filter>Source Files\DataSystem\JsonFile</Filter>
     </None>
     <None Include="json\SceneInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\BaseStatInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\SkillInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\ProjectileInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\CharacterInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\MonsterInfo.json">
       <Filter>Source Files\DataSystem\JsonFile</Filter>
     </None>
   </ItemGroup>

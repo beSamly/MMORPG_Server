@@ -7,7 +7,7 @@
 
 using GameSystemReq::BaseReq;
 
-class GameSystem
+class GameSystem : public std::enable_shared_from_this<GameSystem>
 {
 public:
     GameSystem(sptr<DataSystem> p_dataSystem);

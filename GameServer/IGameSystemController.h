@@ -10,5 +10,5 @@ using GameSystemReq::BaseReq;
 class IGameSystemController
 {
 public:
-    virtual int Process(GameSystem& gameSystem, sptr<Scene>& scene, sptr<BaseReq>& command) abstract;
+    virtual int Process(sptr<Scene>& scene, sptr<BaseReq>& command) abstract;
 };

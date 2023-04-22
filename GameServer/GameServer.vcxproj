@@ -133,7 +133,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaseStatInfo.h" />
     <ClInclude Include="ChampRelatedStruct.h" />
+    <ClInclude Include="BaseStatManager.h" />
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="ClientSession.h" />
     <ClInclude Include="GameSystemReq.h" />
@@ -172,12 +174,13 @@
     <ClInclude Include="StatController.h" />
     <ClInclude Include="StateController.h" />
     <ClInclude Include="StatModifier.h" />
+    <ClInclude Include="StatType.h" />
     <ClInclude Include="ThreadSystem.h" />
     <ClInclude Include="TLS.h" />
     <ClInclude Include="TransformController.h" />
-    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseStatManager.cpp" />
     <ClCompile Include="ClientManager.cpp" />
     <ClCompile Include="ClientSession.cpp" />
     <ClCompile Include="Data.cpp" />
@@ -211,16 +214,20 @@
     <ClCompile Include="ThreadSystem.cpp" />
     <ClCompile Include="TLS.cpp" />
     <ClCompile Include="TransformController.cpp" />
-    <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
     <None Include="json\ChampData.json" />
     <None Include="json\ChampSkillData.json" />
     <None Include="json\ChampStatData.json" />
+    <None Include="json\BaseStatInfo.json" />
+    <None Include="json\CharacterInfo.json" />
+    <None Include="json\MonsterInfo.json" />
     <None Include="json\NavigationMeshAgentData.json" />
+    <None Include="json\ProjectileInfo.json" />
     <None Include="json\SceneInfo.json" />
     <None Include="json\SkillData.json" />
+    <None Include="json\SkillInfo.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

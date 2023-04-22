@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "InputReqController.h"
-#include "NetworkResCode.h"
+#include "ResponseCode.h"
 #include <Packet.h>
-#include "KeyInputMovementReq.pb.h"
+#include "InputMovementReq.pb.h"
 
 using GameSystemReq::InputMovementReq;
 
@@ -27,18 +27,18 @@ int InputReqController::Process(sptr<ClientSession>& session, BYTE* buffer, int3
 	}
 	else
 	{
-		//logger->Error("AuthController has no process function for packetId = {}", packetId);
+		logger->Error("InputReqController has no process function for packetId = " + packetId);
 	}
 
-	return NetworkResCode::CODE_SUCCESS;
+	return RES_CODE::CODE_SUCCESS;
 }
 
 int InputReqController::ProcessInputMovement(sptr<ClientSession>& session, BYTE* buffer, int32 len)
 {
 
-	Protocol::KeyInputMovementReq pkt;
+	Protocol::InputMovementReq pkt;
 	if (pkt.ParseFromArray(buffer + sizeof(PacketHeader), len - sizeof(PacketHeader)) == false)
-		return NetworkResCode::CODE_PROTOBUF_PARSE_FAIL;
+		return RES_CODE::CODE_PROTOBUF_PARSE_FAIL;
 
 	sptr<InputMovementReq> command = make_shared<InputMovementReq>();
 	command->playerId = session->playerId;

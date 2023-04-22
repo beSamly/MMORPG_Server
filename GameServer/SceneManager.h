@@ -9,8 +9,7 @@ private:
 
 public:
     SceneManager();
-    bool AddScene(sptr<Scene> scene);
+    void AddScene(sptr<Scene> scene);
     sptr<Scene> GetScene(string sceneName);
     sptr<map<string, sptr<Scene>>> GetAllScene() { return mapScene; }
-    sptr<Scene> GetSceneByPlayerId(int playerId);
 };

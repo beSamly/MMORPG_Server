@@ -5,7 +5,7 @@
 #include "TLS.h"
 #include "GameSystem.h"
 
-int MAX_WORKER_THREAD = 10;
+int MAX_WORKER_THREAD = 1;
 int MAX_SCENE_UPDATE_THREAD = 1;
 int NETWORK_TIME_OUT_MS = 1000;
 int WORKER_TICK = 64;
@@ -42,15 +42,8 @@ void ServerApp::StartSocketServer()
 		threadSystem->Launch(
 			[&]()
 			{
-				while (true)
-				{
-					// LEndTickCount = ::GetTickCount64() + WORKER_TICK;
-
-					// 네트워크 입출력 및 패킷 핸들러 실행
-					//[TODO] 밖에 while문이 있을 필요가 있나?? RunIoContext 내부에서 while 돌 수도?? 아래 스트링에 디버거 걸어서 확인해보기 나중에
-					networkSystem->RunIoContext();
-					string debug = "come here???";
-				}
+				// 네트워크 입출력 및 패킷 핸들러 실행
+				networkSystem->RunIoContext();
 			});
 	}
 }

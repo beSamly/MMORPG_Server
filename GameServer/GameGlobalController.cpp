@@ -10,22 +10,22 @@
 
 using GameSystemReq::EnterSceneReq;
 using PacketDef::PACKET_GROUP_ID;
-using PacketDef::PACKET_ID_SCENE;
+using PacketDef::PACKET_ID_GLOBAL;
 
-GameGlobalController::GameGlobalController(sptr<Logger> paramLogger) : logger(paramLogger)
+GameGlobalController::GameGlobalController(sptr<GameSystem> paramGameSystem, sptr<Logger> paramLogger) : gameSystem(paramGameSystem), logger(paramLogger)
 {
 	mapProcessFunc.emplace(REQ_ID_GLOBAL::ENTER_SCENE, TO_BASE_COMMAND_PROCESS_FUNC(ProcessEnterScene));
 
 	//mapProcessFunc[COMMAND_ID_GAME_SYSTEM_GLOBAL::PLAYER_LOG_IN] = TO_BASE_COMMAND_PROCESS_FUNC(ProcessEnterScene);
 }
 
-int GameGlobalController::Process(GameSystem& gameSystem, sptr<Scene>& scene, sptr<BaseReq>& command)
+int GameGlobalController::Process(sptr<Scene>& scene, sptr<BaseReq>& command)
 {
 	REQ_ID_GLOBAL commandId = static_cast<REQ_ID_GLOBAL>(command->commandId);
 	BaseCommandProcessFunc func = mapProcessFunc[commandId];
 	if (func)
 	{
-		return func(gameSystem, scene, command);
+		return func(scene, command);
 	}
 	else
 	{
@@ -34,7 +34,7 @@ int GameGlobalController::Process(GameSystem& gameSystem, sptr<Scene>& scene, sp
 	}
 }
 
-int GameGlobalController::ProcessEnterScene(GameSystem& gameSystem, sptr<Scene>& scene, sptr<BaseReq>& command)
+int GameGlobalController::ProcessEnterScene(sptr<Scene>& scene, sptr<BaseReq>& command)
 {
 	sptr<EnterSceneReq> enterSceneReq = dynamic_pointer_cast<EnterSceneReq>(command);
 	if (enterSceneReq == nullptr)
@@ -44,19 +44,18 @@ int GameGlobalController::ProcessEnterScene(GameSystem& gameSystem, sptr<Scene>&
 
 	sptr<Player> player = enterSceneReq->player;
 
-	gameSystem.playerManager->AddPlayer(player);
-	player->SetCurrentSceneName(scene->GetSceneName());
-	scene->AddPlayerId(player->GetPlayerId());
+	gameSystem->playerManager->AddPlayer(player);
+	scene->AddPlayerId(player->playerId);
 
 	//씬에 접속 완료했다면 클라에게 보내준다
 	Protocol::EnterSceneRes pkt;
-	pkt.set_result(true);
+	pkt.set_result(RES_CODE::CODE_SUCCESS);
 	pkt.set_scenename("Main");
 	pkt.mutable_position()->set_x(0.0f);
 	pkt.mutable_position()->set_y(0.0f);
 	pkt.mutable_position()->set_z(0.0f);
 
-	Packet packet(PACKET_GROUP_ID::SCENE, PACKET_ID_SCENE::ENTER_SCENE_RES);
+	Packet packet(PACKET_GROUP_ID::GLOBAL, PACKET_ID_GLOBAL::ENTER_SCENE_RES);
 	packet.WriteData<Protocol::EnterSceneRes>(pkt);
 
 	player->Send(packet.GetSendBuffer());

@@ -7,75 +7,79 @@
 #include "ResponseCode.h"
 #include <InputMovementRes.pb.h>
 
-using GameSystemReq::REQ_ID_INPUT;
 using GameSystemReq::InputMovementReq;
-using PacketDef::PACKET_ID_INPUT;
+using GameSystemReq::REQ_ID_INPUT;
 using PacketDef::PACKET_GROUP_ID;
+using PacketDef::PACKET_ID_INPUT;
 
-GameInputController::GameInputController(sptr<Logger> paramLogger) : logger(paramLogger)
+GameInputController::GameInputController(sptr<GameSystem> paramGameSystem, sptr<Logger> paramLogger) : gameSystem(paramGameSystem), logger(paramLogger)
 {
-	//mapProcessFunc[REQ_ID_INPUT::MOVEMENT] = TO_PLAYER_COMMAND_PROCESS_FUNC(ProcessInputMovement);
-	mapProcessFunc.emplace(REQ_ID_INPUT::MOVEMENT, TO_PLAYER_COMMAND_PROCESS_FUNC(ProcessInputMovement));
+    // mapProcessFunc[REQ_ID_INPUT::MOVEMENT] = TO_PLAYER_COMMAND_PROCESS_FUNC(ProcessInputMovement);
+    mapProcessFunc.emplace(REQ_ID_INPUT::MOVEMENT, TO_PLAYER_COMMAND_PROCESS_FUNC(ProcessInputMovement));
 }
 
-int GameInputController::Process(GameSystem& gameSystem, sptr<Scene>& scene, sptr<BaseReq>& command)
+int GameInputController::Process(sptr<Scene>& scene, sptr<BaseReq>& command)
 {
-	REQ_ID_INPUT commandId = static_cast<REQ_ID_INPUT>(command->commandId);
-	PlayerCommandProcessFunc func = mapProcessFunc[commandId];
+    REQ_ID_INPUT commandId = static_cast<REQ_ID_INPUT>(command->commandId);
+    PlayerCommandProcessFunc func = mapProcessFunc[commandId];
 
-	sptr<Player> player = scene->GetPlayer(command->playerId);
+    sptr<Player> player = gameSystem->playerManager->GetPlayer(command->playerId);
+    if (player == nullptr)
+    {
+        // logger->Error("Player not found from scene for sceneName = {} playerId = {}", scene->sceneName, command->playerId);
+        return RES_CODE::CODE_PLAYER_NOT_FOUND;
+    }
 
-	if (player == nullptr)
-	{
-		//logger->Error("Player not found from scene for sceneName = {} playerId = {}", scene->sceneName, command->playerId);
-		return RES_CODE::CODE_PLAYER_NOT_FOUND;
-	}
-
-	if (func)
-	{
-		return func(gameSystem, scene, player, command);
-	}
-	else
-	{
-		//logger->Error("GameGlobalController has no process function for commandId = {}", command->commandId);
-		return RES_CODE::CODE_PROCESS_FUNC_NOT_FOUND;
-	}
+    if (func)
+    {
+        return func(scene, player, command);
+    }
+    else
+    {
+        // logger->Error("GameGlobalController has no process function for commandId = {}", command->commandId);
+        return RES_CODE::CODE_PROCESS_FUNC_NOT_FOUND;
+    }
 }
 
-int GameInputController::ProcessInputMovement(GameSystem& gameSystem, sptr<Scene>& scene, sptr<Player>& player, sptr<BaseReq>& command)
+int GameInputController::ProcessInputMovement(sptr<Scene>& scene, sptr<Player>& player, sptr<BaseReq>& command)
 {
-	int result = [&]()->int {
-		sptr<InputMovementReq> inputMovementCommand = dynamic_pointer_cast<InputMovementReq>(command);
-		if (inputMovementCommand == nullptr)
-		{
-			return RES_CODE::CODE_STRUCT_TYPE_MISMATCH;
-		}
-	}();
+    sptr<InputMovementReq> inputMovementCommand;
+    int result = [&]() -> int
+    {
+        inputMovementCommand = dynamic_pointer_cast<InputMovementReq>(command);
+        if (inputMovementCommand == nullptr)
+        {
+            return RES_CODE::CODE_STRUCT_TYPE_MISMATCH;
+        }
 
-	if (result != RES_CODE::CODE_SUCCESS) {
-		Protocol::InputMovementRes res;
-		res.set_result(result);
-		Packet packet(PACKET_GROUP_ID::INPUT, PACKET_ID_INPUT::MOVEMENT);
-		packet.WriteData<Protocol::InputMovementRes>(res);
-		player->Send(packet.GetSendBuffer());
-		return result;
-	}
+        player->inputController->HandleInputMovement(MOVEMENT_INPUT::UP, inputMovementCommand->up);
+        player->inputController->HandleInputMovement(MOVEMENT_INPUT::DOWN, inputMovementCommand->down);
+        player->inputController->HandleInputMovement(MOVEMENT_INPUT::LEFT, inputMovementCommand->left);
+        player->inputController->HandleInputMovement(MOVEMENT_INPUT::RIGHT, inputMovementCommand->right);
 
-	player->GetController<InputController>()->HandleInputMovement(MOVEMENT_INPUT::UP, inputMovementCommand->up);
-	player->GetController<InputController>()->HandleInputMovement(MOVEMENT_INPUT::DOWN, inputMovementCommand->down);
-	player->GetController<InputController>()->HandleInputMovement(MOVEMENT_INPUT::LEFT, inputMovementCommand->left);
-	player->GetController<InputController>()->HandleInputMovement(MOVEMENT_INPUT::RIGHT, inputMovementCommand->right);
+        return RES_CODE::CODE_SUCCESS;
+    }();
 
-	Protocol::InputMovementRes res;
-	res.set_result(RES_CODE::CODE_SUCCESS);
-	res.set_up(inputMovementCommand->up);
-	res.set_down(inputMovementCommand->down);
-	res.set_left(inputMovementCommand->left);
-	res.set_right(inputMovementCommand->right);
+    if (result != RES_CODE::CODE_SUCCESS)
+    {
+        Protocol::InputMovementRes res;
+        res.set_result(result);
+        Packet packet(PACKET_GROUP_ID::INPUT, PACKET_ID_INPUT::MOVEMENT);
+        packet.WriteData<Protocol::InputMovementRes>(res);
+        player->Send(packet.GetSendBuffer());
+        return result;
+    }
 
-	Packet packet(PACKET_GROUP_ID::INPUT, PACKET_ID_INPUT::MOVEMENT);
-	packet.WriteData<Protocol::InputMovementRes>(res);
-	player->Send(packet.GetSendBuffer());
+    Protocol::InputMovementRes res;
+    res.set_result(RES_CODE::CODE_SUCCESS);
+    res.set_up(inputMovementCommand->up);
+    res.set_down(inputMovementCommand->down);
+    res.set_left(inputMovementCommand->left);
+    res.set_right(inputMovementCommand->right);
 
-	return RES_CODE::CODE_SUCCESS;
+    Packet packet(PACKET_GROUP_ID::INPUT, PACKET_ID_INPUT::MOVEMENT);
+    packet.WriteData<Protocol::InputMovementRes>(res);
+    player->Send(packet.GetSendBuffer());
+
+    return RES_CODE::CODE_SUCCESS;
 }

@@ -5,15 +5,13 @@
 
 using PacketDef::PACKET_GROUP_ID;
 
-NetworkControllerContainer::NetworkControllerContainer(sptr<GameSystem> gameSystem, sptr<Logger> logger)
+NetworkControllerContainer::NetworkControllerContainer(sptr<GameSystem> gameSystem, sptr<DataSystem> dataSystem, sptr<Logger> logger)
 {
-    sptr<AuthController> authController = make_shared<AuthController>(gameSystem, logger);
+    sptr<AuthController> authController = make_shared<AuthController>(gameSystem, dataSystem, logger);
     sptr<InputReqController> inputReqController = make_shared<InputReqController>(gameSystem, logger);
 
     mapController.emplace(PACKET_GROUP_ID::AUTH, authController);
     mapController.emplace(PACKET_GROUP_ID::INPUT, inputReqController);
-    /*mapController[PACKET_GROUP_ID::AUTH] = authController;
-    mapController[PACKET_GROUP_ID::INPUT] = inputReqController;*/
 }
 
 sptr<INetworkController> NetworkControllerContainer::GetController(int packetGroupId)

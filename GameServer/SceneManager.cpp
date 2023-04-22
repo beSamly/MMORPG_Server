@@ -3,16 +3,9 @@
 
 SceneManager::SceneManager() { mapScene = make_shared<map<string, sptr<Scene>>>(); }
 
-bool SceneManager::AddScene(sptr<Scene> scene)
+void SceneManager::AddScene(sptr<Scene> scene)
 {
-	return true;
-	if (mapScene->count(scene->sceneName))
-	{
-		return false;
-	}
-
 	mapScene->emplace(scene->sceneName, scene);
-	return true;
 }
 
 sptr<Scene> SceneManager::GetScene(string sceneName)
@@ -27,18 +20,4 @@ sptr<Scene> SceneManager::GetScene(string sceneName)
 	{
 		return nullptr;
 	}
-}
-
-sptr<Scene> SceneManager::GetSceneByPlayerId(int playerId)
-{
-	READ_LOCK;
-	map<int, string>::iterator iter = mapPlayerIdToSceneName.find(playerId);
-
-	if (iter == mapPlayerIdToSceneName.end())
-	{
-		return nullptr;
-	}
-
-	string& sceneName = iter->second;
-	return GetScene(sceneName);
 }

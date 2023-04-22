@@ -5,18 +5,19 @@
 #include "GameSystem.h"
 
 using GameSystemReq::REQ_ID_GLOBAL;
-using SceneCommandProcessCommon::BaseCommandProcessFunc;
+using GameSystemReqProcessCommon::BaseCommandProcessFunc;
 
 class GameGlobalController : public IGameSystemController
 {
 private:
 	sptr<Logger> logger;
+    sptr<GameSystem> gameSystem;
 	map<REQ_ID_GLOBAL, BaseCommandProcessFunc> mapProcessFunc;
 
 public:
-	GameGlobalController(sptr<Logger> logger);
-	virtual int Process(GameSystem& gameSystem, sptr<Scene>& scene, sptr<BaseReq>& command) override;
+	GameGlobalController(sptr<GameSystem> paramGameSystem, sptr<Logger> logger);
+	virtual int Process(sptr<Scene>& scene, sptr<BaseReq>& command) override;
 
 private:
-	int ProcessEnterScene(GameSystem& gameSystem, sptr<Scene>& scene, sptr<BaseReq>& command);
+	int ProcessEnterScene(sptr<Scene>& scene, sptr<BaseReq>& command);
 };

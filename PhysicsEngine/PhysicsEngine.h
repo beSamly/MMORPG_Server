@@ -40,6 +40,18 @@ class Vector3 {
     return Vector3(x - rhs.x, y - rhs.y, z - rhs.z);
   }
 
+  void operator+=(Vector3 rhs) {
+    x += rhs.x;
+    y += rhs.y;
+    z += rhs.z;
+  }
+
+  void operator-=(Vector3 rhs) {
+    x -= rhs.x;
+    y -= rhs.y;
+    z -= rhs.z;
+  }
+
   Vector3 operator+(Vector3 rhs) {
     return Vector3(x + rhs.x, y + rhs.y, z + rhs.z);
   }
@@ -497,7 +509,8 @@ class NavigationMeshAgent {
       string meshName = adjacentMeshInfo.meshName;
       Mesh mesh = mapMesh[meshName];
 
-      bool isTerrain = meshName.find("Terrain") != std::string::npos ? true : false;
+      bool isTerrain =
+          meshName.find("Terrain") != std::string::npos ? true : false;
       if (isTerrain) {
         // mesh, adjacentTriangleInfo, position, radius
 

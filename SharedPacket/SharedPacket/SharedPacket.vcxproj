@@ -175,17 +175,17 @@
     <ClCompile Include="ProxyPacketId.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Protobuf\EnterSceneRes.pb.h" />
     <ClInclude Include="Protobuf\InputMovementReq.pb.h" />
     <ClInclude Include="Protobuf\InputMovementRes.pb.h" />
-    <ClInclude Include="Protobuf\PositionUpdate.pb.h" />
-    <ClInclude Include="ResponseCode.h" />
-    <ClInclude Include="PacketDef.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Protobuf\EnterSceneRes.pb.h" />
     <ClInclude Include="Protobuf\LoginReq.pb.h" />
     <ClInclude Include="Protobuf\LoginRes.pb.h" />
     <ClInclude Include="Protobuf\PlayerInfo.pb.h" />
+    <ClInclude Include="Protobuf\PositionUpdate.pb.h" />
     <ClInclude Include="Protobuf\Vector3.pb.h" />
+    <ClInclude Include="ResponseCode.h" />
+    <ClInclude Include="PacketDef.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="ProxyPacketId.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

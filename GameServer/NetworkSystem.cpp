@@ -19,7 +19,7 @@ NetworkSystem::NetworkSystem(sptr<DataSystem> paramDataSystem, sptr<GameSystem> 
 	clientManager = make_unique<ClientManager>();
 	logger = make_shared<Logger>("Dummy file path");
 
-	networkControllerContainer = make_shared<NetworkControllerContainer>(gameSystem, logger);
+	networkControllerContainer = make_shared<NetworkControllerContainer>(gameSystem, dataSystem, logger);
 }
 
 void NetworkSystem::StartSocketServer()
@@ -68,7 +68,7 @@ void NetworkSystem::OnClientRecv(sptr<AsioSession> client, BYTE* buffer, int len
 	}
 	else
 	{
-		//logger->Error("NetworkControllerContainer has no controller for groupId = {}", header->groupId);
+		logger->Error("NetworkControllerContainer has no controller for groupId = " + header->groupId);
 	}
 
 	// if (clientSession->isAuthenticated)

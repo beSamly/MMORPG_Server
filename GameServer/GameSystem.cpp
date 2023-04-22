@@ -12,16 +12,21 @@
 
 DWORD intervalTick = 1000; // 3초에 한 번씩
 
+using PhysicsEngine::Vector3;
+
 GameSystem::GameSystem(sptr<DataSystem> p_dataSystem) : dataSystem(p_dataSystem)
 {
     playerManager = make_unique<PlayerManager>();
     sceneManager = make_unique<SceneManager>();
     logger = make_shared<Logger>("dummy path");
     logger = make_shared<Logger>("dummy path");
-    reqControllerContainer = make_unique<GameSystemControllerContainer>(logger);
 }
 
-void GameSystem::Init() { InitSceneManager(); }
+void GameSystem::Init()
+{
+    reqControllerContainer = make_unique<GameSystemControllerContainer>(shared_from_this(), logger);
+    InitSceneManager();
+}
 
 void GameSystem::InitSceneManager()
 {
@@ -29,16 +34,19 @@ void GameSystem::InitSceneManager()
 
     for (SceneInfo& sceneInfo : vecSceneInfo)
     {
+        // 씬 객체 생성
         sptr<Scene> scene = make_shared<Scene>(sceneInfo.sceneName);
 
-        sptr<PhysicsEngine::NavigationMeshAgent> navigationMeshAgent = dataSystem->navigationMeshAgentManager->GetNavigationMeshAgent(sceneInfo.sceneName;);
+        // 씬의 네비게이션 매쉬 에이전트 객체 찾기
+        sptr<PhysicsEngine::NavigationMeshAgent> navigationMeshAgent = dataSystem->navigationMeshAgentManager->GetNavigationMeshAgent(sceneInfo.sceneName);
         if (navigationMeshAgent == nullptr)
         {
-            logger->Error("NavigationMeshAgent not found for sceneName = {}" + sceneInfo.sceneName;);
+            logger->Error("NavigationMeshAgent not found for sceneName = " + sceneInfo.sceneName);
         }
 
         scene->navigationMeshAgent = navigationMeshAgent;
 
+        // 씬 매니저에 추가
         sceneManager->AddScene(scene);
     }
 }
@@ -81,7 +89,7 @@ void GameSystem::UpdateScene(int threadId, float deltaTime)
             sptr<IGameSystemController> controller = reqControllerContainer->GetController(command->commandGroupId);
             if (controller)
             {
-                controller->Process(*this, scene, command);
+                controller->Process(scene, command);
             }
             else
             {
@@ -95,7 +103,6 @@ void GameSystem::UpdateScene(int threadId, float deltaTime)
 
         for (const int& playerId : playerIds)
         {
-
             sptr<Player> player = playerManager->GetPlayer(playerId);
 
             if (player == nullptr)
@@ -104,7 +111,16 @@ void GameSystem::UpdateScene(int threadId, float deltaTime)
                 continue;
             }
 
+            // 플레이어 객체 업데이트
             player->Update(deltaTime);
+
+            //[TODO]
+            float radius = 10.0f; // Unity의 this.GetComponent<SphereCollider>().radius 값
+
+            // 지형과 충돌 처리
+            Vector3 currentPosition = player->transformController->GetPosition();
+            Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
+            player->transformController->SetPosition(newPosition);
         }
     };
 }

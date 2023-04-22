@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include <PhysicsEngine.h>
+#include "SceneInfo.h"
 
 class SceneInfoManager
 {
