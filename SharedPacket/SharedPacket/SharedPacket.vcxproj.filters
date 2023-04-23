@@ -61,9 +61,6 @@
     <ClInclude Include="ResponseCode.h">
       <Filter>Source Files\Packet</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\Vector3.pb.h">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClInclude>
     <ClInclude Include="Protobuf\EnterSceneRes.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
@@ -83,6 +80,9 @@
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
     <ClInclude Include="Protobuf\PositionUpdate.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\Vector3.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
   </ItemGroup>

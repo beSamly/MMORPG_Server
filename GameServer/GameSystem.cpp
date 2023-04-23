@@ -121,6 +121,11 @@ void GameSystem::UpdateScene(int threadId, float deltaTime)
             Vector3 currentPosition = player->transformController->GetPosition();
             Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
             player->transformController->SetPosition(newPosition);
+
+            if (player->inputController->IsAnyKeyDown())
+            {
+                player->SendUpdatePosition();
+            }
         }
     };
 }

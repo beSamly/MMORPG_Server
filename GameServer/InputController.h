@@ -1,6 +1,6 @@
 #pragma once
 
-enum MOVEMENT_INPUT : int
+enum KEY_INPUT : int
 {
     UP = 0,
     DOWN,
@@ -10,14 +10,12 @@ enum MOVEMENT_INPUT : int
 
 class InputController
 {
-    const static int TOTAL_KEY_INPUT = 4;
-
 private:
-    bool keyInput[TOTAL_KEY_INPUT] = {
-        false,
-    };
+    map<int, bool> mapKeyPressed;
 
 public:
-    void HandleInputMovement(MOVEMENT_INPUT input, bool value) { keyInput[input] = value; };
-    bool IsKeyDown(MOVEMENT_INPUT input) { return keyInput[static_cast<int>(input)]; };
+    InputController();
+    void SetKeyPressed(KEY_INPUT input, bool value) { mapKeyPressed[input] = value; };
+    bool IsKeyDown(KEY_INPUT input) { return mapKeyPressed[static_cast<int>(input)]; };
+    bool IsAnyKeyDown();
 };

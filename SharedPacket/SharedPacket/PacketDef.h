@@ -16,6 +16,7 @@ enum PACKET_ID_AUTH : int {
 enum PACKET_ID_GLOBAL : int {
   ENTER_SCENE_REQ = 1,
   ENTER_SCENE_RES,
+  POSITION_UPDATE
 };
 
 enum PACKET_ID_INPUT : int {

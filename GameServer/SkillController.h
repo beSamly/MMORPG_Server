@@ -1,5 +1,4 @@
 #pragma once
-#include "Vector3.h"
 #include "ChampRelatedStruct.h"
 
 class SkillController

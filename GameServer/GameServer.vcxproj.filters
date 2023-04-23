@@ -334,39 +334,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="json\ChampStatData.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
-    <None Include="json\SkillData.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
-    <None Include="json\ChampData.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
-    <None Include="json\ChampSkillData.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
     <None Include=".clang-format" />
-    <None Include="json\NavigationMeshAgentData.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
-    <None Include="json\SceneInfo.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
-    <None Include="json\BaseStatInfo.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
-    <None Include="json\SkillInfo.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
-    <None Include="json\ProjectileInfo.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
-    <None Include="json\CharacterInfo.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
-    <None Include="json\MonsterInfo.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
   </ItemGroup>
 </Project>

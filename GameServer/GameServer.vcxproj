@@ -217,17 +217,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
-    <None Include="json\ChampData.json" />
-    <None Include="json\ChampSkillData.json" />
-    <None Include="json\ChampStatData.json" />
-    <None Include="json\BaseStatInfo.json" />
-    <None Include="json\CharacterInfo.json" />
-    <None Include="json\MonsterInfo.json" />
-    <None Include="json\NavigationMeshAgentData.json" />
-    <None Include="json\ProjectileInfo.json" />
-    <None Include="json\SceneInfo.json" />
-    <None Include="json\SkillData.json" />
-    <None Include="json\SkillInfo.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

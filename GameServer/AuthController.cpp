@@ -63,6 +63,8 @@ int AuthController::ProcessLoginReq(sptr<ClientSession>& session, BYTE* buffer, 
         player = make_shared<Player>();
         player->playerId = playerId;
         player->SetSession(session);
+        player->currentSceneName = "Main";
+        session->playerId = player->playerId;
 
         // [TODO] 일단 모두 아처 타입으로 세팅
         string characterType = "Archer";

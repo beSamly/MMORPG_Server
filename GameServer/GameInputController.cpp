@@ -52,34 +52,27 @@ int GameInputController::ProcessInputMovement(sptr<Scene>& scene, sptr<Player>& 
             return RES_CODE::CODE_STRUCT_TYPE_MISMATCH;
         }
 
-        player->inputController->HandleInputMovement(MOVEMENT_INPUT::UP, inputMovementCommand->up);
-        player->inputController->HandleInputMovement(MOVEMENT_INPUT::DOWN, inputMovementCommand->down);
-        player->inputController->HandleInputMovement(MOVEMENT_INPUT::LEFT, inputMovementCommand->left);
-        player->inputController->HandleInputMovement(MOVEMENT_INPUT::RIGHT, inputMovementCommand->right);
+        player->inputController->SetKeyPressed(KEY_INPUT::UP, inputMovementCommand->up);
+        player->inputController->SetKeyPressed(KEY_INPUT::DOWN, inputMovementCommand->down);
+        player->inputController->SetKeyPressed(KEY_INPUT::LEFT, inputMovementCommand->left);
+        player->inputController->SetKeyPressed(KEY_INPUT::RIGHT, inputMovementCommand->right);
 
         return RES_CODE::CODE_SUCCESS;
     }();
 
-    if (result != RES_CODE::CODE_SUCCESS)
+    Protocol::InputMovementRes res;
+    res.set_result(result);
+    Packet packet(PACKET_GROUP_ID::INPUT, PACKET_ID_INPUT::MOVEMENT);
+    
+    if (result == RES_CODE::CODE_SUCCESS)
     {
-        Protocol::InputMovementRes res;
-        res.set_result(result);
-        Packet packet(PACKET_GROUP_ID::INPUT, PACKET_ID_INPUT::MOVEMENT);
-        packet.WriteData<Protocol::InputMovementRes>(res);
-        player->Send(packet.GetSendBuffer());
-        return result;
+        res.set_up(inputMovementCommand->up);
+        res.set_down(inputMovementCommand->down);
+        res.set_left(inputMovementCommand->left);
+        res.set_right(inputMovementCommand->right);
     }
 
-    Protocol::InputMovementRes res;
-    res.set_result(RES_CODE::CODE_SUCCESS);
-    res.set_up(inputMovementCommand->up);
-    res.set_down(inputMovementCommand->down);
-    res.set_left(inputMovementCommand->left);
-    res.set_right(inputMovementCommand->right);
-
-    Packet packet(PACKET_GROUP_ID::INPUT, PACKET_ID_INPUT::MOVEMENT);
     packet.WriteData<Protocol::InputMovementRes>(res);
     player->Send(packet.GetSendBuffer());
-
-    return RES_CODE::CODE_SUCCESS;
+    return result;
 }

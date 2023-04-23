@@ -12,10 +12,10 @@ class InputReqController : public INetworkController
 private:
     sptr<GameSystem> gameSystem;
     sptr<Logger> logger;
-    map<PACKET_ID_INPUT, BasePacketProcessFunc> mapProcessFunc;
+    map<PACKET_ID_INPUT, PlayerPacketProcessFunc> mapProcessFunc;
 
 public:
     InputReqController(sptr<GameSystem> gameSystem, sptr<Logger> logger);
     virtual int Process(sptr<ClientSession>& session, BYTE* buffer, int32 len) override;
-    int ProcessInputMovement(sptr<ClientSession>& session, BYTE* buffer, int32 len);
+    int ProcessInputMovement(sptr<ClientSession>& session, sptr<Player>& player, BYTE* buffer, int32 len);
 };

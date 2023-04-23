@@ -1,6 +1,12 @@
 #include "pch.h"
 #include "Player.h"
 #include "StatController.h"
+#include "PositionUpdate.pb.h"
+#include <Packet.h>
+#include "PacketDef.h"
+
+using PacketDef::PACKET_GROUP_ID;
+using PacketDef::PACKET_ID_GLOBAL;
 
 void Player::Init()
 {
@@ -41,25 +47,39 @@ void Player::UpdatePosition(float deltaTime)
     int statValue = GetStat(STAT_TYPE::MOVE_SPEED);
     float movePosition = statValue * deltaTime;
 
-    if (inputController->IsKeyDown(MOVEMENT_INPUT::UP))
+    if (inputController->IsKeyDown(KEY_INPUT::UP))
     {
         addPosition += Vector3(0.0f, 0.0f, movePosition);
     }
 
-    if (inputController->IsKeyDown(MOVEMENT_INPUT::DOWN))
+    if (inputController->IsKeyDown(KEY_INPUT::DOWN))
     {
         addPosition += Vector3(0.0f, 0.0f, -movePosition);
     }
 
-    if (inputController->IsKeyDown(MOVEMENT_INPUT::LEFT))
+    if (inputController->IsKeyDown(KEY_INPUT::LEFT))
     {
         addPosition += Vector3(-movePosition, 0.0f, 0.0f);
     }
 
-    if (inputController->IsKeyDown(MOVEMENT_INPUT::RIGHT))
+    if (inputController->IsKeyDown(KEY_INPUT::RIGHT))
     {
         addPosition += Vector3(movePosition, 0.0f, 0.0f);
     }
 
     transformController->AddPosition(addPosition);
+}
+
+void Player::SendUpdatePosition()
+{
+    Vector3 position = transformController->GetPosition();
+
+    Protocol::PositionUpdate positionUpdate;
+    positionUpdate.mutable_position()->set_x(position.x);
+    positionUpdate.mutable_position()->set_y(position.y);
+    positionUpdate.mutable_position()->set_z(position.z);
+
+    Packet packet(PACKET_GROUP_ID::GLOBAL, PACKET_ID_GLOBAL::POSITION_UPDATE);
+    packet.WriteData<Protocol::PositionUpdate>(positionUpdate);
+    Send(packet.GetSendBuffer());
 }

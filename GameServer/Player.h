@@ -27,6 +27,7 @@ public:
     void Update(float deltaTime);
 
 public:
+    void SendUpdatePosition();
     int GetStat(STAT_TYPE statType);
 
 private:
