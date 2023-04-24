@@ -10,107 +10,109 @@ using namespace rapidjson;
 
 void NavigationMeshAgentManager::LoadJsonData()
 {
-    LoadSceneData();
+	LoadSceneData();
 }
 
 sptr<PhysicsEngine::NavigationMeshAgent> NavigationMeshAgentManager::GetNavigationMeshAgent(string sceneName)
 {
-    if (mapNavigationMeshAgent.count(sceneName))
-    {
-        return mapNavigationMeshAgent[sceneName];
-    }
-    else
-    {
-        return nullptr;
-    }
+	if (mapNavigationMeshAgent.count(sceneName))
+	{
+		return mapNavigationMeshAgent[sceneName];
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 void NavigationMeshAgentManager::LoadSceneData()
 {
-    // Open the file
-    ifstream file("./json/NavigationMeshAgentData.json");
+	// Open the file
+	ifstream file("./json/NavigationMeshAgentData.json");
 
-    // Read the entire file into a string
-    string jsonStr((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+	// Read the entire file into a string
+	string jsonStr((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
 
-    // Create a Document object
-    // to hold the JSON data
-    Document d;
+	// Create a Document object
+	// to hold the JSON data
+	Document d;
 
-    // Parse the JSON data
-    d.Parse(jsonStr.c_str());
+	// Parse the JSON data
+	d.Parse(jsonStr.c_str());
 
-    // Check for parse errors
-    if (d.HasParseError())
-    {
-        std::cerr << "Error parsing JSON: " << d.GetParseError() << std::endl;
-        return;
-    }
+	// Check for parse errors
+	if (d.HasParseError())
+	{
+		std::cerr << "Error parsing JSON: " << d.GetParseError() << std::endl;
+		assert(false);
+		return;
+	}
 
-    sptr<PhysicsEngine::NavigationMeshAgent> navigationAgent = make_shared<PhysicsEngine::NavigationMeshAgent>();
+	sptr<PhysicsEngine::NavigationMeshAgent> navigationAgent = make_shared<PhysicsEngine::NavigationMeshAgent>();
 
-    navigationAgent->sceneName = d["sceneName"].GetString();
-    int gridSize = d["gridSize"].GetInt();
+	navigationAgent->sceneName = d["sceneName"].GetString();
 
-    navigationAgent->SetGridSize(gridSize);
+	int gridSize = d["gridSize"].GetInt();
 
-    vector<PhysicsEngine::Mesh> vecMesh;
+	navigationAgent->SetGridSize(gridSize);
 
-    const auto& listMesh = d["listMesh"].GetArray();
-    for (auto& jsonMesh : listMesh)
-    {
-        PhysicsEngine::Mesh mesh;
-        mesh.name = jsonMesh["meshName"].GetString();
+	vector<PhysicsEngine::Mesh> vecMesh;
 
-        const auto& listTriangle = jsonMesh["listTriangle"].GetArray();
-        for (auto& jsonTriangle : listTriangle)
-        {
-            PhysicsEngine::Triangle triangle;
-            triangle.name = jsonTriangle["triangleName"].GetString();
+	const auto& listMesh = d["listMesh"].GetArray();
+	for (auto& jsonMesh : listMesh)
+	{
+		PhysicsEngine::Mesh mesh;
+		mesh.name = jsonMesh["meshName"].GetString();
 
-            const auto& vertices = jsonTriangle["vertices"].GetArray();
-            for (auto& jsonVertex : vertices)
-            {
-                PhysicsEngine::Vector3 vertex;
-                vertex.x = jsonVertex["x"].GetFloat();
-                vertex.y = jsonVertex["y"].GetFloat();
-                vertex.z = jsonVertex["z"].GetFloat();
+		const auto& listTriangle = jsonMesh["listTriangle"].GetArray();
+		for (auto& jsonTriangle : listTriangle)
+		{
+			PhysicsEngine::Triangle triangle;
+			triangle.name = jsonTriangle["triangleName"].GetString();
 
-                triangle.vertices.push_back(vertex);
-            }
+			const auto& vertices = jsonTriangle["vertices"].GetArray();
+			for (auto& jsonVertex : vertices)
+			{
+				PhysicsEngine::Vector3 vertex;
+				vertex.x = jsonVertex["x"].GetFloat();
+				vertex.y = jsonVertex["y"].GetFloat();
+				vertex.z = jsonVertex["z"].GetFloat();
 
-            mesh.vecTriangle.push_back(triangle);
-        }
+				triangle.vertices.push_back(vertex);
+			}
 
-        navigationAgent->AddMesh(mesh);
-    }
+			mesh.vecTriangle.push_back(triangle);
+		}
 
-    vector<PhysicsEngine::GridInfo> vecGridInfo;
+		navigationAgent->AddMesh(mesh);
+	}
 
-    const auto& listGridInfo = d["listGridInfo"].GetArray();
-    for (auto& jsonGridInfo : listGridInfo)
-    {
-        PhysicsEngine::GridInfo gridInfo;
-        gridInfo.gridIndex = jsonGridInfo["gridIndex"].GetString();
+	vector<PhysicsEngine::GridInfo> vecGridInfo;
 
-        const auto& listAdjacentTriangleInfo = jsonGridInfo["listAdjacentMeshInfo"].GetArray();
-        for (auto& jsonAdjacentTriangleInfo : listAdjacentTriangleInfo)
-        {
-            PhysicsEngine::AdjacentMeshInfo adjacentMeshInfo;
-            adjacentMeshInfo.meshName = jsonAdjacentTriangleInfo["meshName"].GetString();
+	const auto& listGridInfo = d["listGridInfo"].GetArray();
+	for (auto& jsonGridInfo : listGridInfo)
+	{
+		PhysicsEngine::GridInfo gridInfo;
+		gridInfo.gridIndex = jsonGridInfo["gridIndex"].GetString();
 
-            const auto& listAdjacentTriangleIndices = jsonAdjacentTriangleInfo["adjacentTriangleIndices"].GetArray();
-            for (auto& index : listAdjacentTriangleIndices)
-            {
-                adjacentMeshInfo.adjacentTriangleIndices.push_back(index.GetInt());
-            }
-            gridInfo.vecAdjacentMeshInfo.push_back(adjacentMeshInfo);
-        }
+		const auto& listAdjacentTriangleInfo = jsonGridInfo["listAdjacentMeshInfo"].GetArray();
+		for (auto& jsonAdjacentTriangleInfo : listAdjacentTriangleInfo)
+		{
+			PhysicsEngine::AdjacentMeshInfo adjacentMeshInfo;
+			adjacentMeshInfo.meshName = jsonAdjacentTriangleInfo["meshName"].GetString();
 
-        navigationAgent->AddGridInfo(gridInfo);
-    }
+			const auto& listAdjacentTriangleIndices = jsonAdjacentTriangleInfo["adjacentTriangleIndices"].GetArray();
+			for (auto& index : listAdjacentTriangleIndices)
+			{
+				adjacentMeshInfo.adjacentTriangleIndices.push_back(index.GetInt());
+			}
+			gridInfo.vecAdjacentMeshInfo.push_back(adjacentMeshInfo);
+		}
 
-    mapNavigationMeshAgent.emplace(navigationAgent->sceneName, navigationAgent);
+		navigationAgent->AddGridInfo(gridInfo);
+	}
 
-    return;
+	mapNavigationMeshAgent.emplace(navigationAgent->sceneName, navigationAgent);
+
+	return;
 }

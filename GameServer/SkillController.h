@@ -1,21 +1,24 @@
 #pragma once
 #include "ChampRelatedStruct.h"
+#include "Skill.h"
 
 class SkillController
 {
-public:
-    SkillController() {};
-    void Update(float deltaTime);
-    bool IsUsingSkill();
-    bool CanUseSkill();
-
-public:
-    /* 데이터 세팅 */
-    void SetBaseAttackSkill(vector<SkillData> p_skill) { baseAttack = p_skill; }
-    void SetSkills(vector<SkillData> p_skill) { skills = p_skill; }
-
 private:
+	Skill usingSkill;
 
-    vector<SkillData> baseAttack;
-    vector<SkillData> skills;
+public:
+	SkillController() {};
+	void Update(float deltaTime);
+	bool IsUsingSkill();
+	bool CanUseSkill();
+
+public:
+	/* 데이터 세팅 */
+	void AddSkill(Skill skill);
+	void UseSkill(int skillIndex);
+private:
+	map<int, Skill> mapSkill;
+	vector<SkillData> baseAttack;
+	vector<SkillData> skills;
 };
