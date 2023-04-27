@@ -1,0 +1,19 @@
+[
+  {
+    "SceneName": "Main",
+    "SpawnInfo": [
+      {
+        "MonsterIndex": 1,
+        "SpawnCoolTime": 500,
+        "TotalNumber": 100,
+        "SpawnPoint": [
+          {
+            "x": 420.7,
+            "y": 117.0,
+            "z": 143
+          }
+        ]
+      }
+    ]
+  }
+]

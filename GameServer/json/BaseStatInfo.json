@@ -1,0 +1,13 @@
+[
+  {
+    "BaseStatIndex": 1,
+    "MaxHP":  1000,
+    "MaxMP":  1000,
+    "AttackPower": 10,
+    "MagicPower": 10,
+    "AttackSpeed": 10,
+    "MoveSpeed": 10,
+    "Armor": 10,
+    "MagicResistance": 10
+  }
+]
