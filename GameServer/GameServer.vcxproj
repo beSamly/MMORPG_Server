@@ -155,6 +155,8 @@
     <ClInclude Include="AuthController.h" />
     <ClInclude Include="NetworkControllerContainer.h" />
     <ClInclude Include="NetworkSystem.h" />
+    <ClInclude Include="Operation.h" />
+    <ClInclude Include="OperationCondition.h" />
     <ClInclude Include="OperationController.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhysicalDamage.h" />
@@ -169,7 +171,9 @@
     <ClInclude Include="SceneInfoManager.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ServerApp.h" />
+    <ClInclude Include="Skill.h" />
     <ClInclude Include="SkillController.h" />
+    <ClInclude Include="SkillDataManager.h" />
     <ClInclude Include="SocketServer.h" />
     <ClInclude Include="StatController.h" />
     <ClInclude Include="StateController.h" />
@@ -195,6 +199,8 @@
     <ClCompile Include="AuthController.cpp" />
     <ClCompile Include="NetworkControllerContainer.cpp" />
     <ClCompile Include="NetworkSystem.cpp" />
+    <ClCompile Include="Operation.cpp" />
+    <ClCompile Include="OperationCondition.cpp" />
     <ClCompile Include="OperationController.cpp" />
     <ClCompile Include="PhysicalDamage.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -206,7 +212,9 @@
     <ClCompile Include="SceneInfoManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ServerApp.cpp" />
+    <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SkillController.cpp" />
+    <ClCompile Include="SkillDataManager.cpp" />
     <ClCompile Include="SocketServer.cpp" />
     <ClCompile Include="StatController.cpp" />
     <ClCompile Include="StateController.cpp" />

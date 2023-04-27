@@ -93,6 +93,9 @@
     <Filter Include="Source Files\GameSystem\Object">
       <UniqueIdentifier>{cacd833b-8a09-41af-a0ad-5a50376b35d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameSystem\Skill">
+      <UniqueIdentifier>{5a656c5d-c0e8-4f2b-ab0c-218471dbc7e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -228,6 +231,18 @@
     <ClInclude Include="StatType.h">
       <Filter>Source Files\GameSystem\Common</Filter>
     </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Source Files\GameSystem\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Operation.h">
+      <Filter>Source Files\GameSystem\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationCondition.h">
+      <Filter>Source Files\GameSystem\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillDataManager.h">
+      <Filter>Source Files\DataSystem\StaticData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -330,6 +345,18 @@
       <Filter>Source Files\DataSystem\StaticData</Filter>
     </ClCompile>
     <ClCompile Include="BaseStatManager.cpp">
+      <Filter>Source Files\DataSystem\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>Source Files\GameSystem\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Operation.cpp">
+      <Filter>Source Files\GameSystem\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="OperationCondition.cpp">
+      <Filter>Source Files\GameSystem\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillDataManager.cpp">
       <Filter>Source Files\DataSystem\StaticData</Filter>
     </ClCompile>
   </ItemGroup>
