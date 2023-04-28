@@ -10,10 +10,10 @@ using std::map;
 using std::string;
 using std::vector;
 
-#define PI 3.1415926;
-
 namespace PhysicsEngine
 {
+    const float PI = 3.1415926535897931;
+    const float Deg2Rad = PI / 180.0f;
 
     class Vector3
     {
@@ -101,8 +101,8 @@ namespace PhysicsEngine
     public:
         string name;
         vector<Vector3> vertices;
-        Vector3 crossProduct = Vector3(0, 0, 0);
-        Vector3 centroid = Vector3(0, 0, 0);
+        Vector3 crossProduct;
+        Vector3 centroid;
 
         Triangle(Vector3 a, Vector3 b, Vector3 c)
         {
@@ -318,7 +318,8 @@ namespace PhysicsEngine
                 // (collisionInfo.penetrationDepth / sin(anotherAngleInDegree)); sin()
                 // 함수는 degree가 아닌 radian을 인자로 받으므로 Mathf.Deg2Rad 를
                 // 곱해준다.
-                float newDepth = (collisionInfo.penetrationDepth / std::asin(anotherAngleInDegree)); // Sin(90도)는 무조건 1이니 생략
+                float divider = sin(anotherAngleInDegree * Deg2Rad);
+                float newDepth = (collisionInfo.penetrationDepth / divider); // Sin(90도)는 무조건 1이니 생략
 
                 CollisionInfo resolved;
                 resolved.penetrationDepth = abs(newDepth);
