@@ -669,7 +669,7 @@ namespace PhysicsEngine
                 }
             }
 
-            vector<CollisionInfo> vecCollisionInfo;
+            vector<CollisionInfo> vecFinalCollisionInfo;
 
             // 같은 방향(normal)으로 충돌한 정보 중 가장 정확한 정보만 찾는다.(같은
             // 방향(normal)으로 충돌이 발생 했을 경우 가장 정확한 충돌 방향은
@@ -696,10 +696,10 @@ namespace PhysicsEngine
                 }
 
                 // 이 normal의 충돌 정보 중 가장 정확한 정보만 리턴 값에 넣어준다.
-                vecCollisionInfo.push_back(finalCollisionInfo);
+                vecFinalCollisionInfo.push_back(finalCollisionInfo);
             }
 
-            return vecCollisionInfo;
+            return vecFinalCollisionInfo;
         }
     };
 } // namespace PhysicsEngine
