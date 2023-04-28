@@ -96,6 +96,12 @@
     <Filter Include="Source Files\GameSystem\Skill">
       <UniqueIdentifier>{5a656c5d-c0e8-4f2b-ab0c-218471dbc7e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameSystem\Updater">
+      <UniqueIdentifier>{9554b817-6105-4cf6-8d9a-9b3cd0efa682}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameSystem\Skill\Handler">
+      <UniqueIdentifier>{95cf852a-554e-489b-b491-3d6099d54e94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -134,7 +140,7 @@
     <ClInclude Include="StateController.h">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="TransformController.h">
+    <ClInclude Include="TransformEntity.h">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClInclude>
     <ClInclude Include="StatModifier.h">
@@ -243,6 +249,21 @@
     <ClInclude Include="SkillDataManager.h">
       <Filter>Source Files\DataSystem\StaticData</Filter>
     </ClInclude>
+    <ClInclude Include="GameSystemUpdater.h">
+      <Filter>Source Files\GameSystem\Updater</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationConditionHandler.h">
+      <Filter>Source Files\GameSystem\Skill\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationHandler.h">
+      <Filter>Source Files\GameSystem\Skill\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnManager.h">
+      <Filter>Source Files\GameSystem\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Source Files\GameSystem\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -273,9 +294,6 @@
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClCompile>
     <ClCompile Include="StateController.cpp">
-      <Filter>Source Files\GameSystem\Player\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformController.cpp">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClCompile>
     <ClCompile Include="StatModifier.cpp">
@@ -358,6 +376,24 @@
     </ClCompile>
     <ClCompile Include="SkillDataManager.cpp">
       <Filter>Source Files\DataSystem\StaticData</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystemUpdater.cpp">
+      <Filter>Source Files\GameSystem\Updater</Filter>
+    </ClCompile>
+    <ClCompile Include="OperationConditionHandler.cpp">
+      <Filter>Source Files\GameSystem\Skill\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="OperationHandler.cpp">
+      <Filter>Source Files\GameSystem\Skill\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnManager.cpp">
+      <Filter>Source Files\GameSystem\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformEntity.cpp">
+      <Filter>Source Files\GameSystem\Player\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Source Files\GameSystem\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

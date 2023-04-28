@@ -17,6 +17,7 @@ public:
 	/* 데이터 세팅 */
 	void AddSkill(Skill skill);
 	void UseSkill(int skillIndex);
+	queue<Operation> GetReadyOperation();
 private:
 	map<int, Skill> mapSkill;
 	vector<SkillData> baseAttack;

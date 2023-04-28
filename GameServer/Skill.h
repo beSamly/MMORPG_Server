@@ -21,8 +21,8 @@ public:
 	/* Non Static Data */
 
 public:
-	queue<Operation> GetOperationReady();
+	queue<Operation> FlushReadyOperation();
 private:
 	float elapsed;
-	queue<Operation> operationReady;
+	queue<Operation> readyOperation;
 };

@@ -38,3 +38,12 @@ void SkillController::UseSkill(int skillIndex)
 
 	usingSkill = mapSkill[skillIndex];
 }
+
+queue<Operation> SkillController::GetReadyOperation()
+{
+	if (!usingSkill.IsNull()) {
+		return;
+	}
+
+	return usingSkill.FlushReadyOperation();
+}

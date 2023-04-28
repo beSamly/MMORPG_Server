@@ -1,11 +1,11 @@
 #pragma once
-#include "TransformController.h"
+#include "TransformEntity.h"
 #include "InputController.h"
 #include "ClientSession.h"
 #include "StatController.h"
 #include "SkillController.h"
 
-class Player
+class Player : public TransformEntity
 {
 private:
 
@@ -14,7 +14,7 @@ private:
 
 public:
 	uptr<InputController> inputController;
-	uptr<TransformController> transformController;
+	//uptr<TransformEntity> transformController;
 	uptr<StatController> statController;
 	uptr<SkillController> skillController;
 	string currentSceneName;

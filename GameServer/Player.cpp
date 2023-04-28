@@ -11,7 +11,7 @@ using PacketDef::PACKET_ID_GLOBAL;
 void Player::Init()
 {
 	inputController = make_unique<InputController>();
-	transformController = make_unique<TransformController>();
+	//transformController = make_unique<TransformEntity>();
 	statController = make_unique<StatController>();
 	skillController = make_unique<SkillController>();
 }
@@ -71,12 +71,12 @@ void Player::UpdatePosition(float deltaTime)
 		addPosition += Vector3(movePosition, 0.0f, 0.0f);
 	}
 
-	transformController->AddPosition(addPosition);
+	AddPosition(addPosition);
 }
 
 void Player::SendUpdatePosition()
 {
-	Vector3 position = transformController->GetPosition();
+	Vector3 position = GetPosition();
 
 	Protocol::PositionUpdate positionUpdate;
 	positionUpdate.mutable_position()->set_x(position.x);

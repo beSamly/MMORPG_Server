@@ -143,6 +143,7 @@
     <ClInclude Include="DataSystem.h" />
     <ClInclude Include="GameSystem.h" />
     <ClInclude Include="CommandProcessCommon.h" />
+    <ClInclude Include="GameSystemUpdater.h" />
     <ClInclude Include="ILogger.h" />
     <ClInclude Include="INetworkController.h" />
     <ClInclude Include="GameInputController.h" />
@@ -153,11 +154,14 @@
     <ClInclude Include="LibraryHeader.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="AuthController.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="NetworkControllerContainer.h" />
     <ClInclude Include="NetworkSystem.h" />
     <ClInclude Include="Operation.h" />
     <ClInclude Include="OperationCondition.h" />
+    <ClInclude Include="OperationConditionHandler.h" />
     <ClInclude Include="OperationController.h" />
+    <ClInclude Include="OperationHandler.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PhysicalDamage.h" />
     <ClInclude Include="Player.h" />
@@ -175,13 +179,14 @@
     <ClInclude Include="SkillController.h" />
     <ClInclude Include="SkillDataManager.h" />
     <ClInclude Include="SocketServer.h" />
+    <ClInclude Include="SpawnManager.h" />
     <ClInclude Include="StatController.h" />
     <ClInclude Include="StateController.h" />
     <ClInclude Include="StatModifier.h" />
     <ClInclude Include="StatType.h" />
     <ClInclude Include="ThreadSystem.h" />
     <ClInclude Include="TLS.h" />
-    <ClInclude Include="TransformController.h" />
+    <ClInclude Include="TransformEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseStatManager.cpp" />
@@ -191,17 +196,21 @@
     <ClCompile Include="DataSystem.cpp" />
     <ClCompile Include="GameSystem.cpp" />
     <ClCompile Include="GameInputController.cpp" />
+    <ClCompile Include="GameSystemUpdater.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="IOperation.cpp" />
     <ClCompile Include="InputReqController.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AuthController.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="NetworkControllerContainer.cpp" />
     <ClCompile Include="NetworkSystem.cpp" />
     <ClCompile Include="Operation.cpp" />
     <ClCompile Include="OperationCondition.cpp" />
+    <ClCompile Include="OperationConditionHandler.cpp" />
     <ClCompile Include="OperationController.cpp" />
+    <ClCompile Include="OperationHandler.cpp" />
     <ClCompile Include="PhysicalDamage.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
@@ -216,12 +225,13 @@
     <ClCompile Include="SkillController.cpp" />
     <ClCompile Include="SkillDataManager.cpp" />
     <ClCompile Include="SocketServer.cpp" />
+    <ClCompile Include="SpawnManager.cpp" />
     <ClCompile Include="StatController.cpp" />
     <ClCompile Include="StateController.cpp" />
     <ClCompile Include="StatModifier.cpp" />
     <ClCompile Include="ThreadSystem.cpp" />
     <ClCompile Include="TLS.cpp" />
-    <ClCompile Include="TransformController.cpp" />
+    <ClCompile Include="TransformEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />

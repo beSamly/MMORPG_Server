@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "SceneManager.h"
 
-SceneManager::SceneManager() { mapScene = make_shared<map<string, sptr<Scene>>>(); }
+SceneManager::SceneManager() {
+	mapScene = make_shared<map<string, sptr<Scene>>>();
+	spawnManager = make_unique<SpawnManager>();
+}
 
 void SceneManager::AddScene(sptr<Scene> scene)
 {

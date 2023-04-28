@@ -13,14 +13,14 @@ void Skill::Update(float deltaTime)
 
 		if (lastElapsed <= operationTime && operationTime <= currentElapsed)
 		{
-			operationReady.push(operation);
+			readyOperation.push(operation);
 		}
 	}
 }
 
-queue<Operation> Skill::GetOperationReady()
+queue<Operation> Skill::FlushReadyOperation()
 {
 	queue<Operation> queue;
-	std::swap(queue, operationReady);
+	std::swap(queue, readyOperation);
 	return queue;
 }

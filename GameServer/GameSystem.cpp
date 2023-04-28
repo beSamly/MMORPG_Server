@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include "Logger.h"
 #include "SceneInfo.h"
+#include "GameSystemUpdater.h"
 
 DWORD intervalTick = 1000; // 3초에 한 번씩
 
@@ -117,23 +118,7 @@ void GameSystem::UpdateScene(int threadId, float deltaTime)
 
 		for (const sptr<Player>& player : allPlayer)
 		{
-			// 플레이어 포지션 객체 업데이트
-			player->Update(deltaTime);
-
-			//[TODO]
-			float radius = 10.0f; // Unity의 this.GetComponent<SphereCollider>().radius 값
-
-			// 지형과 충돌 처리
-			Vector3 currentPosition = player->transformController->GetPosition();
-			Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
-			player->transformController->SetPosition(newPosition);
-
-			if (player->inputController->IsAnyKeyDown())
-			{
-				player->SendUpdatePosition();
-			}
-
-
+			GameSystemUpdater::UpdateEachPlayer(deltaTime, scene, player, allPlayer);
 		}
 	};
 }
