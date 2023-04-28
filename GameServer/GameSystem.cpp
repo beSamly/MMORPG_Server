@@ -73,6 +73,8 @@ void GameSystem::InitSceneManager()
 
 void GameSystem::UpdateScene(int threadId, float deltaTime)
 {
+    //logger->Debug("[GameSystem] deltaTime = " + std::to_string(deltaTime));
+	
 	// Scene 몇개 찾아서
 	// loop 돌면서
 	//  scene->flushqueue()

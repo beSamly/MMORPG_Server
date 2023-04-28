@@ -4,6 +4,7 @@
 #include "PacketHeader.h"
 #include "TLS.h"
 #include "GameSystem.h"
+#include <chrono>
 
 int MAX_WORKER_THREAD = 1;
 int MAX_SCENE_UPDATE_THREAD = 1;
@@ -12,16 +13,16 @@ int WORKER_TICK = 64;
 
 ServerApp::ServerApp()
 {
-	threadSystem = make_unique<ThreadSystem>();
-	dataSystem = make_shared<DataSystem>();
-	gameSystem = make_shared<GameSystem>(dataSystem);
-	networkSystem = make_shared<NetworkSystem>(dataSystem, gameSystem);
+    threadSystem = make_unique<ThreadSystem>();
+    dataSystem = make_shared<DataSystem>();
+    gameSystem = make_shared<GameSystem>(dataSystem);
+    networkSystem = make_shared<NetworkSystem>(dataSystem, gameSystem);
 }
 
-void ServerApp::InitSystems() { 
-	dataSystem->LoadJsonData();
+void ServerApp::InitSystems()
+{
+    dataSystem->LoadJsonData();
     gameSystem->Init();
-
 }
 
 void ServerApp::StartSystems()
@@ -33,65 +34,55 @@ void ServerApp::StartSystems()
 
 void ServerApp::StartSocketServer()
 {
-	spdlog::set_level(spdlog::level::debug); // Set global log level to debug
+    spdlog::set_level(spdlog::level::debug); // Set global log level to debug
 
-	networkSystem->StartSocketServer();
+    networkSystem->StartSocketServer();
 
-	for (int32 i = 0; i < MAX_WORKER_THREAD; i++)
-	{
-		threadSystem->Launch(
-			[&]()
-			{
-				// 네트워크 입출력 및 패킷 핸들러 실행
-				networkSystem->RunIoContext();
-			});
-	}
+    for (int32 i = 0; i < MAX_WORKER_THREAD; i++)
+    {
+        threadSystem->Launch(
+            [&]()
+            {
+                // 네트워크 입출력 및 패킷 핸들러 실행
+                networkSystem->RunIoContext();
+            });
+    }
 }
 
 void ServerApp::InitGameSystem() {}
 
 void ServerApp::StartGameSystem()
 {
-	// TODO 나중에 삭제하기
-	// threadSystem->Launch(
-	//    [&]()
-	//    {
-	//        while (true)
-	//        {
-	//            int keyPressed;
-	//            debugInputHandler->PrintInstruction();
-	//            std::cin >> keyPressed;
-	//            debugInputHandler->HandleInput(keyPressed);
-	//            // GInputHandler->HandleInput(socketClient, keyPressed);
-	//            cout << "Key pressed is " << keyPressed << endl;
-	//        }
-	//    });
+    // TODO 나중에 삭제하기
+    // threadSystem->Launch(
+    //    [&]()
+    //    {
+    //        while (true)
+    //        {
+    //            int keyPressed;
+    //            debugInputHandler->PrintInstruction();
+    //            std::cin >> keyPressed;
+    //            debugInputHandler->HandleInput(keyPressed);
+    //            // GInputHandler->HandleInput(socketClient, keyPressed);
+    //            cout << "Key pressed is " << keyPressed << endl;
+    //        }
+    //    });
 
-	//씬 업데이트 쓰레드
-	for (int32 i = 0; i < MAX_SCENE_UPDATE_THREAD; i++)
-	{
-		threadSystem->Launch(
-			[&]()
-			{
-				DWORD startTime = 0;
-				DWORD deltaTime = 0;
-				DWORD prevTime = 0;
+    //씬 업데이트 쓰레드
+    for (int32 i = 0; i < MAX_SCENE_UPDATE_THREAD; i++)
+    {
+        threadSystem->Launch(
+            [&]()
+            {
+                std::chrono::steady_clock::time_point lastUpdate;
 
-				while (true)
-				{
-					DWORD currentTime = GetTickCount();
-					if (startTime == 0)
-					{
-						startTime = currentTime;
-					}
-
-					DWORD elapsedMils = currentTime - startTime;
-
-					deltaTime = currentTime - prevTime;
-					prevTime = currentTime;
-					float deltaTimeInSec = elapsedMils / 1000;
-					gameSystem->UpdateScene(i, deltaTimeInSec);
-				}
-			});
-	}
+                while (true)
+                {
+                    auto now = std::chrono::steady_clock::now();
+                    float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - lastUpdate).count() / 1000000.0f;
+                    lastUpdate = now;
+                    gameSystem->UpdateScene(i, deltaTime);
+                }
+            });
+    }
 }

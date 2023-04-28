@@ -6,42 +6,50 @@
 class GameSystemUpdater
 {
 private:
-
+    float lastChecked = 0.0f;
+    float elapsedTime = 0.0f;
 
 public:
-	GameSystemUpdater() {
+    GameSystemUpdater() {}
 
-	}
+    void UpdateEachPlayer(float deltaTime, const sptr<Scene>& scene, const sptr<Player>& player, const vector<sptr<Player>>& others)
+    {
 
-	void UpdateEachPlayer(float deltaTime, const sptr<Scene>& scene, const sptr<Player>& player, const vector<sptr<Player>>& others)
-	{
-		// 플레이어 포지션 객체 업데이트
-		player->Update(deltaTime);
+        //[TEST]
+        elapsedTime += deltaTime;
 
-		//[TODO]
-		float radius = 10.0f; // Unity의 this.GetComponent<SphereCollider>().radius 값
+        // 플레이어 포지션 객체 업데이트
+        player->Update(deltaTime);
 
-		// 지형과 충돌 처리
-		Vector3 currentPosition = player->GetPosition();
-		Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
-		player->SetPosition(newPosition);
+        //[TODO]
+        float radius = 0.5f; // Unity의 this.GetComponent<SphereCollider>().radius 값
 
-		if (player->inputController->IsAnyKeyDown())
-		{
-			player->SendUpdatePosition();
-		}
+        // 지형과 충돌 처리
+        Vector3 currentPosition = player->GetPosition();
+        Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
+        player->SetPosition(newPosition);
 
-		//queue<Operation> readyOperation = player->skillController->GetReadyOperation();
+        if (elapsedTime - lastChecked > 2)
+        {
+            player->SendUpdatePosition();
+            lastChecked = elapsedTime;
+        }
 
-		//while (!readyOperation.empty())
-		//{
-		//	Operation& operation = readyOperation.front();
+        /*if (player->inputController->IsAnyKeyDown())
+        {
+            player->SendUpdatePosition();
+        }*/
 
-		//	//smt like operation->trigger()
-		//	//operation.opereationType
+        // queue<Operation> readyOperation = player->skillController->GetReadyOperation();
 
-		//	readyOperation.pop();
-		//}
+        // while (!readyOperation.empty())
+        //{
+        //	Operation& operation = readyOperation.front();
 
-	}
+        //	//smt like operation->trigger()
+        //	//operation.opereationType
+
+        //	readyOperation.pop();
+        //}
+    }
 };

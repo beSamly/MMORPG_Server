@@ -19,4 +19,6 @@ public:
 	{
 		spdlog::error(str);
 	}
+
+	void Debug(string str) { spdlog::debug(str); }
 };

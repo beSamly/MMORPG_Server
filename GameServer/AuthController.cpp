@@ -95,11 +95,12 @@ int AuthController::ProcessLoginReq(sptr<ClientSession>& session, BYTE* buffer, 
 
     if (result == RES_CODE::CODE_SUCCESS)
     {
-        logger->Info("Login success for playerId = " + player->playerId);
+        logger->Info("login success for playerId = " + player->playerId);
+
+        sptr<EnterSceneReq> command = make_shared<EnterSceneReq>();
+        command->player = player;
+        scene->PushCommand(command);
     }
 
-    sptr<EnterSceneReq> command = make_shared<EnterSceneReq>();
-    command->player = player;
-    scene->PushCommand(command);
     return result;
 }

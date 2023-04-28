@@ -239,6 +239,7 @@
     <None Include="json\NPCInfo.json" />
     <None Include="json\OperationData.json" />
     <None Include="json\ProjectileInfo.json" />
+    <None Include="json\SceneInfo.json" />
     <None Include="json\SpawnInfo.json" />
     <None Include="json\SkillData.json" />
     <None Include="json\SkillInfo.json" />

@@ -419,5 +419,8 @@
     <None Include="json\NPCInfo.json">
       <Filter>Source Files\DataSystem\JsonFile</Filter>
     </None>
+    <None Include="json\SceneInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
   </ItemGroup>
 </Project>
