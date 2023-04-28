@@ -5,10 +5,9 @@
 #include "Player.h"
 #include "Scene.h"
 
-
 class OperationHandler
 {
-	typedef function<(sptr<Scene>&, Operation&, sptr<Player>&, vector<sptr<Player>>&)> FuncHandler;
+	typedef function<void(sptr<Scene>&, Operation&, sptr<Player>&, vector<sptr<Player>>&)> FuncHandler;
 
 private:
 	map<OperationType, FuncHandler> mapHandler;

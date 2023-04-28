@@ -20,7 +20,7 @@ Skill SkillDataManager::GetSkillData(int skillIndex)
 	auto iter = mapSkillData.find(skillIndex);
 	if (iter != mapSkillData.end())
 	{
-		return *iter;
+		return iter->second;
 	}
 	else
 	{
@@ -60,18 +60,18 @@ void SkillDataManager::LoadSkillData()
 		const auto& listOperation = jsonSkillData["OperationList"].GetArray();
 		for (auto& jsonOperation : listOperation)
 		{
-			Operation operation;
-			operation.opereationType = jsonOperation["OperationType"].GetString();
-			operation.operationValue = jsonOperation["OperationValue"].GetInt();
+                    /*Operation operation;
+                    operation.opereationType = jsonOperation["OperationType"].GetString();
+                    operation.operationValue = jsonOperation["OperationValue"].GetInt();
 
-			const auto& jsonOperationCondition = jsonOperation["OperationCondition"];
-			OperationCondition condition;
-			condition.conditionType = jsonOperationCondition["ConditionType"].GetString();
-			condition.conditionValue = jsonOperationCondition["ConditionValue"].GetInt();
+                    const auto& jsonOperationCondition = jsonOperation["OperationCondition"];
+                    OperationCondition condition;
+                    condition.conditionType = jsonOperationCondition["ConditionType"].GetString();
+                    condition.conditionValue = jsonOperationCondition["ConditionValue"].GetInt();
 
-			operation.condition = condition;
+                    operation.condition = condition;
 
-			skillData.AddOperation(operation);
+                    skillData.AddOperation(operation);*/
 		}
 
 		mapSkillData[skillData.skillIndex] = skillData;

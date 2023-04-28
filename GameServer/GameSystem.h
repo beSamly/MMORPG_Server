@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "PlayerManager.h"
 #include "GameSystemControllerContainer.h"
+#include "GameSystemUpdater.h"
 
 using GameSystemReq::BaseReq;
 
@@ -16,6 +17,7 @@ public:
     void UpdateScene(int threadId, float deltaTime);
     uptr<PlayerManager> playerManager;
     uptr<SceneManager> sceneManager;
+    uptr<GameSystemUpdater> gameSystemUpdater;
 
     void Init();
 

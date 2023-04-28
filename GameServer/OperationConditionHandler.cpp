@@ -3,6 +3,8 @@
 
 
 
+vector<sptr<TransformEntity>> OperationConditionHandler::Myself(sptr<TransformEntity> owner, vector<TransformEntity> other) { return vector<sptr<TransformEntity>>(); }
+
 OperationConditionHandler::OperationConditionHandler()
 {
 	//mapHandler[OperationConditionType::MYSELF] = Myself;
@@ -16,9 +18,4 @@ vector<sptr<TransformEntity>> OperationConditionHandler::Get(OperationConditionT
 	}
 
 	return mapHandler[type](owner, other);
-}
-
-vector<sptr<TransformEntity>> OperationConditionHandler::OperationConditionHandler::Myself(sptr<TransformEntity> owner, vector<sptr<TransformEntity>> other)
-{
-	return vector<sptr<TransformEntity>>();
 }

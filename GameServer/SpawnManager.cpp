@@ -3,17 +3,5 @@
 
 SpawnManager::SpawnManager() { mapScene = make_shared<map<string, sptr<Scene>>>(); }
 
+void SpawnManager::Update(float deltaTime) {}
 
-sptr<Scene> SpawnManager::GetScene(string sceneName)
-{
-	map<string, sptr<Scene>>::iterator iter = mapScene->find(sceneName);
-
-	if (iter != mapScene->end())
-	{
-		return iter->second;
-	}
-	else
-	{
-		return nullptr;
-	}
-}

@@ -15,6 +15,4 @@ private:
 public:
 	SpawnManager();
 	void Update(float deltaTime);
-
-
 };

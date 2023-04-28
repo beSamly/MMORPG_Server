@@ -1,5 +1,4 @@
 #pragma once
-#include "ChampRelatedStruct.h"
 #include "Skill.h"
 
 class SkillController
@@ -20,6 +19,6 @@ public:
 	queue<Operation> GetReadyOperation();
 private:
 	map<int, Skill> mapSkill;
-	vector<SkillData> baseAttack;
-	vector<SkillData> skills;
+	//vector<SkillData> baseAttack;
+	//vector<SkillData> skills;
 };

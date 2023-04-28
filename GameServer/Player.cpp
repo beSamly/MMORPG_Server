@@ -41,7 +41,7 @@ int Player::GetStat(STAT_TYPE statType)
 
 void Player::Update(float deltaTime) {
 	UpdatePosition(deltaTime);
-	skillController->Update();
+	skillController->Update(deltaTime);
 }
 
 void Player::UpdatePosition(float deltaTime)

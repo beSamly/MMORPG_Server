@@ -1,9 +1,9 @@
 [
   {
     "SceneName": "Main",
-    "SpawnInfo": [
+    "ListSpawnInfo": [
       {
-        "MonsterIndex": 1,
+        "NPCIndex": 1,
         "SpawnCoolTime": 500,
         "TotalNumber": 100,
         "SpawnPoint": [

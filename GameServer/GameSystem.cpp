@@ -20,7 +20,7 @@ GameSystem::GameSystem(sptr<DataSystem> p_dataSystem) : dataSystem(p_dataSystem)
 	playerManager = make_unique<PlayerManager>();
 	sceneManager = make_unique<SceneManager>();
 	logger = make_shared<Logger>("dummy path");
-	logger = make_shared<Logger>("dummy path");
+    gameSystemUpdater = make_unique<GameSystemUpdater>();
 }
 
 void GameSystem::Init()
@@ -99,9 +99,7 @@ void GameSystem::UpdateScene(int threadId, float deltaTime)
 			copied.pop();
 		}
 
-		//씬의 Player 업데이트
 		std::set<int> playerIds = scene->GetAllPlayerId();
-
 		vector<sptr<Player>> allPlayer; // 씬에 있는 모든 플레이어
 		for (const int& playerId : playerIds)
 		{
@@ -118,7 +116,7 @@ void GameSystem::UpdateScene(int threadId, float deltaTime)
 
 		for (const sptr<Player>& player : allPlayer)
 		{
-			GameSystemUpdater::UpdateEachPlayer(deltaTime, scene, player, allPlayer);
+			gameSystemUpdater->UpdateEachPlayer(deltaTime, scene, player, allPlayer);
 		}
 	};
 }

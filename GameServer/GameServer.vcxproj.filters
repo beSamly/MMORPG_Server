@@ -122,9 +122,6 @@
     <ClInclude Include="TLS.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="ChampRelatedStruct.h">
-      <Filter>Source Files\DataSystem\StaticData</Filter>
-    </ClInclude>
     <ClInclude Include="DataSystem.h">
       <Filter>Source Files\DataSystem</Filter>
     </ClInclude>
@@ -398,5 +395,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
+    <None Include="json\OperationData.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\ProjectileInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\SpawnInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\SkillData.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\SkillInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\BaseStatInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\CharacterInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
+    <None Include="json\NPCInfo.json">
+      <Filter>Source Files\DataSystem\JsonFile</Filter>
+    </None>
   </ItemGroup>
 </Project>

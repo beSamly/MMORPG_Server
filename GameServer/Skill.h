@@ -1,3 +1,4 @@
+#pragma once
 #include "Operation.h"
 
 class Skill

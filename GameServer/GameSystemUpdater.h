@@ -1,4 +1,4 @@
-
+#pragma once
 #include "pch.h"
 #include "Player.h"
 #include "Scene.h"
@@ -31,19 +31,17 @@ public:
 			player->SendUpdatePosition();
 		}
 
-		queue<Operation> readyOperation = player->skillController->GetReadyOperation();
+		//queue<Operation> readyOperation = player->skillController->GetReadyOperation();
 
-		while (!readyOperation.empty())
-		{
-			Operation& operation = readyOperation.front();
+		//while (!readyOperation.empty())
+		//{
+		//	Operation& operation = readyOperation.front();
 
+		//	//smt like operation->trigger()
+		//	//operation.opereationType
 
-			//smt like operation->trigger()
-			//operation.opereationType
-
-
-			readyOperation.pop();
-		}
+		//	readyOperation.pop();
+		//}
 
 	}
 };
