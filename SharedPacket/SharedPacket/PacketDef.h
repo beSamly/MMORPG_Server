@@ -4,7 +4,7 @@ namespace PacketDef {
 
 enum PACKET_GROUP_ID : int {
   AUTH = 1,
-  INPUT,
+  POSITION,
   GLOBAL,
 };
 
@@ -16,11 +16,13 @@ enum PACKET_ID_AUTH : int {
 enum PACKET_ID_GLOBAL : int {
   ENTER_SCENE_REQ = 1,
   ENTER_SCENE_RES,
-  POSITION_UPDATE
+  
 };
 
-enum PACKET_ID_INPUT : int {
-  MOVEMENT = 1,
+enum PACKET_ID_POSITION : int {
+  POSITION_UPDATE = 1,
+  MOVE_REQ,
+  MOVE_RES,
 };
 
 }  // namespace PacketDef

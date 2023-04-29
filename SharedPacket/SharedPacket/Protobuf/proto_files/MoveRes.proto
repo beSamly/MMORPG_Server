@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "Vector3.proto";
+
+package Protocol;
+
+message MoveRes{
+    int32 result = 1;
+	Vector3 direction = 2;
+}

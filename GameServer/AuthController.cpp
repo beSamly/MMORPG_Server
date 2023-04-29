@@ -57,11 +57,10 @@ int AuthController::ProcessLoginReq(sptr<ClientSession>& session, BYTE* buffer, 
         string password = pkt.password();
 
         // DB 체크 이후에 Player 객체 세팅
-        int playerId = 1;
         string sceneName = "dummy"; //[TODO] 유저가 마지막으로 로그인한 씬의 정보를 로그인 정보에서 읽어오기
 
         player = make_shared<Player>();
-        player->playerId = playerId;
+        player->playerId = session->clientId; // [TODO] 임시로 clientId 사용하자
         player->SetSession(session);
         player->currentSceneName = "Main";
         session->playerId = player->playerId;
@@ -95,7 +94,7 @@ int AuthController::ProcessLoginReq(sptr<ClientSession>& session, BYTE* buffer, 
 
     if (result == RES_CODE::CODE_SUCCESS)
     {
-        LOG_INFO("login success for playerId = " + player->playerId);
+        LOG_INFO("login success for playerId = " + std::to_string(player->playerId));
 
         sptr<EnterSceneReq> command = make_shared<EnterSceneReq>();
         command->player = player;

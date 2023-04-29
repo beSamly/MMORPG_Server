@@ -1,21 +1,20 @@
 #pragma once
+#include "PhysicsEngine.h"
 
-enum KEY_INPUT : int
-{
-    UP = 0,
-    DOWN,
-    LEFT,
-    RIGHT
-};
+using PhysicsEngine::Vector3;
 
 class InputController
 {
 private:
-    map<int, bool> mapKeyPressed;
+    Vector3 moveDirection;
 
 public:
     InputController();
-    void SetKeyPressed(KEY_INPUT input, bool value) { mapKeyPressed[input] = value; };
-    bool IsKeyDown(KEY_INPUT input) { return mapKeyPressed[static_cast<int>(input)]; };
-    bool IsAnyKeyDown();
+    Vector3 GetMoveDirection() { return moveDirection; }
+
+    void SetMoveDirection(Vector3 direction)
+    {
+        direction.Normalize();
+        moveDirection = direction;
+    };
 };

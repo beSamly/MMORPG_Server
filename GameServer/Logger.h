@@ -43,5 +43,7 @@ public:
 
     static void Error(string str) { spdlog::error(str); }
 
-    static void Debug(string str) { spdlog::debug(str); }
+    static void Debug(string str) { 
+        spdlog::debug(str); 
+    }
 };

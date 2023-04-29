@@ -7,7 +7,7 @@
 #include "Logger.h"
 
 using PacketDef::PACKET_GROUP_ID;
-using PacketDef::PACKET_ID_GLOBAL;
+using PacketDef::PACKET_ID_POSITION;
 
 void Player::Init()
 {
@@ -22,6 +22,19 @@ void Player::Send(std::shared_ptr<SendBuffer> buffer)
     if (sptr<ClientSession> session = tcpSession.lock())
     {
         session->Send(buffer);
+    }
+    else
+    {
+        LOG_DEBUG("player has no tcp session");
+        //[TODO] ERROR
+    }
+}
+
+void Player::Send(Packet& packet)
+{
+    if (sptr<ClientSession> session = tcpSession.lock())
+    {
+        session->Send(packet.GetSendBuffer());
     }
     else
     {
@@ -52,30 +65,13 @@ void Player::UpdatePosition(float deltaTime)
     Vector3 addPosition;
 
     int statValue = GetStat(STAT_TYPE::MOVE_SPEED);
-    float movePosition = statValue * deltaTime;
+    float moveSpeed = statValue * deltaTime;
 
-    if (inputController->IsKeyDown(KEY_INPUT::UP))
-    {
-        addPosition += Vector3(0.0f, 0.0f, movePosition);
-    }
+    // 이동하는 방향으로 이동속도만큼 이동
+    addPosition += (inputController->GetMoveDirection() * moveSpeed);
 
-    if (inputController->IsKeyDown(KEY_INPUT::DOWN))
-    {
-        addPosition += Vector3(0.0f, 0.0f, -movePosition);
-    }
-
-    if (inputController->IsKeyDown(KEY_INPUT::LEFT))
-    {
-        addPosition += Vector3(-movePosition, 0.0f, 0.0f);
-    }
-
-    if (inputController->IsKeyDown(KEY_INPUT::RIGHT))
-    {
-        addPosition += Vector3(movePosition, 0.0f, 0.0f);
-    }
-
-    // 중력
-    // addPosition += Vector3(0.0f, -movePosition, 0.0f);
+    //[TODO] 중력 - 일단 이동속도 만큼 중력 나중에 바꿔라
+    addPosition += Vector3(0.0f, -moveSpeed, 0.0f);
 
     AddPosition(addPosition);
 }
@@ -89,7 +85,7 @@ void Player::SendUpdatePosition()
     positionUpdate.mutable_position()->set_y(position.y);
     positionUpdate.mutable_position()->set_z(position.z);
 
-    Packet packet(PACKET_GROUP_ID::GLOBAL, PACKET_ID_GLOBAL::POSITION_UPDATE);
+    Packet packet(PACKET_GROUP_ID::POSITION, PACKET_ID_POSITION::POSITION_UPDATE);
     packet.WriteData<Protocol::PositionUpdate>(positionUpdate);
     Send(packet.GetSendBuffer());
 }

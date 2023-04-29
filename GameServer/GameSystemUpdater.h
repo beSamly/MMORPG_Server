@@ -14,7 +14,6 @@ public:
 
     void UpdateEachPlayer(float deltaTime, const sptr<Scene>& scene, const sptr<Player>& player, const vector<sptr<Player>>& others)
     {
-
         //[TEST]
         elapsedTime += deltaTime;
 
@@ -28,6 +27,7 @@ public:
         Vector3 currentPosition = player->GetPosition();
         Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
         player->SetPosition(newPosition);
+
 
         if (elapsedTime - lastChecked > 2)
         {

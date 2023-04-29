@@ -169,6 +169,8 @@
     <ClCompile Include="Protobuf\InputMovementRes.pb.cc" />
     <ClCompile Include="Protobuf\LoginReq.pb.cc" />
     <ClCompile Include="Protobuf\LoginRes.pb.cc" />
+    <ClCompile Include="Protobuf\MoveReq.pb.cc" />
+    <ClCompile Include="Protobuf\MoveRes.pb.cc" />
     <ClCompile Include="Protobuf\PlayerInfo.pb.cc" />
     <ClCompile Include="Protobuf\PositionUpdate.pb.cc" />
     <ClCompile Include="Protobuf\Vector3.pb.cc" />
@@ -180,6 +182,8 @@
     <ClInclude Include="Protobuf\InputMovementRes.pb.h" />
     <ClInclude Include="Protobuf\LoginReq.pb.h" />
     <ClInclude Include="Protobuf\LoginRes.pb.h" />
+    <ClInclude Include="Protobuf\MoveReq.pb.h" />
+    <ClInclude Include="Protobuf\MoveRes.pb.h" />
     <ClInclude Include="Protobuf\PlayerInfo.pb.h" />
     <ClInclude Include="Protobuf\PositionUpdate.pb.h" />
     <ClInclude Include="Protobuf\Vector3.pb.h" />

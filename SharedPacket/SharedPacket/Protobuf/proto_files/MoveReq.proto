@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+import "Vector3.proto";
+
+package Protocol;
+
+message MoveReq{
+	Vector3 direction = 1;
+}

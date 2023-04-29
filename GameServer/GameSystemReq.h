@@ -7,7 +7,7 @@ namespace GameSystemReq
 	enum REQ_GROUP_ID : int
 	{
 		GLOBAL,
-		INPUT
+		POSITION
 	};
 
 	enum REQ_ID_GLOBAL : int
@@ -15,9 +15,9 @@ namespace GameSystemReq
 		ENTER_SCENE = 1
 	};
 
-	enum REQ_ID_INPUT : int
+	enum REQ_ID_POSITION : int
 	{
-		MOVEMENT = 1
+		MOVE = 1
 	};
 
 	struct BaseReq
@@ -26,7 +26,6 @@ namespace GameSystemReq
 		REQ_GROUP_ID    commandGroupId;
 		int             commandId = 0;
 		int             playerId = 0;
-
 
 	public:
 		BaseReq(REQ_GROUP_ID paramCommandGroupId, int paramCommandId) : commandGroupId(paramCommandGroupId), commandId(paramCommandId) {};
@@ -44,10 +43,17 @@ namespace GameSystemReq
 		sptr<Player> player;
 	};
 
+	class MoveReq : public BaseReq
+        {
+        public:
+            MoveReq() : BaseReq(REQ_GROUP_ID::POSITION, REQ_ID_POSITION::MOVE){};
+            Vector3 direction;
+        };
+
 	class InputMovementReq : public BaseReq
 	{
 	public:
-		InputMovementReq() : BaseReq(REQ_GROUP_ID::INPUT, REQ_ID_INPUT::MOVEMENT) {};
+            InputMovementReq() : BaseReq(REQ_GROUP_ID::POSITION, REQ_ID_POSITION::MOVE){};
 
 		bool up;
 		bool down;

@@ -49,6 +49,12 @@
     <ClCompile Include="Protobuf\Vector3.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
+    <ClCompile Include="Protobuf\MoveReq.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\MoveRes.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -83,6 +89,12 @@
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
     <ClInclude Include="Protobuf\Vector3.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\MoveReq.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\MoveRes.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
   </ItemGroup>

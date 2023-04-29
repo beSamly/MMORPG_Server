@@ -102,6 +102,9 @@
     <Filter Include="Source Files\GameSystem\Skill\Handler">
       <UniqueIdentifier>{95cf852a-554e-489b-b491-3d6099d54e94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Macro">
+      <UniqueIdentifier>{66b84789-bc58-4f2b-b6ad-74b0c482e977}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -176,7 +179,7 @@
     <ClInclude Include="INetworkController.h">
       <Filter>Source Files\NetworkSystem\Controller\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="InputReqController.h">
+    <ClInclude Include="PositionController.h">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
@@ -197,7 +200,7 @@
     <ClInclude Include="IGameSystemController.h">
       <Filter>Source Files\GameSystem\ReqController\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="GameInputController.h">
+    <ClInclude Include="GamePositionController.h">
       <Filter>Source Files\GameSystem\ReqController\Input</Filter>
     </ClInclude>
     <ClInclude Include="NavigationMeshAgentManager.h">
@@ -261,6 +264,9 @@
     <ClInclude Include="Monster.h">
       <Filter>Source Files\GameSystem\Object</Filter>
     </ClInclude>
+    <ClInclude Include="LogMacro.h">
+      <Filter>Source Files\Macro</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -323,7 +329,7 @@
     <ClCompile Include="AuthController.cpp">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="InputReqController.cpp">
+    <ClCompile Include="PositionController.cpp">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
@@ -341,7 +347,7 @@
     <ClCompile Include="GameGlobalController.cpp">
       <Filter>Source Files\GameSystem\ReqController\Global</Filter>
     </ClCompile>
-    <ClCompile Include="GameInputController.cpp">
+    <ClCompile Include="GamePositionController.cpp">
       <Filter>Source Files\GameSystem\ReqController\Input</Filter>
     </ClCompile>
     <ClCompile Include="NavigationMeshAgentManager.cpp">
