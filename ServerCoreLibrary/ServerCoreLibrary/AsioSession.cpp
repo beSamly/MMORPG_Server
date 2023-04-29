@@ -49,8 +49,8 @@ void AsioSession::DoRead()
                                else
                                {
                                    // OnError();
-
-                                   OnDisconnect();
+                                   socket.close();
+                                   OnDisconnect(ec);
                                }
                            });
 }
@@ -65,11 +65,13 @@ void AsioSession::Send(shared_ptr<SendBuffer> sendBuffer)
                       {
                           if (!ec)
                           {
-                              DoRead();
+                              //Echo Server 예제를 봐서 DoRead를 호출한 것 같은데 이렇게 될 경우 소켓 연결 끊어질 때 Send함수 보낸 만큼 async_read_some 함수에 인자로 넘긴 콜백이 실행된다..
+                              //DoRead();
                           }
                           else
                           {
-                              OnDisconnect();
+                              socket.close();
+                              OnDisconnect(ec);
                           }
                       });
 }
@@ -86,8 +88,8 @@ void AsioSession::Connect(string address, int port)
                              }
                              else
                              {
-                                 std::cout << "[AsionSession] connection failed. error = " << ec << std::endl;
-                                 OnDisconnect();
+                                 socket.close();
+                                 OnDisconnect(ec);
                              }
                          });
 }
@@ -118,7 +120,7 @@ int AsioSession::OnRecv(BYTE* buffer, int len)
 
 void AsioSession::OnConnect() { OnConnectCallback(shared_from_this()); }
  
-void AsioSession::OnDisconnect() { OnDisconnectCallback(shared_from_this()); }
+void AsioSession::OnDisconnect(std::error_code err) { OnDisconnectCallback(shared_from_this(), err); }
 
 std::shared_ptr<AsioSession> AsioSession::GetSessionRef() {
     return shared_from_this();

@@ -71,7 +71,8 @@ void ProxyManager::Connect(string address, int port, SERVER_TYPE type)
     session->SetOnRecvCallback([&](shared_ptr<AsioSession> client, BYTE* buffer, int len)
                                { OnRecv(client, buffer, len); });
 
-    session->SetOnDisconnectCallback([&](shared_ptr<AsioSession> client) { OnDisconnect(client); });
+    session->SetOnDisconnectCallback([&](shared_ptr<AsioSession> client, std::error_code err)
+                                     { OnDisconnect(client, err); });
     session->SetConnectionInfo(address, port);
     session->Connect();
     AddProxy((int)type, session);
@@ -108,7 +109,7 @@ void ProxyManager::OnConnect(shared_ptr<AsioSession> session)
     OnConnectCallback(proxySession, proxySession->GetServerType());
 }
 
-void ProxyManager::OnDisconnect(shared_ptr<AsioSession> session)
+void ProxyManager::OnDisconnect(shared_ptr<AsioSession> session, std::error_code err)
 {
     WRITE_LOCK;
 

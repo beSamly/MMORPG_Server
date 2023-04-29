@@ -16,6 +16,6 @@ private:
 
 public:
     bool isAuthenticated = false;
-    int tempClientId = 0;
+    int clientId = 0;
     int playerId = 0;
 };

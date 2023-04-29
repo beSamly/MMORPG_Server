@@ -12,7 +12,7 @@ using GameSystemReq::EnterSceneReq;
 using PacketDef::PACKET_GROUP_ID;
 using PacketDef::PACKET_ID_GLOBAL;
 
-GameGlobalController::GameGlobalController(sptr<GameSystem> paramGameSystem, sptr<Logger> paramLogger) : gameSystem(paramGameSystem), logger(paramLogger)
+GameGlobalController::GameGlobalController(sptr<GameSystem> paramGameSystem) : gameSystem(paramGameSystem)
 {
     mapProcessFunc.emplace(REQ_ID_GLOBAL::ENTER_SCENE, TO_BASE_COMMAND_PROCESS_FUNC(ProcessEnterScene));
 
@@ -29,7 +29,7 @@ int GameGlobalController::Process(sptr<Scene>& scene, sptr<BaseReq>& command)
     }
     else
     {
-        // logger->Error("GameGlobalController has no process function for commandId = {}", command->commandId);
+        // LOG_ERROR("GameGlobalController has no process function for commandId = {}", command->commandId);
         return RES_CODE::CODE_PROCESS_FUNC_NOT_FOUND;
     }
 }

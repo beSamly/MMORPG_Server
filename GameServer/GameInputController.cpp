@@ -12,7 +12,7 @@ using GameSystemReq::REQ_ID_INPUT;
 using PacketDef::PACKET_GROUP_ID;
 using PacketDef::PACKET_ID_INPUT;
 
-GameInputController::GameInputController(sptr<GameSystem> paramGameSystem, sptr<Logger> paramLogger) : gameSystem(paramGameSystem), logger(paramLogger)
+GameInputController::GameInputController(sptr<GameSystem> paramGameSystem) : gameSystem(paramGameSystem)
 {
     // mapProcessFunc[REQ_ID_INPUT::MOVEMENT] = TO_PLAYER_COMMAND_PROCESS_FUNC(ProcessInputMovement);
     mapProcessFunc.emplace(REQ_ID_INPUT::MOVEMENT, TO_PLAYER_COMMAND_PROCESS_FUNC(ProcessInputMovement));
@@ -26,7 +26,7 @@ int GameInputController::Process(sptr<Scene>& scene, sptr<BaseReq>& command)
     sptr<Player> player = gameSystem->playerManager->GetPlayer(command->playerId);
     if (player == nullptr)
     {
-        // logger->Error("Player not found from scene for sceneName = {} playerId = {}", scene->sceneName, command->playerId);
+        // LOG_ERROR("Player not found from scene for sceneName = {} playerId = {}", scene->sceneName, command->playerId);
         return RES_CODE::CODE_PLAYER_NOT_FOUND;
     }
 
@@ -36,7 +36,7 @@ int GameInputController::Process(sptr<Scene>& scene, sptr<BaseReq>& command)
     }
     else
     {
-        // logger->Error("GameGlobalController has no process function for commandId = {}", command->commandId);
+        // LOG_ERROR("GameGlobalController has no process function for commandId = {}", command->commandId);
         return RES_CODE::CODE_PROCESS_FUNC_NOT_FOUND;
     }
 }

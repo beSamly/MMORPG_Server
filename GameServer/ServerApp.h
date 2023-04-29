@@ -14,7 +14,6 @@ public:
 	sptr<GameSystem> gameSystem;
 	sptr<DataSystem> dataSystem;
 	sptr<NetworkSystem> networkSystem;
-	sptr<Logger> logger;
 
 public:
 	ServerApp();

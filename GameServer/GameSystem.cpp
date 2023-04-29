@@ -19,13 +19,13 @@ GameSystem::GameSystem(sptr<DataSystem> p_dataSystem) : dataSystem(p_dataSystem)
 {
 	playerManager = make_unique<PlayerManager>();
 	sceneManager = make_unique<SceneManager>();
-	logger = make_shared<Logger>("dummy path");
+	//logger = make_shared<Logger>("dummy path");
     gameSystemUpdater = make_unique<GameSystemUpdater>();
 }
 
 void GameSystem::Init()
 {
-	reqControllerContainer = make_unique<GameSystemControllerContainer>(shared_from_this(), logger);
+	reqControllerContainer = make_unique<GameSystemControllerContainer>(shared_from_this());
 	InitSceneManager();
 }
 
@@ -42,7 +42,7 @@ void GameSystem::InitSceneManager()
 		sptr<PhysicsEngine::NavigationMeshAgent> navigationMeshAgent = dataSystem->navigationMeshAgentManager->GetNavigationMeshAgent(sceneInfo.sceneName);
 		if (navigationMeshAgent == nullptr)
 		{
-			logger->Error("NavigationMeshAgent not found for sceneName = " + sceneInfo.sceneName);
+			LOG_ERROR("NavigationMeshAgent not found for sceneName = " + sceneInfo.sceneName);
 		}
 
 		scene->navigationMeshAgent = navigationMeshAgent;
@@ -64,7 +64,7 @@ void GameSystem::InitSceneManager()
 //     sptr<Scene> scene = GetSceneByPlayerId(playerId);
 //     if (scene == nullptr)
 //     {
-//         logger->Error("Scene not found for playerId = {}", playerId);
+//         LOG_ERROR("Scene not found for playerId = {}", playerId);
 //         return;
 //     }
 //
@@ -73,7 +73,7 @@ void GameSystem::InitSceneManager()
 
 void GameSystem::UpdateScene(int threadId, float deltaTime)
 {
-    //logger->Debug("[GameSystem] deltaTime = " + std::to_string(deltaTime));
+    //LOG_DEBUG("[GameSystem] deltaTime = " + std::to_string(deltaTime));
 	
 	// Scene 몇개 찾아서
 	// loop 돌면서
@@ -96,7 +96,7 @@ void GameSystem::UpdateScene(int threadId, float deltaTime)
 			}
 			else
 			{
-				logger->Error("GameSystemControllerContainer has no controller for commandGroupId = " + command->commandGroupId);
+				LOG_ERROR("GameSystemControllerContainer has no controller for commandGroupId = " + command->commandGroupId);
 			}
 			copied.pop();
 		}

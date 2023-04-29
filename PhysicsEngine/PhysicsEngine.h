@@ -9,6 +9,8 @@
 using std::map;
 using std::string;
 using std::vector;
+template <typename T>
+using sptr = std::shared_ptr<T>;
 
 namespace PhysicsEngine
 {
@@ -492,24 +494,24 @@ namespace PhysicsEngine
 
     public:
         string sceneName;
-        map<string, Mesh> mapMesh;
-        map<string, GridInfo> mapGridInfo;
+        map<string, sptr<Mesh>> mapMesh;
+        map<string, sptr<GridInfo>> mapGridInfo;
 
         void SetGridSize(int gridSize) { GRID_SIZE = gridSize; }
 
         // !!DEPRECATED!!
-        void AddTriangle(string meshName, Triangle triangle) { mapMesh[meshName].AddTriangle(triangle); }
+        void AddTriangle(string meshName, Triangle& triangle) { mapMesh[meshName]->AddTriangle(triangle); }
 
-        void AddGridInfo(GridInfo gridInfo) { mapGridInfo[gridInfo.gridIndex] = gridInfo; }
+        void AddGridInfo(sptr<GridInfo> gridInfo) { mapGridInfo[gridInfo->gridIndex] = gridInfo; }
 
-        void AddMesh(Mesh mesh)
+        void AddMesh(sptr<Mesh> mesh)
         {
-            if (mapMesh.count(mesh.name))
+            if (mapMesh.count(mesh->name))
             {
                 //!!ERROR
             }
 
-            mapMesh[mesh.name] = mesh;
+            mapMesh[mesh->name] = mesh;
         }
 
         // Version 2 - 위치를 기반으로 GridIndex를 알아내고 해당 Grid에 인접한 다른
@@ -534,13 +536,13 @@ namespace PhysicsEngine
                 return position;
             }
 
-            GridInfo& gridInfo = mapGridInfo[gridIndex];
+            sptr<GridInfo> gridInfo = mapGridInfo[gridIndex];
             vector<CollisionInfo> vecTotalCollisionInfo;
 
-            for (AdjacentMeshInfo& adjacentMeshInfo : gridInfo.vecAdjacentMeshInfo)
+            for (AdjacentMeshInfo& adjacentMeshInfo : gridInfo->vecAdjacentMeshInfo)
             {
                 string meshName = adjacentMeshInfo.meshName;
-                Mesh& mesh = mapMesh[meshName];
+                sptr<Mesh> mesh = mapMesh[meshName];
 
                 bool isTerrain = meshName.find("Terrain") != std::string::npos ? true : false;
                 if (isTerrain)
@@ -577,17 +579,17 @@ namespace PhysicsEngine
 
         // Terrain 과의 가장 정확한 충돌 정보 중 가장 정확한 정보 단 1개 리턴한다.
     private:
-        CollisionInfo GetBestCollisionInfo_From_Terrain(Mesh& mesh, vector<int>& triangleIndicesToCheck, Vector3& position, float radius)
+        CollisionInfo GetBestCollisionInfo_From_Terrain(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, Vector3& position, float radius)
         {
             vector<CollisionInfo> vecCollisionInfo;
             for (int triangleIndex : triangleIndicesToCheck)
             {
-                Triangle& triangle = mesh.vecTriangle[triangleIndex];
+                Triangle& triangle = mesh->vecTriangle[triangleIndex];
 
                 CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
                 if (collisionInfo.IsCollided())
                 {
-                    collisionInfo.fromMeshName = mesh.name;
+                    collisionInfo.fromMeshName = mesh->name;
                     collisionInfo.fromTriangle = triangle;
 
                     vecCollisionInfo.push_back(collisionInfo);
@@ -624,7 +626,7 @@ namespace PhysicsEngine
 
         // Object 와의 충돌한 정보 중 DotProductType 별로 가장 정확한 충돌 정보를
         // 리턴한다.
-        vector<CollisionInfo> GetBestCollisionInfo_From_Object(Mesh& mesh, vector<int>& triangleIndicesToCheck, Vector3 position, float radius)
+        vector<CollisionInfo> GetBestCollisionInfo_From_Object(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, Vector3 position, float radius)
         {
             // Ver1 - Vector3(1,0,0) 와 DotProduct를 계산해서 음수, 0, 양수에 해당하는
             // normal들의 충돌 정보를 vec 에 모은다.(비슷한 방향에서 발생한 충돌 정보
@@ -636,12 +638,12 @@ namespace PhysicsEngine
             // 충돌한 모든 정보를 DotProductType 기준으로 모은다.
             for (int triangleIndex : triangleIndicesToCheck)
             {
-                Triangle triangle = mesh.vecTriangle[triangleIndex];
+                Triangle triangle = mesh->vecTriangle[triangleIndex];
 
                 CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
                 if (collisionInfo.IsCollided())
                 {
-                    collisionInfo.fromMeshName = mesh.name;
+                    collisionInfo.fromMeshName = mesh->name;
                     collisionInfo.fromTriangle = triangle;
 
                     // 여기서 2가지 방법의 장단점이 있다.

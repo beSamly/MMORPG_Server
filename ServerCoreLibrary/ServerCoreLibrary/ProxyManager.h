@@ -92,5 +92,5 @@ public:
 private:
 	void OnConnect(shared_ptr<AsioSession> session);
 	void OnRecv(shared_ptr<AsioSession> session, BYTE* buffer, int len);
-	void OnDisconnect(shared_ptr<AsioSession> session);
+	void OnDisconnect(shared_ptr<AsioSession> session, std::error_code err);
 };

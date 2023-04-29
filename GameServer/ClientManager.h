@@ -10,7 +10,7 @@ public:
 private:
     USE_LOCK;
     uptr<map<int, sptr<ClientSession>>> clientMap = make_unique<map<int, sptr<ClientSession>>>();
-    int tempProxyId = 1;
+    int clientId = 1;
 
 public:
     void AddClient(sptr<ClientSession> client);

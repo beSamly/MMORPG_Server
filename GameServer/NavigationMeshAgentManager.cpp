@@ -58,8 +58,8 @@ void NavigationMeshAgentManager::LoadSceneData()
     const auto& listMesh = d["listMesh"].GetArray();
     for (auto& jsonMesh : listMesh)
     {
-        PhysicsEngine::Mesh mesh;
-        mesh.name = jsonMesh["meshName"].GetString();
+        sptr<PhysicsEngine::Mesh> mesh = make_shared<PhysicsEngine::Mesh>();
+        mesh->name = jsonMesh["meshName"].GetString();
 
         const auto& listTriangle = jsonMesh["listTriangle"].GetArray();
         for (auto& jsonTriangle : listTriangle)
@@ -79,19 +79,17 @@ void NavigationMeshAgentManager::LoadSceneData()
             PhysicsEngine::Triangle triangle(vertices[0], vertices[1], vertices[2]);
             triangle.name = jsonTriangle["triangleName"].GetString();
      
-            mesh.vecTriangle.push_back(triangle);
+            mesh->vecTriangle.push_back(triangle);
         }
 
         navigationAgent->AddMesh(mesh);
     }
 
-    vector<PhysicsEngine::GridInfo> vecGridInfo;
-
     const auto& listGridInfo = d["listGridInfo"].GetArray();
     for (auto& jsonGridInfo : listGridInfo)
     {
-        PhysicsEngine::GridInfo gridInfo;
-        gridInfo.gridIndex = jsonGridInfo["gridIndex"].GetString();
+        sptr<PhysicsEngine::GridInfo> gridInfo = make_shared<PhysicsEngine::GridInfo>();
+        gridInfo->gridIndex = jsonGridInfo["gridIndex"].GetString();
 
         const auto& listAdjacentTriangleInfo = jsonGridInfo["listAdjacentMeshInfo"].GetArray();
         for (auto& jsonAdjacentTriangleInfo : listAdjacentTriangleInfo)
@@ -104,7 +102,7 @@ void NavigationMeshAgentManager::LoadSceneData()
             {
                 adjacentMeshInfo.adjacentTriangleIndices.push_back(index.GetInt());
             }
-            gridInfo.vecAdjacentMeshInfo.push_back(adjacentMeshInfo);
+            gridInfo->vecAdjacentMeshInfo.push_back(adjacentMeshInfo);
         }
 
         navigationAgent->AddGridInfo(gridInfo);

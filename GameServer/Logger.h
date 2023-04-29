@@ -5,20 +5,43 @@
 
 using std::string;
 
+// class Logger
+//{
+// private:
+//     string filePath;
+//
+// public:
+//     Logger(string paramfilePath) : filePath(paramfilePath) {}
+//
+//     static void Info(string str) { spdlog::info(str); }
+//
+//     static void Error(string str) { spdlog::error(str); }
+//
+//     static void Debug(string str) { spdlog::debug(str); }
+// };
+
 class Logger
 {
 private:
-	string filePath;
+    Logger(){};
+    Logger(const Logger& ref){};
+    Logger& operator=(const Logger& ref){};
 
 public:
-	Logger(string paramfilePath) : filePath(paramfilePath) {}
+    ~Logger(){};
 
-	void Info(string str) { spdlog::info(str); }
+    static string filePath;
+    static void SetFilaPath(string path) { filePath = path; }
 
-	void Error(string str)
-	{
-		spdlog::error(str);
-	}
+    static const Logger& GetInstance()
+    {
+        static Logger s;
+        return s;
+    }
 
-	void Debug(string str) { spdlog::debug(str); }
+    static void Info(string str) { spdlog::info(str); }
+
+    static void Error(string str) { spdlog::error(str); }
+
+    static void Debug(string str) { spdlog::debug(str); }
 };

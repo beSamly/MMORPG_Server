@@ -4,10 +4,10 @@
 #include "GameGlobalController.h"
 #include "GameInputController.h"
 
-GameSystemControllerContainer::GameSystemControllerContainer(sptr<GameSystem> gameSystem, sptr<Logger> logger)
+GameSystemControllerContainer::GameSystemControllerContainer(sptr<GameSystem> gameSystem)
 {
-    sptr<GameGlobalController> globalController = make_shared<GameGlobalController>(gameSystem, logger);
-    sptr<GameInputController> inputController = make_shared<GameInputController>(gameSystem, logger);
+    sptr<GameGlobalController> globalController = make_shared<GameGlobalController>(gameSystem);
+    sptr<GameInputController> inputController = make_shared<GameInputController>(gameSystem);
 
     mapController.emplace(REQ_GROUP_ID::GLOBAL, globalController);
     mapController.emplace(REQ_GROUP_ID::INPUT, inputController);

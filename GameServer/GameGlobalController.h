@@ -10,12 +10,11 @@ using GameSystemReqProcessCommon::BaseCommandProcessFunc;
 class GameGlobalController : public IGameSystemController
 {
 private:
-	sptr<Logger> logger;
     sptr<GameSystem> gameSystem;
 	map<REQ_ID_GLOBAL, BaseCommandProcessFunc> mapProcessFunc;
 
 public:
-	GameGlobalController(sptr<GameSystem> paramGameSystem, sptr<Logger> logger);
+	GameGlobalController(sptr<GameSystem> paramGameSystem);
 	virtual int Process(sptr<Scene>& scene, sptr<BaseReq>& command) override;
 
 private:

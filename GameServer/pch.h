@@ -51,6 +51,11 @@ using wptr = std::weak_ptr<T>;
 #define WRITE_LOCK WRITE_LOCK_IDX(0)
 #define READ_LOCK READ_LOCK_IDX(0)
 
+#include "Logger.h"
+#define LOG_DEBUG(str) Logger::GetInstance().Debug(str);
+#define LOG_ERROR(str) Logger::GetInstance().Error(str);
+#define LOG_INFO(str) Logger::GetInstance().Info(str);
+
 /*---------------
 		  Crash
 ---------------*/

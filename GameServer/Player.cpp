@@ -4,6 +4,7 @@
 #include "PositionUpdate.pb.h"
 #include <Packet.h>
 #include "PacketDef.h"
+#include "Logger.h"
 
 using PacketDef::PACKET_GROUP_ID;
 using PacketDef::PACKET_ID_GLOBAL;
@@ -24,6 +25,7 @@ void Player::Send(std::shared_ptr<SendBuffer> buffer)
     }
     else
     {
+        LOG_DEBUG("player has no tcp session");
         //[TODO] ERROR
     }
 }
@@ -73,7 +75,7 @@ void Player::UpdatePosition(float deltaTime)
     }
 
     // ม฿ทย
-    //addPosition += Vector3(0.0f, -movePosition, 0.0f);
+    // addPosition += Vector3(0.0f, -movePosition, 0.0f);
 
     AddPosition(addPosition);
 }

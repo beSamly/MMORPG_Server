@@ -19,12 +19,12 @@ public:
 public:
     void SetOnAcceptCallback(function<void(shared_ptr<AsioSession>)> callback) { onAcceptCallback = callback; }
     void SetOnClientRecv(function<void(shared_ptr<AsioSession>, BYTE*, int32)> callback) { onClientRecv = callback; }
-    void SetOnClientDisconnect(function<void(shared_ptr<AsioSession>)> callback) { onClientDisconnect = callback; }
+    void SetOnClientDisconnect(function<void(shared_ptr<AsioSession>, std::error_code)> callback) { onClientDisconnect = callback; }
 
 protected:
     function<void(shared_ptr<AsioSession>)> onAcceptCallback;
     function<void(shared_ptr<AsioSession>, BYTE*, int32)> onClientRecv;
-    function<void(shared_ptr<AsioSession>)> onClientDisconnect;
+    function<void(shared_ptr<AsioSession>, std::error_code err)> onClientDisconnect;
 
 private:
     virtual shared_ptr<AsioSession> CreateSession();

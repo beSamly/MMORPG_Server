@@ -26,20 +26,20 @@ public:
         OnRecvCallback = callback;
     }
 
-    void SetOnDisconnectCallback(function<void(std::shared_ptr<AsioSession>)> callback) { OnDisconnectCallback = callback; }
+    void SetOnDisconnectCallback(function<void(std::shared_ptr<AsioSession>, std::error_code err)> callback) { OnDisconnectCallback = callback; }
     void SetOnConnectCallback(function<void(std::shared_ptr<AsioSession>)> callback) { OnConnectCallback = callback; }
     std::shared_ptr<AsioSession> GetSessionRef();
 
 private:
     /* 네트워크 콜백 */
     function<void(std::shared_ptr<AsioSession>, BYTE*, int32)> OnRecvCallback;
-    function<void(std::shared_ptr<AsioSession>)> OnDisconnectCallback;
+    function<void(std::shared_ptr<AsioSession>, std::error_code err)> OnDisconnectCallback;
     function<void(std::shared_ptr<AsioSession>)> OnConnectCallback;
     
     void DoRead();
     int  OnRecv(BYTE* buffer, int len);
     void OnConnect();
-    void OnDisconnect();
+    void OnDisconnect(std::error_code err);
 
 private:
     /* Utility */

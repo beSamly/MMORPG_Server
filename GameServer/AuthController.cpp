@@ -14,8 +14,8 @@ using GameSystemReq::EnterSceneReq;
 
 #define PROCESS(FUNC) [&]() -> int { return FUNC(); }
 
-AuthController::AuthController(sptr<GameSystem> paramGameSystem, sptr<DataSystem> paramDataSystem, sptr<Logger> paramLogger)
-    : gameSystem(paramGameSystem), dataSystem(paramDataSystem), logger(paramLogger)
+AuthController::AuthController(sptr<GameSystem> paramGameSystem, sptr<DataSystem> paramDataSystem)
+    : gameSystem(paramGameSystem), dataSystem(paramDataSystem)
 {
     INetworkController::AddValidator([&](sptr<ClientSession>& session) -> bool { return RequestValidator::IsPlayerInScene(gameSystem, session); });
 
@@ -37,7 +37,7 @@ int AuthController::Process(sptr<ClientSession>& session, BYTE* buffer, int32 le
     }
     else
     {
-        logger->Error("AuthController has no process function for packetId = " + packetId);
+        LOG_ERROR("AuthController has no process function for packetId = " + packetId);
     }
 }
 
@@ -95,7 +95,7 @@ int AuthController::ProcessLoginReq(sptr<ClientSession>& session, BYTE* buffer, 
 
     if (result == RES_CODE::CODE_SUCCESS)
     {
-        logger->Info("login success for playerId = " + player->playerId);
+        LOG_INFO("login success for playerId = " + player->playerId);
 
         sptr<EnterSceneReq> command = make_shared<EnterSceneReq>();
         command->player = player;

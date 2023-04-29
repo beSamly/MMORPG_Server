@@ -4,13 +4,13 @@
 void ClientManager::AddClient(sptr<ClientSession> client)
 {
     WRITE_LOCK;
-    int proxyId = tempProxyId;
-    clientMap->emplace(proxyId, client);
-    tempProxyId++;
+    client->clientId = clientId;
+    clientMap->emplace(clientId, client);
+    clientId++;
     return;
 }
 
-void ClientManager::RemoveClient(int playerId) { clientMap->erase(playerId); }
+void ClientManager::RemoveClient(int clientId) { clientMap->erase(clientId); }
 
 void ClientManager::Update()
 {

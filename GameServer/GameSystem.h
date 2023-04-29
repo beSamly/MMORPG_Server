@@ -24,8 +24,6 @@ public:
 private:
     USE_LOCK;
 
-    sptr<Logger> logger;
-
     /* Command related */
     uptr<GameSystemControllerContainer> reqControllerContainer;
 

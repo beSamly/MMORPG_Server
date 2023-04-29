@@ -6,7 +6,7 @@
 
 using GameSystemReq::InputMovementReq;
 
-InputReqController::InputReqController(sptr<GameSystem> paramGameSystem, sptr<Logger> paramLogger) : gameSystem(paramGameSystem), logger(paramLogger)
+InputReqController::InputReqController(sptr<GameSystem> paramGameSystem) : gameSystem(paramGameSystem)
 {
     mapProcessFunc.emplace(PACKET_ID_INPUT::MOVEMENT, TO_PLAYER_PACKET_PROCESS_FUNC(ProcessInputMovement));
 }
@@ -22,7 +22,7 @@ int InputReqController::Process(sptr<ClientSession>& session, BYTE* buffer, int3
     sptr<Player> player = gameSystem->playerManager->GetPlayer(session->playerId);
     if (player == nullptr)
     {
-        logger->Error("InputReqController player not found for playerId = " + session->playerId);
+        LOG_ERROR("InputReqController player not found for playerId = " + session->playerId);
         return RES_CODE::CODE_PLAYER_NOT_FOUND;
     }
 
@@ -33,7 +33,7 @@ int InputReqController::Process(sptr<ClientSession>& session, BYTE* buffer, int3
     }
     else
     {
-        logger->Error("InputReqController has no process function for packetId = " + packetId);
+        LOG_ERROR("InputReqController has no process function for packetId = " + packetId);
     }
 
     return RES_CODE::CODE_SUCCESS;
