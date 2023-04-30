@@ -5,28 +5,26 @@
 #include <Packet.h>
 #include "PacketDef.h"
 #include "Logger.h"
+#include "GameSystemConstant.h"
 
+using GameSystemConstant::GRAVITY;
 using PacketDef::PACKET_GROUP_ID;
 using PacketDef::PACKET_ID_POSITION;
 
-void Player::Init()
+Player::Player() : TransformEntity()
 {
-    inputController = make_unique<InputController>();
     // transformController = make_unique<TransformEntity>();
     statController = make_unique<StatController>();
     skillController = make_unique<SkillController>();
 }
+
+void Player::Init() {}
 
 void Player::Send(std::shared_ptr<SendBuffer> buffer)
 {
     if (sptr<ClientSession> session = tcpSession.lock())
     {
         session->Send(buffer);
-    }
-    else
-    {
-        LOG_DEBUG("player has no tcp session");
-        //[TODO] ERROR
     }
 }
 
@@ -68,10 +66,10 @@ void Player::UpdatePosition(float deltaTime)
     float moveSpeed = statValue * deltaTime;
 
     // 이동하는 방향으로 이동속도만큼 이동
-    addPosition += (inputController->GetMoveDirection() * moveSpeed);
+    addPosition += (GetMoveDirection() * moveSpeed);
 
     //[TODO] 중력 - 일단 이동속도 만큼 중력 나중에 바꿔라
-    addPosition += Vector3(0.0f, -moveSpeed, 0.0f);
+    addPosition += (Vector3(0.0f, -GRAVITY, 0.0f) * deltaTime);
 
     AddPosition(addPosition);
 }

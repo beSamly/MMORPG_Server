@@ -1,6 +1,12 @@
 #include "pch.h"
 #include "Scene.h"
 
+Scene::Scene(string paramSceneName) : sceneName(paramSceneName)
+{
+    spawnManager = make_unique<SpawnManager>();
+    npcManager = make_unique<NPCManager>();
+}
+
 void Scene::PushCommand(sptr<BaseReq> command)
 {
     WRITE_LOCK;
@@ -14,5 +20,3 @@ queue<sptr<BaseReq>> Scene::FlushQueue()
     std::swap(copied, commandQueue);
     return copied;
 }
-
-void Scene::Update(float deltaTime) {}

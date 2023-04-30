@@ -12,8 +12,6 @@ public:
     void LoadJsonData();
     sptr<PhysicsEngine::NavigationMeshAgent> GetNavigationMeshAgent(string sceneName);
 
-	void LoadSceneDataVer2();
-
 private:
     void LoadSceneData();
 };

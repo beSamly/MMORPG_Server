@@ -1,18 +1,22 @@
 #pragma once
-#include "Scene.h"
+#include "SpawnInfo.h"
+#include "TransformEntity.h"
 
-class SpawnInfo
+struct NextSpawnTimeInfo
 {
-	int monsterIndex;
+    int nextSpawnTime;
+    sptr<TransformEntity> target;
+
+    bool operator<(const NextSpawnTimeInfo s) const { return this->nextSpawnTime > s.nextSpawnTime; }
 };
 
 class SpawnManager
 {
 private:
-	USE_LOCK;
-	sptr<map<string, sptr<Scene>>> mapScene;
+    std::priority_queue<NextSpawnTimeInfo> spawnQueue;
 
 public:
-	SpawnManager();
-	void Update(float deltaTime);
+    SpawnManager();
+    void AddToSpawnQueue(sptr<TransformEntity> npc, int nextSpawnTime);
+    vector<sptr<TransformEntity>> GetReadyToSpawn();
 };

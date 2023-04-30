@@ -18,7 +18,6 @@ private:
     /*int currentHp;
     int currentMp;*/
 
-
 public:
     /* Stat related */
     void SetBaseStat(BaseStatInfo paramBaseStat) { baseStat = paramBaseStat; }

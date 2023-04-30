@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package Protocol;
+
+message StatInfo {
+  int32 maxHP = 1;
+  int32 maxHP = 2;
+}

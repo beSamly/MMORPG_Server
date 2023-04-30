@@ -10,6 +10,7 @@
 #include "Logger.h"
 #include "SceneInfo.h"
 #include "GameSystemUpdater.h"
+#include "NPC.h"
 
 DWORD intervalTick = 1000; // 3초에 한 번씩
 
@@ -17,108 +18,74 @@ using PhysicsEngine::Vector3;
 
 GameSystem::GameSystem(sptr<DataSystem> p_dataSystem) : dataSystem(p_dataSystem)
 {
-	playerManager = make_unique<PlayerManager>();
-	sceneManager = make_unique<SceneManager>();
-	//logger = make_shared<Logger>("dummy path");
-    gameSystemUpdater = make_unique<GameSystemUpdater>();
+    playerManager = make_unique<PlayerManager>();
+    sceneManager = make_unique<SceneManager>();
 }
 
 void GameSystem::Init()
 {
-	reqControllerContainer = make_unique<GameSystemControllerContainer>(shared_from_this());
-	InitSceneManager();
+    gameSystemUpdater = make_unique<GameSystemUpdater>(shared_from_this());
+    InitSceneManager();
 }
 
 void GameSystem::InitSceneManager()
 {
-	vector<SceneInfo> vecSceneInfo = dataSystem->sceneInfoManager->GetAllSceneInfo();
+    vector<SceneInfo> vecSceneInfo = dataSystem->sceneInfoManager->GetAllSceneInfo();
 
-	for (SceneInfo& sceneInfo : vecSceneInfo)
-	{
-		// 씬 객체 생성
-		sptr<Scene> scene = make_shared<Scene>(sceneInfo.sceneName);
+    for (SceneInfo& sceneInfo : vecSceneInfo)
+    {
+        // 씬 객체 생성
+        sptr<Scene> scene = make_shared<Scene>(sceneInfo.sceneName);
 
-		// 씬의 네비게이션 매쉬 에이전트 객체 찾기
-		sptr<PhysicsEngine::NavigationMeshAgent> navigationMeshAgent = dataSystem->navigationMeshAgentManager->GetNavigationMeshAgent(sceneInfo.sceneName);
-		if (navigationMeshAgent == nullptr)
-		{
-			LOG_ERROR("NavigationMeshAgent not found for sceneName = " + sceneInfo.sceneName);
-		}
+        // 씬의 네비게이션 매쉬 에이전트 객체 찾기
+        sptr<PhysicsEngine::NavigationMeshAgent> navigationMeshAgent = dataSystem->navigationMeshAgentManager->GetNavigationMeshAgent(sceneInfo.sceneName);
+        if (navigationMeshAgent == nullptr)
+        {
+            LOG_ERROR("NavigationMeshAgent not found for sceneName = " + sceneInfo.sceneName);
+        }
+        scene->navigationMeshAgent = navigationMeshAgent;
 
-		scene->navigationMeshAgent = navigationMeshAgent;
+        // 씬의 SpawnManager 초기화
+        SpawnInfo spawnInfo = dataSystem->spawnInfoManager->GetSpawnInfo(scene->sceneName);
+        for (NPCSpawnInfo& npcSpawnInfo : spawnInfo.vecNPCSpawnInfo)
+        {
+            for (int i = 0; i < npcSpawnInfo.totalNumber; i++)
+            {
+                int spawnPointSize = npcSpawnInfo.vecSpawnPoint.size();
+                PhysicsEngine::Vector3 spawnPoint = npcSpawnInfo.vecSpawnPoint[i % spawnPointSize];
+                NPCInfo npcInfo = dataSystem->npcInfoManager->GetNPCInfo(npcSpawnInfo.npcIndex);
+                BaseStatInfo baseStatInfo = dataSystem->baseStatManager->GetBaseStat(npcInfo.BaseStatIndex);
 
-		// 씬 매니저에 추가
-		sceneManager->AddScene(scene);
-	}
+                sptr<NPC> npc = make_shared<NPC>();
+                npc->npcIndex = npcSpawnInfo.npcIndex;
+                npc->npcName = npcInfo.npcName;
+                npc->npcId = (npc->npcIndex * 100000) + i; //[TODO] 나중에 수정
+                npc->spawnCoolTime = npcSpawnInfo.spawnCoolTime;
+                npc->SetPosition(spawnPoint);
+                npc->statController->SetBaseStat(baseStatInfo);
+
+                scene->spawnManager->AddToSpawnQueue(npc, 0); // 초기화 할 때는 바로 spawn 하기 위해 0 대입
+            }
+        }
+
+        // 씬 매니저에 추가
+        sceneManager->AddScene(scene);
+    }
 }
-
-// void GameSystem::PushCommand(sptr<BaseReq> command)
-//{
-//     WRITE_LOCK;
-//     commandQueue.push(command);
-// }
-//
-// void GameSystem::PushCommandToScene(int playerId, sptr<BaseReq> command)
-//{
-//
-//     sptr<Scene> scene = GetSceneByPlayerId(playerId);
-//     if (scene == nullptr)
-//     {
-//         LOG_ERROR("Scene not found for playerId = {}", playerId);
-//         return;
-//     }
-//
-//     scene->PushCommand(command);
-// }
 
 void GameSystem::UpdateScene(int threadId, float deltaTime)
 {
-    //LOG_DEBUG("[GameSystem] deltaTime = " + std::to_string(deltaTime));
-	
-	// Scene 몇개 찾아서
-	// loop 돌면서
-	//  scene->flushqueue()
-	//  GameSystemControllerContainer->process(command) 느낌으로 갈까?
+    // LOG_DEBUG("[GameSystem] deltaTime = " + std::to_string(deltaTime));
+    for (auto& [sceneName, scene] : *sceneManager->GetAllScene())
+    {
+        vector<sptr<Player>> playersInScene = playerManager->GetPlayersById(scene->GetPlayerIdsInScene());
 
-	for (auto& [sceneName, scene] : *sceneManager->GetAllScene())
-	{
-		// 커맨드 먼저 처리
-		queue<sptr<BaseReq>> copied = scene->FlushQueue();
-		while (!copied.empty())
-		{
-			sptr<BaseReq> command = copied.front();
-			int commandId = command->GetCommandId();
+        //씬 SpawnManager Update
+        gameSystemUpdater->UpdateEachScene(deltaTime, scene, playersInScene);
 
-			sptr<IGameSystemController> controller = reqControllerContainer->GetController(command->commandGroupId);
-			if (controller)
-			{
-				controller->Process(scene, command);
-			}
-			else
-			{
-				LOG_ERROR("GameSystemControllerContainer has no controller for commandGroupId = " + command->commandGroupId);
-			}
-			copied.pop();
-		}
-
-		std::set<int> playerIds = scene->GetAllPlayerId();
-		vector<sptr<Player>> allPlayer; // 씬에 있는 모든 플레이어
-		for (const int& playerId : playerIds)
-		{
-			sptr<Player> player = playerManager->GetPlayer(playerId);
-
-			if (player == nullptr)
-			{
-				//!! ERROR
-				continue;
-			}
-
-			allPlayer.push_back(player);
-		}
-
-		for (const sptr<Player>& player : allPlayer)
-		{
-			gameSystemUpdater->UpdateEachPlayer(deltaTime, scene, player, allPlayer);
-		}
-	};
+        for (sptr<Player>& player : playersInScene)
+        {
+            gameSystemUpdater->UpdateEachPlayer(deltaTime, scene, player, playersInScene);
+        }
+    };
 }

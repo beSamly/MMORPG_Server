@@ -1,12 +1,12 @@
 [
   {
     "SceneName": "Main",
-    "ListSpawnInfo": [
+    "ListNPCSpawnInfo": [
       {
         "NPCIndex": 1,
         "SpawnCoolTime": 500,
         "TotalNumber": 100,
-        "SpawnPoint": [
+        "ListSpawnPoint": [
           {
             "x": 420.7,
             "y": 117.0,

@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 #include "GameSystemReq.h"
+#include "PhysicsEngine.h"
+#include "SpawnManager.h"
+#include "NPCManager.h"
 
 using GameSystemReq::BaseReq;
 using std::string;
@@ -8,21 +11,22 @@ using std::string;
 class Scene
 {
 private:
-	USE_LOCK;
-	queue<sptr<BaseReq>> commandQueue;
-	std::set<int> setPlayer;
+    USE_LOCK;
+    queue<sptr<BaseReq>> commandQueue;
+    std::set<int> setPlayer;
 
 public:
-	string sceneName;
+    string sceneName;
     sptr<PhysicsEngine::NavigationMeshAgent> navigationMeshAgent;
+    uptr<SpawnManager> spawnManager;
+    uptr<NPCManager> npcManager;
 
 public:
-	Scene(string paramSceneName) : sceneName(paramSceneName) {}
+    Scene(string paramSceneName);
 
-	void PushCommand(sptr<BaseReq> command);
-	queue<sptr<BaseReq>> FlushQueue();
-	void Update(float deltaTime);
+    void PushCommand(sptr<BaseReq> command);
+    queue<sptr<BaseReq>> FlushQueue();
 
-	std::set<int> GetAllPlayerId() { return setPlayer; }
-	void AddPlayerId(int playerId) { setPlayer.insert(playerId); }
+    std::set<int> GetPlayerIdsInScene() { return setPlayer; }
+    void AddPlayerId(int playerId) { setPlayer.insert(playerId); }
 };

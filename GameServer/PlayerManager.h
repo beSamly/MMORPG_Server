@@ -5,16 +5,17 @@
 class PlayerManager
 {
 public:
-	PlayerManager();
+    PlayerManager();
 
 private:
-	USE_LOCK;
-	map<int, sptr<Player>> mapPlayer;
-	int tempPlayerId = 1;
+    USE_LOCK;
+    map<int, sptr<Player>> mapPlayer;
+    int tempPlayerId = 1;
 
 public:
-	void AddPlayer(sptr<Player> client);
-	sptr<Player> GetPlayer(int playerId);
-	void RemovePlayer(int playerId);
-	void Update();
+    void AddPlayer(sptr<Player> client);
+    sptr<Player> GetPlayer(int playerId);
+    vector<sptr<Player>> GetPlayersById(std::set<int> playerIds);
+    void RemovePlayer(int playerId);
+    void Update();
 };

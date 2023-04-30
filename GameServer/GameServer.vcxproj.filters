@@ -42,9 +42,6 @@
     <Filter Include="Source Files\GameSystem\Scene">
       <UniqueIdentifier>{1d432961-03d9-4109-8685-dcdd814b06b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\DataSystem\StaticData">
-      <UniqueIdentifier>{b3b5217b-dcd2-4bfe-9596-f06b27b747da}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\DataSystem\Data">
       <UniqueIdentifier>{d626696a-34e3-458f-b1c3-36a6e2d54afc}</UniqueIdentifier>
     </Filter>
@@ -104,6 +101,9 @@
     </Filter>
     <Filter Include="Source Files\Macro">
       <UniqueIdentifier>{66b84789-bc58-4f2b-b6ad-74b0c482e977}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DataSystem\StaticDataManager">
+      <UniqueIdentifier>{b3b5217b-dcd2-4bfe-9596-f06b27b747da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,7 +204,7 @@
       <Filter>Source Files\GameSystem\ReqController\Input</Filter>
     </ClInclude>
     <ClInclude Include="NavigationMeshAgentManager.h">
-      <Filter>Source Files\DataSystem\StaticData</Filter>
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClInclude>
     <ClInclude Include="ClientManager.h">
       <Filter>Source Files\NetworkSystem\Manager</Filter>
@@ -223,13 +223,13 @@
       <Filter>Source Files\GameSystem\ReqController</Filter>
     </ClInclude>
     <ClInclude Include="SceneInfoManager.h">
-      <Filter>Source Files\DataSystem\StaticData</Filter>
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClInclude>
     <ClInclude Include="SceneInfo.h">
       <Filter>Source Files\DataSystem\Data</Filter>
     </ClInclude>
     <ClInclude Include="BaseStatManager.h">
-      <Filter>Source Files\DataSystem\StaticData</Filter>
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClInclude>
     <ClInclude Include="BaseStatInfo.h">
       <Filter>Source Files\GameSystem\Object</Filter>
@@ -247,7 +247,7 @@
       <Filter>Source Files\GameSystem\Skill</Filter>
     </ClInclude>
     <ClInclude Include="SkillDataManager.h">
-      <Filter>Source Files\DataSystem\StaticData</Filter>
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClInclude>
     <ClInclude Include="GameSystemUpdater.h">
       <Filter>Source Files\GameSystem\Updater</Filter>
@@ -261,11 +261,32 @@
     <ClInclude Include="SpawnManager.h">
       <Filter>Source Files\GameSystem\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Source Files\GameSystem\Object</Filter>
-    </ClInclude>
     <ClInclude Include="LogMacro.h">
       <Filter>Source Files\Macro</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystemConstant.h">
+      <Filter>Source Files\GameSystem\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnInfoManager.h">
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnInfo.h">
+      <Filter>Source Files\DataSystem\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>Source Files\GameSystem\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCManager.h">
+      <Filter>Source Files\GameSystem\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCInfoManager.h">
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCInfo.h">
+      <Filter>Source Files\DataSystem\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="PatrolController.h">
+      <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -351,7 +372,7 @@
       <Filter>Source Files\GameSystem\ReqController\Input</Filter>
     </ClCompile>
     <ClCompile Include="NavigationMeshAgentManager.cpp">
-      <Filter>Source Files\DataSystem\StaticData</Filter>
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClCompile>
     <ClCompile Include="ClientManager.cpp">
       <Filter>Source Files\NetworkSystem\Manager</Filter>
@@ -363,10 +384,10 @@
       <Filter>Source Files\NetworkSystem\Object</Filter>
     </ClCompile>
     <ClCompile Include="SceneInfoManager.cpp">
-      <Filter>Source Files\DataSystem\StaticData</Filter>
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClCompile>
     <ClCompile Include="BaseStatManager.cpp">
-      <Filter>Source Files\DataSystem\StaticData</Filter>
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClCompile>
     <ClCompile Include="Skill.cpp">
       <Filter>Source Files\GameSystem\Skill</Filter>
@@ -378,7 +399,7 @@
       <Filter>Source Files\GameSystem\Skill</Filter>
     </ClCompile>
     <ClCompile Include="SkillDataManager.cpp">
-      <Filter>Source Files\DataSystem\StaticData</Filter>
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClCompile>
     <ClCompile Include="GameSystemUpdater.cpp">
       <Filter>Source Files\GameSystem\Updater</Filter>
@@ -395,8 +416,20 @@
     <ClCompile Include="TransformEntity.cpp">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
+    <ClCompile Include="SpawnInfoManager.cpp">
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC.cpp">
       <Filter>Source Files\GameSystem\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCManager.cpp">
+      <Filter>Source Files\GameSystem\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCInfoManager.cpp">
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="PatrolController.cpp">
+      <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

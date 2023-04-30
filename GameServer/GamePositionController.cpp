@@ -53,7 +53,7 @@ int GamePositionController::ProcessMoveReq(sptr<Scene>& scene, sptr<Player>& pla
             return RES_CODE::CODE_STRUCT_TYPE_MISMATCH;
         }
 
-        player->inputController->SetMoveDirection(moveReq->direction);
+        player->SetMoveDirection(moveReq->direction);
         return RES_CODE::CODE_SUCCESS;
     }();
 
@@ -61,6 +61,7 @@ int GamePositionController::ProcessMoveReq(sptr<Scene>& scene, sptr<Player>& pla
     res.set_result(result);
     Packet packet(PACKET_GROUP_ID::POSITION, PACKET_ID_POSITION::MOVE_RES);
     
+    //[TODO] 성공일 경우 Scene의 모든 Player 에게 보내기
     if (result == RES_CODE::CODE_SUCCESS)
     {
         res.mutable_direction()->set_x(moveReq->direction.x);
