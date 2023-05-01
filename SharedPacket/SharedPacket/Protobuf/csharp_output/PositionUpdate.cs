@@ -25,12 +25,13 @@ namespace Protocol {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChRQb3NpdGlvblVwZGF0ZS5wcm90bxIIUHJvdG9jb2waDVZlY3RvcjMucHJv",
-            "dG8iRwoOUG9zaXRpb25VcGRhdGUSEAoIdGFyZ2V0SWQYASABKAkSIwoIcG9z",
-            "aXRpb24YAiABKAsyES5Qcm90b2NvbC5WZWN0b3IzYgZwcm90bzM="));
+            "dG8iWwoOUG9zaXRpb25VcGRhdGUSEgoKdGFyZ2V0VHlwZRgBIAEoBRIQCgh0",
+            "YXJnZXRJZBgCIAEoBRIjCghwb3NpdGlvbhgDIAEoCzIRLlByb3RvY29sLlZl",
+            "Y3RvcjNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Protocol.Vector3Reflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.PositionUpdate), global::Protocol.PositionUpdate.Parser, new[]{ "TargetId", "Position" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.PositionUpdate), global::Protocol.PositionUpdate.Parser, new[]{ "TargetType", "TargetId", "Position" }, null, null, null, null)
           }));
     }
     #endregion
@@ -71,6 +72,7 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public PositionUpdate(PositionUpdate other) : this() {
+      targetType_ = other.targetType_;
       targetId_ = other.targetId_;
       position_ = other.position_ != null ? other.position_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -82,20 +84,32 @@ namespace Protocol {
       return new PositionUpdate(this);
     }
 
-    /// <summary>Field number for the "targetId" field.</summary>
-    public const int TargetIdFieldNumber = 1;
-    private string targetId_ = "";
+    /// <summary>Field number for the "targetType" field.</summary>
+    public const int TargetTypeFieldNumber = 1;
+    private int targetType_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string TargetId {
+    public int TargetType {
+      get { return targetType_; }
+      set {
+        targetType_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "targetId" field.</summary>
+    public const int TargetIdFieldNumber = 2;
+    private int targetId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int TargetId {
       get { return targetId_; }
       set {
-        targetId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        targetId_ = value;
       }
     }
 
     /// <summary>Field number for the "position" field.</summary>
-    public const int PositionFieldNumber = 2;
+    public const int PositionFieldNumber = 3;
     private global::Protocol.Vector3 position_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -121,6 +135,7 @@ namespace Protocol {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (TargetType != other.TargetType) return false;
       if (TargetId != other.TargetId) return false;
       if (!object.Equals(Position, other.Position)) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -130,7 +145,8 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (TargetId.Length != 0) hash ^= TargetId.GetHashCode();
+      if (TargetType != 0) hash ^= TargetType.GetHashCode();
+      if (TargetId != 0) hash ^= TargetId.GetHashCode();
       if (position_ != null) hash ^= Position.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -150,12 +166,16 @@ namespace Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (TargetId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(TargetId);
+      if (TargetType != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(TargetType);
+      }
+      if (TargetId != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(TargetId);
       }
       if (position_ != null) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteMessage(Position);
       }
       if (_unknownFields != null) {
@@ -168,12 +188,16 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (TargetId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(TargetId);
+      if (TargetType != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(TargetType);
+      }
+      if (TargetId != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(TargetId);
       }
       if (position_ != null) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteMessage(Position);
       }
       if (_unknownFields != null) {
@@ -186,8 +210,11 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (TargetId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(TargetId);
+      if (TargetType != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(TargetType);
+      }
+      if (TargetId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(TargetId);
       }
       if (position_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
@@ -204,7 +231,10 @@ namespace Protocol {
       if (other == null) {
         return;
       }
-      if (other.TargetId.Length != 0) {
+      if (other.TargetType != 0) {
+        TargetType = other.TargetType;
+      }
+      if (other.TargetId != 0) {
         TargetId = other.TargetId;
       }
       if (other.position_ != null) {
@@ -228,11 +258,15 @@ namespace Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            TargetId = input.ReadString();
+          case 8: {
+            TargetType = input.ReadInt32();
             break;
           }
-          case 18: {
+          case 16: {
+            TargetId = input.ReadInt32();
+            break;
+          }
+          case 26: {
             if (position_ == null) {
               Position = new global::Protocol.Vector3();
             }
@@ -254,11 +288,15 @@ namespace Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            TargetId = input.ReadString();
+          case 8: {
+            TargetType = input.ReadInt32();
             break;
           }
-          case 18: {
+          case 16: {
+            TargetId = input.ReadInt32();
+            break;
+          }
+          case 26: {
             if (position_ == null) {
               Position = new global::Protocol.Vector3();
             }

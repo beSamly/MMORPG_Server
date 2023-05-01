@@ -7,14 +7,21 @@
 #include "EnterSceneRes.pb.h"
 #include "Vector3.pb.h"
 #include <ResponseCode.h>
+#include "GameSystemReq.h"
+#include "NPCListRes.pb.h"
+#include "NPCInfo.pb.h"
+#include "NPCBaseInfo.pb.h"
 
 using GameSystemReq::EnterSceneReq;
+using GameSystemReq::NPCListReq;
 using PacketDef::PACKET_GROUP_ID;
 using PacketDef::PACKET_ID_GLOBAL;
+using PacketDef::PACKET_ID_POSITION;
 
 GameGlobalController::GameGlobalController(sptr<GameSystem> paramGameSystem) : gameSystem(paramGameSystem)
 {
     mapProcessFunc.emplace(REQ_ID_GLOBAL::ENTER_SCENE, TO_BASE_COMMAND_PROCESS_FUNC(ProcessEnterScene));
+    mapProcessFunc.emplace(REQ_ID_GLOBAL::NPC_LIST_REQ, TO_BASE_COMMAND_PROCESS_FUNC(ProcessNPCListReq));
 
     // mapProcessFunc[COMMAND_ID_GAME_SYSTEM_GLOBAL::PLAYER_LOG_IN] = TO_BASE_COMMAND_PROCESS_FUNC(ProcessEnterScene);
 }
@@ -47,10 +54,10 @@ int GameGlobalController::ProcessEnterScene(sptr<Scene>& scene, sptr<BaseReq>& c
     gameSystem->playerManager->AddPlayer(player);
     scene->AddPlayerId(player->playerId);
 
-    //float x = 420.0f;
+    // float x = 420.0f;
     //// float y = 117.0f; //공중
-    //float y = 111.6f; //충돌
-    //float z = 143.0f;
+    // float y = 111.6f; //충돌
+    // float z = 143.0f;
 
     //기둥 충돌 테스트
     float x = 414.779f;
@@ -71,6 +78,96 @@ int GameGlobalController::ProcessEnterScene(sptr<Scene>& scene, sptr<BaseReq>& c
     player->Send(packet.GetSendBuffer());
 
     player->SetPosition(Vector3(x, y, z));
-    // player->transformController->SetPosition(Vector3(x, y, z));
+
     return RES_CODE::CODE_SUCCESS;
+}
+
+int GameGlobalController::ProcessNPCListReq(sptr<Scene>& scene, sptr<BaseReq>& command)
+{
+    sptr<NPCListReq> npcListReq = dynamic_pointer_cast<NPCListReq>(command);
+    if (npcListReq == nullptr)
+    {
+        return RES_CODE::CODE_STRUCT_TYPE_MISMATCH;
+    }
+
+    sptr<Player> player = npcListReq->player;
+
+    // Version 1 - 한꺼번에 모아서 보내주기
+    {
+        Protocol::NPCListRes npcListRes;
+        vector<sptr<TransformEntity>> npcInScene = scene->npcManager->getAllNpc();
+        for (sptr<TransformEntity>& transformEntity : npcInScene)
+        {
+            sptr<NPC> npc = dynamic_pointer_cast<NPC>(transformEntity);
+            if (npc == nullptr)
+            {
+                LOG_ERROR("TrnasformEntity is not NPC object");
+                continue;
+            }
+
+            PhysicsEngine::Vector3 position = transformEntity->GetPosition();
+
+            Protocol::NPCInfo* npcInfo = npcListRes.add_npcinfo();
+            npcInfo->mutable_position()->set_x(position.x);
+            npcInfo->mutable_position()->set_y(position.y);
+            npcInfo->mutable_position()->set_z(position.z);
+
+            npcInfo->mutable_npcbaseinfo()->set_npcid(npc->npcId);
+            npcInfo->mutable_npcbaseinfo()->set_npcindex(npc->npcIndex);
+            npcInfo->mutable_npcbaseinfo()->set_npcname(npc->npcName);
+
+            npcInfo->mutable_statinfo()->set_maxhp(npc->GetStat(STAT_TYPE::MAX_HP));
+            npcInfo->mutable_statinfo()->set_maxmp(npc->GetStat(STAT_TYPE::MAX_MP));
+            npcInfo->mutable_statinfo()->set_armor(npc->GetStat(STAT_TYPE::ARMOR));
+            npcInfo->mutable_statinfo()->set_attackpower(npc->GetStat(STAT_TYPE::ATTACK_POWER));
+            npcInfo->mutable_statinfo()->set_attackspeed(npc->GetStat(STAT_TYPE::ATTACK_SPEED));
+            npcInfo->mutable_statinfo()->set_magicpower(npc->GetStat(STAT_TYPE::MAGIC_POWER));
+            npcInfo->mutable_statinfo()->set_magicresistance(npc->GetStat(STAT_TYPE::MAGIC_RESISTANCE));
+            npcInfo->mutable_statinfo()->set_movespeed(npc->GetStat(STAT_TYPE::MOVE_SPEED));
+        }
+
+        Packet pakcet(PACKET_GROUP_ID::GLOBAL, PACKET_ID_GLOBAL::NPC_LIST_RES);
+        pakcet.WriteData<Protocol::NPCListRes>(npcListRes);
+        player->Send(pakcet);
+    }
+
+    // Version 2 테스트용 - 하나하나 보내주기 동시에 많이 보내주면 클라에서 뭉태기로 받네 ;;
+    {
+        /*vector<sptr<TransformEntity>> npcInScene = scene->npcManager->getAllNpc();
+        for (sptr<TransformEntity>& transformEntity : npcInScene)
+        {
+            sptr<NPC> npc = dynamic_pointer_cast<NPC>(transformEntity);
+            if (npc == nullptr)
+            {
+                LOG_ERROR("TrnasformEntity is not NPC object");
+                continue;
+            }
+
+            Protocol::NPCListRes npcListRes;
+
+            PhysicsEngine::Vector3 position = transformEntity->GetPosition();
+
+            Protocol::NPCInfo* npcInfo = npcListRes.add_npcinfo();
+            npcInfo->mutable_position()->set_x(position.x);
+            npcInfo->mutable_position()->set_y(position.y);
+            npcInfo->mutable_position()->set_z(position.z);
+
+            npcInfo->mutable_npcbaseinfo()->set_npcid(npc->npcId);
+            npcInfo->mutable_npcbaseinfo()->set_npcindex(npc->npcIndex);
+            npcInfo->mutable_npcbaseinfo()->set_npcname(npc->npcName);
+
+            npcInfo->mutable_statinfo()->set_maxhp(npc->GetStat(STAT_TYPE::MAX_HP));
+            npcInfo->mutable_statinfo()->set_maxmp(npc->GetStat(STAT_TYPE::MAX_MP));
+            npcInfo->mutable_statinfo()->set_armor(npc->GetStat(STAT_TYPE::ARMOR));
+            npcInfo->mutable_statinfo()->set_attackpower(npc->GetStat(STAT_TYPE::ATTACK_POWER));
+            npcInfo->mutable_statinfo()->set_attackspeed(npc->GetStat(STAT_TYPE::ATTACK_SPEED));
+            npcInfo->mutable_statinfo()->set_magicpower(npc->GetStat(STAT_TYPE::MAGIC_POWER));
+            npcInfo->mutable_statinfo()->set_magicresistance(npc->GetStat(STAT_TYPE::MAGIC_RESISTANCE));
+            npcInfo->mutable_statinfo()->set_movespeed(npc->GetStat(STAT_TYPE::MOVE_SPEED));
+
+            Packet pakcet(PACKET_GROUP_ID::GLOBAL, PACKET_ID_GLOBAL::NPC_LIST_RES);
+            pakcet.WriteData<Protocol::NPCListRes>(npcListRes);
+            player->Send(pakcet);
+        }*/
+    }
 }

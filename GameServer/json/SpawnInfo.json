@@ -5,11 +5,11 @@
       {
         "NPCIndex": 1,
         "SpawnCoolTime": 500,
-        "TotalNumber": 100,
+        "TotalNumber": 10,
         "ListSpawnPoint": [
           {
             "x": 420.7,
-            "y": 117.0,
+            "y": 130.0,
             "z": 143
           }
         ]

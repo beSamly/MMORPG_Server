@@ -178,24 +178,11 @@ class PositionUpdate final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kTargetIdFieldNumber = 1,
-    kPositionFieldNumber = 2,
+    kPositionFieldNumber = 3,
+    kTargetTypeFieldNumber = 1,
+    kTargetIdFieldNumber = 2,
   };
-  // string targetId = 1;
-  void clear_targetid();
-  const std::string& targetid() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_targetid(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_targetid();
-  PROTOBUF_NODISCARD std::string* release_targetid();
-  void set_allocated_targetid(std::string* targetid);
-  private:
-  const std::string& _internal_targetid() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_targetid(const std::string& value);
-  std::string* _internal_mutable_targetid();
-  public:
-
-  // .Protocol.Vector3 position = 2;
+  // .Protocol.Vector3 position = 3;
   bool has_position() const;
   private:
   bool _internal_has_position() const;
@@ -213,6 +200,24 @@ class PositionUpdate final :
       ::Protocol::Vector3* position);
   ::Protocol::Vector3* unsafe_arena_release_position();
 
+  // int32 targetType = 1;
+  void clear_targettype();
+  int32_t targettype() const;
+  void set_targettype(int32_t value);
+  private:
+  int32_t _internal_targettype() const;
+  void _internal_set_targettype(int32_t value);
+  public:
+
+  // int32 targetId = 2;
+  void clear_targetid();
+  int32_t targetid() const;
+  void set_targetid(int32_t value);
+  private:
+  int32_t _internal_targetid() const;
+  void _internal_set_targetid(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.PositionUpdate)
  private:
   class _Internal;
@@ -221,8 +226,9 @@ class PositionUpdate final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr targetid_;
     ::Protocol::Vector3* position_;
+    int32_t targettype_;
+    int32_t targetid_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -239,57 +245,47 @@ class PositionUpdate final :
 #endif  // __GNUC__
 // PositionUpdate
 
-// string targetId = 1;
-inline void PositionUpdate::clear_targetid() {
-  _impl_.targetid_.ClearToEmpty();
+// int32 targetType = 1;
+inline void PositionUpdate::clear_targettype() {
+  _impl_.targettype_ = 0;
 }
-inline const std::string& PositionUpdate::targetid() const {
+inline int32_t PositionUpdate::_internal_targettype() const {
+  return _impl_.targettype_;
+}
+inline int32_t PositionUpdate::targettype() const {
+  // @@protoc_insertion_point(field_get:Protocol.PositionUpdate.targetType)
+  return _internal_targettype();
+}
+inline void PositionUpdate::_internal_set_targettype(int32_t value) {
+  
+  _impl_.targettype_ = value;
+}
+inline void PositionUpdate::set_targettype(int32_t value) {
+  _internal_set_targettype(value);
+  // @@protoc_insertion_point(field_set:Protocol.PositionUpdate.targetType)
+}
+
+// int32 targetId = 2;
+inline void PositionUpdate::clear_targetid() {
+  _impl_.targetid_ = 0;
+}
+inline int32_t PositionUpdate::_internal_targetid() const {
+  return _impl_.targetid_;
+}
+inline int32_t PositionUpdate::targetid() const {
   // @@protoc_insertion_point(field_get:Protocol.PositionUpdate.targetId)
   return _internal_targetid();
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void PositionUpdate::set_targetid(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.targetid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+inline void PositionUpdate::_internal_set_targetid(int32_t value) {
+  
+  _impl_.targetid_ = value;
+}
+inline void PositionUpdate::set_targetid(int32_t value) {
+  _internal_set_targetid(value);
   // @@protoc_insertion_point(field_set:Protocol.PositionUpdate.targetId)
 }
-inline std::string* PositionUpdate::mutable_targetid() {
-  std::string* _s = _internal_mutable_targetid();
-  // @@protoc_insertion_point(field_mutable:Protocol.PositionUpdate.targetId)
-  return _s;
-}
-inline const std::string& PositionUpdate::_internal_targetid() const {
-  return _impl_.targetid_.Get();
-}
-inline void PositionUpdate::_internal_set_targetid(const std::string& value) {
-  
-  _impl_.targetid_.Set(value, GetArenaForAllocation());
-}
-inline std::string* PositionUpdate::_internal_mutable_targetid() {
-  
-  return _impl_.targetid_.Mutable(GetArenaForAllocation());
-}
-inline std::string* PositionUpdate::release_targetid() {
-  // @@protoc_insertion_point(field_release:Protocol.PositionUpdate.targetId)
-  return _impl_.targetid_.Release();
-}
-inline void PositionUpdate::set_allocated_targetid(std::string* targetid) {
-  if (targetid != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.targetid_.SetAllocated(targetid, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.targetid_.IsDefault()) {
-    _impl_.targetid_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:Protocol.PositionUpdate.targetId)
-}
 
-// .Protocol.Vector3 position = 2;
+// .Protocol.Vector3 position = 3;
 inline bool PositionUpdate::_internal_has_position() const {
   return this != internal_default_instance() && _impl_.position_ != nullptr;
 }

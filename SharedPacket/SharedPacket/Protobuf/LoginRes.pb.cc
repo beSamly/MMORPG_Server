@@ -59,18 +59,14 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_LoginRes_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\016LoginRes.proto\022\010Protocol\032\rVector3.prot"
-  "o\"+\n\010LoginRes\022\016\n\006result\030\001 \001(\005\022\017\n\007message"
-  "\030\002 \001(\tb\006proto3"
+  "\n\016LoginRes.proto\022\010Protocol\"+\n\010LoginRes\022\016"
+  "\n\006result\030\001 \001(\005\022\017\n\007message\030\002 \001(\tb\006proto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_LoginRes_2eproto_deps[1] = {
-  &::descriptor_table_Vector3_2eproto,
-};
 static ::_pbi::once_flag descriptor_table_LoginRes_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_LoginRes_2eproto = {
-    false, false, 94, descriptor_table_protodef_LoginRes_2eproto,
+    false, false, 79, descriptor_table_protodef_LoginRes_2eproto,
     "LoginRes.proto",
-    &descriptor_table_LoginRes_2eproto_once, descriptor_table_LoginRes_2eproto_deps, 1, 1,
+    &descriptor_table_LoginRes_2eproto_once, nullptr, 0, 1,
     schemas, file_default_instances, TableStruct_LoginRes_2eproto::offsets,
     file_level_metadata_LoginRes_2eproto, file_level_enum_descriptors_LoginRes_2eproto,
     file_level_service_descriptors_LoginRes_2eproto,

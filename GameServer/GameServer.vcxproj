@@ -144,6 +144,7 @@
     <ClInclude Include="GameSystem.h" />
     <ClInclude Include="CommandProcessCommon.h" />
     <ClInclude Include="GameSystemUpdater.h" />
+    <ClInclude Include="GLobalController.h" />
     <ClInclude Include="ILogger.h" />
     <ClInclude Include="INetworkController.h" />
     <ClInclude Include="GamePositionController.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="GameSystem.cpp" />
     <ClCompile Include="GamePositionController.cpp" />
     <ClCompile Include="GameSystemUpdater.cpp" />
+    <ClCompile Include="GLobalController.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="IOperation.cpp" />
     <ClCompile Include="NPC.cpp" />

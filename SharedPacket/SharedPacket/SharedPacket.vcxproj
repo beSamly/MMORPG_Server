@@ -171,8 +171,14 @@
     <ClCompile Include="Protobuf\LoginRes.pb.cc" />
     <ClCompile Include="Protobuf\MoveReq.pb.cc" />
     <ClCompile Include="Protobuf\MoveRes.pb.cc" />
+    <ClCompile Include="Protobuf\NPCBaseInfo.pb.cc" />
+    <ClCompile Include="Protobuf\NPCInfo.pb.cc" />
+    <ClCompile Include="Protobuf\NPCListRes.pb.cc" />
+    <ClCompile Include="Protobuf\NPCSpawned.pb.cc" />
+    <ClCompile Include="Protobuf\NPCSpawnedList.pb.cc" />
     <ClCompile Include="Protobuf\PlayerInfo.pb.cc" />
     <ClCompile Include="Protobuf\PositionUpdate.pb.cc" />
+    <ClCompile Include="Protobuf\StatInfo.pb.cc" />
     <ClCompile Include="Protobuf\Vector3.pb.cc" />
     <ClCompile Include="ProxyPacketId.cpp" />
   </ItemGroup>
@@ -184,8 +190,14 @@
     <ClInclude Include="Protobuf\LoginRes.pb.h" />
     <ClInclude Include="Protobuf\MoveReq.pb.h" />
     <ClInclude Include="Protobuf\MoveRes.pb.h" />
+    <ClInclude Include="Protobuf\NPCBaseInfo.pb.h" />
+    <ClInclude Include="Protobuf\NPCInfo.pb.h" />
+    <ClInclude Include="Protobuf\NPCListRes.pb.h" />
+    <ClInclude Include="Protobuf\NPCSpawned.pb.h" />
+    <ClInclude Include="Protobuf\NPCSpawnedList.pb.h" />
     <ClInclude Include="Protobuf\PlayerInfo.pb.h" />
     <ClInclude Include="Protobuf\PositionUpdate.pb.h" />
+    <ClInclude Include="Protobuf\StatInfo.pb.h" />
     <ClInclude Include="Protobuf\Vector3.pb.h" />
     <ClInclude Include="ResponseCode.h" />
     <ClInclude Include="PacketDef.h" />

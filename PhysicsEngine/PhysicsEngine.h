@@ -96,6 +96,11 @@ namespace PhysicsEngine
             float num2 = DotProduct(vector, onNormal);
             return Vector3(onNormal.x * num2 / num, onNormal.y * num2 / num, onNormal.z * num2 / num);
         }
+
+        static Vector3 UP() { return Vector3(0.0f, 0.0f, 1.0f); }
+        static Vector3 DOWN() { return Vector3(0.0f, 0.0f, -1.0f); }
+        static Vector3 LEFT() { return Vector3(-1.0f, 0.0f, 0.0f); }
+        static Vector3 RIGHT() { return Vector3(1.0f, 0.0f, 0.0f); }
     };
 
     class Triangle

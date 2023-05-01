@@ -5,6 +5,7 @@
 #include "NPCSpawned.pb.h"
 #include "NPC.h"
 #include "TransformEntity.h"
+#include "PositionUpdate.pb.h"
 
 using PacketDef::PACKET_GROUP_ID;
 using PacketDef::PACKET_ID_POSITION;
@@ -15,17 +16,72 @@ void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene, vec
 {
     elapsedTime += deltaTime;
 
-    ProcessSceneReqQueue(scene);
-    UpdateSpawnManager(scene, playersInScene);
-    UpdateNPC(deltaTime, scene);
-
-    if (elapsedTime - lastChecked > 2)
+    // Step 1 - Process request queue
     {
-        // 모든 플레이어의 위치를 모든 플레이에게 동기화
-        //player->SendUpdatePosition();
+        ProcessSceneReqQueue(scene);
+    }
 
-        // 모든 NPC의 위치를 모든 플레이어에게 동기화
-        lastChecked = elapsedTime;
+    // Step 2 - SpawnManager Update
+    {
+        vector<sptr<TransformEntity>> readyToSpawn = scene->spawnManager->GetReadyToSpawn();
+        for (sptr<TransformEntity> transformEntity : readyToSpawn)
+        {
+            scene->npcManager->AddNPC(transformEntity);
+
+            sptr<NPC> npc = dynamic_pointer_cast<NPC>(transformEntity);
+            if (npc == nullptr)
+            {
+                LOG_ERROR("TrnasformEntity is not NPC object");
+                continue;
+            }
+
+            SendNPCSpawnedToPlayer(npc, playersInScene);
+        }
+    }
+
+    // Step 3 - NPC Update
+    vector<sptr<TransformEntity>> vecNPC = scene->npcManager->getAllNpc();
+    {
+        for (sptr<TransformEntity> transformEntity : vecNPC)
+        {
+            sptr<NPC> npc = dynamic_pointer_cast<NPC>(transformEntity);
+            if (npc == nullptr)
+            {
+                LOG_ERROR("Can not convert TransformEntity to NPC");
+                continue;
+            }
+
+            UpdateEachNPC(deltaTime, scene, npc);
+        }
+    }
+
+    // Step 4 - Player Update
+    {
+        for (sptr<Player>& player : playersInScene)
+        {
+            UpdateEachPlayer(deltaTime, scene, player, playersInScene);
+        }
+    }
+
+    // Step 5 - Sync position
+    {
+        if (elapsedTime - lastChecked > 2)
+        {
+            // 모든 플레이어의 위치를 모든 플레이에게 동기화
+            for (sptr<Player>& player : playersInScene)
+            {
+                sptr<TransformEntity> transform = dynamic_pointer_cast<TransformEntity>(player);
+                SendPositionUpdateToPlayer(transform, playersInScene);
+            }
+
+            // 모든 NPC의 위치를 모든 플레이어에게 동기화
+            /*for (sptr<TransformEntity>& transformEntity : vecNPC)
+            {
+                SendPositionUpdateToPlayer(transformEntity, playersInScene);
+            }*/
+
+            lastChecked = elapsedTime;
+        }
     }
 }
 
@@ -77,30 +133,14 @@ void GameSystemUpdater::ProcessSceneReqQueue(sptr<Scene>& scene)
     }
 }
 
-void GameSystemUpdater::UpdateSpawnManager(sptr<Scene>& scene, vector<sptr<Player>>& players)
+void GameSystemUpdater::SendNPCSpawnedToPlayer(sptr<NPC>& npc, vector<sptr<Player>>& players)
 {
-    vector<sptr<TransformEntity>> readyToSpawn = scene->spawnManager->GetReadyToSpawn();
-    for (sptr<TransformEntity> transformEntity : readyToSpawn)
-    {
-        scene->npcManager->AddNPC(transformEntity);
+    /*PhysicsEngine::Vector3 position = npc->GetPosition();
 
-        sptr<NPC> npc = dynamic_pointer_cast<NPC>(transformEntity);
-        if (npc == nullptr)
-        {
-            LOG_ERROR("TrnasformEntity is not NPC object");
-            continue;
-        }
-
-        SendNPCSpawned(npc, players);
-    }
-}
-
-void GameSystemUpdater::SendNPCSpawned(sptr<NPC>& npc, vector<sptr<Player>>& players)
-{
     Protocol::NPCSpawned npcSpawned;
-    npcSpawned.mutable_position()->set_x(0.0f);
-    npcSpawned.mutable_position()->set_y(0.0f);
-    npcSpawned.mutable_position()->set_z(0.0f);
+    npcSpawned.mutable_position()->set_x(position.x);
+    npcSpawned.mutable_position()->set_y(position.y);
+    npcSpawned.mutable_position()->set_z(position.z);
 
     npcSpawned.mutable_npcinfo()->set_npcid(npc->npcId);
     npcSpawned.mutable_npcinfo()->set_npcindex(npc->npcIndex);
@@ -115,52 +155,53 @@ void GameSystemUpdater::SendNPCSpawned(sptr<NPC>& npc, vector<sptr<Player>>& pla
     npcSpawned.mutable_statinfo()->set_magicresistance(npc->GetStat(STAT_TYPE::MAGIC_RESISTANCE));
     npcSpawned.mutable_statinfo()->set_movespeed(npc->GetStat(STAT_TYPE::MOVE_SPEED));
 
-    Packet packet(PACKET_GROUP_ID::POSITION, PACKET_ID_POSITION::NPC_SPAWNED);
+    Packet packet(PACKET_GROUP_ID::POSITION, PACKET_ID_POSITION::NPC_SPAWNED_LIST);
     packet.WriteData<Protocol::NPCSpawned>(npcSpawned);
 
     for (const sptr<Player>& player : players)
     {
         player->Send(packet);
-    }
+    }*/
 }
 
-void GameSystemUpdater::UpdateNPC(float deltaTime, sptr<Scene>& scene)
+void GameSystemUpdater::UpdateEachNPC(float deltaTime, sptr<Scene>& scene, sptr<NPC>& npc)
 {
-    vector<sptr<TransformEntity>> vecNPC = scene->npcManager->getAllNpc();
+    // 플레이어 포지션 객체 업데이트
+    npc->Update(deltaTime);
 
-    for (sptr<TransformEntity> transformEntity : vecNPC)
+    if (npc->patrolController->NeedToSwitchMoveDirection())
     {
-        sptr<NPC> npc = dynamic_pointer_cast<NPC>(transformEntity);
-        if (npc == nullptr)
-        {
-            LOG_ERROR("Can not convert TransformEntity to NPC");
-            continue;
-        }
+        npc->patrolController->SwitchToNextMoveDirection();
+        Vector3 newDirection = npc->patrolController->GetCurrentMoveDirection();
 
-        // 플레이어 포지션 객체 업데이트
-        npc->Update(deltaTime);
+        //모든 Player에게 npc의 move direction 동기화!
+    }
 
-        if (npc->patrolController->NeedToSwitchMoveDirection())
-        {
-            npc->patrolController->SwitchToNextMoveDirection();
-            Vector3 newDirection = npc->patrolController->GetCurrentMoveDirection();
+    //[TODO]
+    float radius = 0.5f; // Unity의 this.GetComponent<SphereCollider>().radius 값
 
-            //모든 Player에게 npc의 move direction 동기화!
+    // 지형과 충돌 처리
+    Vector3 currentPosition = npc->GetPosition();
+    Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
+    npc->SetPosition(newPosition);
+}
 
-        }
+void GameSystemUpdater::SendPositionUpdateToPlayer(sptr<TransformEntity>& transform, vector<sptr<Player>>& players)
+{
+    Vector3 position = transform->GetPosition();
 
-        //[TODO]
-        float radius = 0.5f; // Unity의 this.GetComponent<SphereCollider>().radius 값
+    Protocol::PositionUpdate positionUpdate;
+    positionUpdate.set_targetid(transform->GetIdentifier());
+    positionUpdate.set_targettype(static_cast<int>(transform->GetEntityType()));
+    positionUpdate.mutable_position()->set_x(position.x);
+    positionUpdate.mutable_position()->set_y(position.y);
+    positionUpdate.mutable_position()->set_z(position.z);
 
-        // 지형과 충돌 처리
-        Vector3 currentPosition = npc->GetPosition();
-        Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
-        npc->SetPosition(newPosition);
+    Packet packet(PACKET_GROUP_ID::POSITION, PACKET_ID_POSITION::POSITION_UPDATE);
+    packet.WriteData<Protocol::PositionUpdate>(positionUpdate);
 
-        if (elapsedTime - lastChecked > 2)
-        {
-            // player->SendUpdatePosition();
-            lastChecked = elapsedTime;
-        }
+    for (sptr<Player>& player : players)
+    {
+        player->Send(packet.GetSendBuffer());
     }
 }

@@ -25,6 +25,7 @@ public:
     int GetStat(STAT_TYPE statType);
     void Update(float deltaTime);
     virtual TransformaOwnerType GetEntityType() { return TransformaOwnerType::TYPE_NPC; };
+    virtual int GetIdentifier() { return npcId; };
 
 private:
     void UpdatePosition(float deltaTime);

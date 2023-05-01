@@ -64,7 +64,7 @@ void GameSystem::InitSceneManager()
                 npc->SetPosition(spawnPoint);
                 npc->statController->SetBaseStat(baseStatInfo);
 
-                scene->spawnManager->AddToSpawnQueue(npc, 0); // 초기화 할 때는 바로 spawn 하기 위해 0 대입
+                scene->spawnManager->AddToSpawnQueue(npc, GetTickCount64()); // 초기화 할 때는 바로 spawn 하기 위해 0 대입
             }
         }
 
@@ -83,9 +83,5 @@ void GameSystem::UpdateScene(int threadId, float deltaTime)
         //씬 SpawnManager Update
         gameSystemUpdater->UpdateEachScene(deltaTime, scene, playersInScene);
 
-        for (sptr<Player>& player : playersInScene)
-        {
-            gameSystemUpdater->UpdateEachPlayer(deltaTime, scene, player, playersInScene);
-        }
     };
 }

@@ -3,6 +3,7 @@ import "Vector3.proto";
 
 package Protocol;
 message PositionUpdate {
-  string targetId = 1;
-  Vector3 position = 2;
+  int32 targetType = 1;
+  int32 targetId = 2;
+  Vector3 position = 3;
 }

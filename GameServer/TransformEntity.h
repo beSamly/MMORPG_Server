@@ -27,4 +27,5 @@ public:
 	Vector3 GetMoveDirection();
     void SetMoveDirection(Vector3 direction);
     virtual TransformaOwnerType GetEntityType() abstract;
+    virtual int GetIdentifier() abstract;
 };

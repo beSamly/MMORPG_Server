@@ -25,6 +25,33 @@
     <ClCompile Include="ProxyPacketId.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Protobuf\MoveRes.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\NPCBaseInfo.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\NPCListRes.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\NPCSpawned.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\NPCSpawnedList.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\PlayerInfo.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\PositionUpdate.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\StatInfo.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\Vector3.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
     <ClCompile Include="Protobuf\EnterSceneRes.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
@@ -40,19 +67,10 @@
     <ClCompile Include="Protobuf\LoginRes.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\PlayerInfo.pb.cc">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="Protobuf\PositionUpdate.pb.cc">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="Protobuf\Vector3.pb.cc">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClCompile>
     <ClCompile Include="Protobuf\MoveReq.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\MoveRes.pb.cc">
+    <ClCompile Include="Protobuf\NPCInfo.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
   </ItemGroup>
@@ -66,6 +84,33 @@
     </ClInclude>
     <ClInclude Include="ResponseCode.h">
       <Filter>Source Files\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\MoveRes.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\NPCBaseInfo.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\NPCListRes.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\NPCSpawned.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\NPCSpawnedList.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\PlayerInfo.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\PositionUpdate.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\StatInfo.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\Vector3.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
     <ClInclude Include="Protobuf\EnterSceneRes.pb.h">
       <Filter>Source Files\Protobuf</Filter>
@@ -82,19 +127,10 @@
     <ClInclude Include="Protobuf\LoginRes.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\PlayerInfo.pb.h">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="Protobuf\PositionUpdate.pb.h">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="Protobuf\Vector3.pb.h">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClInclude>
     <ClInclude Include="Protobuf\MoveReq.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\MoveRes.pb.h">
+    <ClInclude Include="Protobuf\NPCInfo.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
   </ItemGroup>

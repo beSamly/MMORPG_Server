@@ -288,6 +288,9 @@
     <ClInclude Include="PatrolController.h">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClInclude>
+    <ClInclude Include="GLobalController.h">
+      <Filter>Source Files\NetworkSystem\Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -430,6 +433,9 @@
     </ClCompile>
     <ClCompile Include="PatrolController.cpp">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="GLobalController.cpp">
+      <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

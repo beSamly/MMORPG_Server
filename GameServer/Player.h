@@ -28,6 +28,7 @@ public:
     void Update(float deltaTime);
     void UpdatePosition(float deltaTime);
     virtual TransformaOwnerType GetEntityType() { return TransformaOwnerType::TYPE_PLAYER; };
+    virtual int GetIdentifier() { return playerId; };
 
 public:
     void SendUpdatePosition();

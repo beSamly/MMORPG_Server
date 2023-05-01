@@ -19,4 +19,5 @@ public:
 
 private:
 	int ProcessEnterScene(sptr<Scene>& scene, sptr<BaseReq>& command);
+    int ProcessNPCListReq(sptr<Scene>& scene, sptr<BaseReq>& command);
 };

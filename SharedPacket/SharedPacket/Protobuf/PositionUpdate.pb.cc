@@ -23,8 +23,9 @@ namespace _pbi = _pb::internal;
 namespace Protocol {
 PROTOBUF_CONSTEXPR PositionUpdate::PositionUpdate(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.targetid_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.position_)*/nullptr
+    /*decltype(_impl_.position_)*/nullptr
+  , /*decltype(_impl_.targettype_)*/0
+  , /*decltype(_impl_.targetid_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct PositionUpdateDefaultTypeInternal {
   PROTOBUF_CONSTEXPR PositionUpdateDefaultTypeInternal()
@@ -47,6 +48,7 @@ const uint32_t TableStruct_PositionUpdate_2eproto::offsets[] PROTOBUF_SECTION_VA
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::PositionUpdate, _impl_.targettype_),
   PROTOBUF_FIELD_OFFSET(::Protocol::PositionUpdate, _impl_.targetid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::PositionUpdate, _impl_.position_),
 };
@@ -60,16 +62,16 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_PositionUpdate_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\024PositionUpdate.proto\022\010Protocol\032\rVector"
-  "3.proto\"G\n\016PositionUpdate\022\020\n\010targetId\030\001 "
-  "\001(\t\022#\n\010position\030\002 \001(\0132\021.Protocol.Vector3"
-  "b\006proto3"
+  "3.proto\"[\n\016PositionUpdate\022\022\n\ntargetType\030"
+  "\001 \001(\005\022\020\n\010targetId\030\002 \001(\005\022#\n\010position\030\003 \001("
+  "\0132\021.Protocol.Vector3b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_PositionUpdate_2eproto_deps[1] = {
   &::descriptor_table_Vector3_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_PositionUpdate_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_PositionUpdate_2eproto = {
-    false, false, 128, descriptor_table_protodef_PositionUpdate_2eproto,
+    false, false, 148, descriptor_table_protodef_PositionUpdate_2eproto,
     "PositionUpdate.proto",
     &descriptor_table_PositionUpdate_2eproto_once, descriptor_table_PositionUpdate_2eproto_deps, 1, 1,
     schemas, file_default_instances, TableStruct_PositionUpdate_2eproto::offsets,
@@ -111,22 +113,18 @@ PositionUpdate::PositionUpdate(const PositionUpdate& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   PositionUpdate* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.targetid_){}
-    , decltype(_impl_.position_){nullptr}
+      decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.targettype_){}
+    , decltype(_impl_.targetid_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.targetid_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.targetid_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_targetid().empty()) {
-    _this->_impl_.targetid_.Set(from._internal_targetid(), 
-      _this->GetArenaForAllocation());
-  }
   if (from._internal_has_position()) {
     _this->_impl_.position_ = new ::Protocol::Vector3(*from._impl_.position_);
   }
+  ::memcpy(&_impl_.targettype_, &from._impl_.targettype_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.targetid_) -
+    reinterpret_cast<char*>(&_impl_.targettype_)) + sizeof(_impl_.targetid_));
   // @@protoc_insertion_point(copy_constructor:Protocol.PositionUpdate)
 }
 
@@ -135,14 +133,11 @@ inline void PositionUpdate::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.targetid_){}
-    , decltype(_impl_.position_){nullptr}
+      decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.targettype_){0}
+    , decltype(_impl_.targetid_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
-  _impl_.targetid_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.targetid_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 PositionUpdate::~PositionUpdate() {
@@ -156,7 +151,6 @@ PositionUpdate::~PositionUpdate() {
 
 inline void PositionUpdate::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.targetid_.Destroy();
   if (this != internal_default_instance()) delete _impl_.position_;
 }
 
@@ -170,11 +164,13 @@ void PositionUpdate::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.targetid_.ClearToEmpty();
   if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
     delete _impl_.position_;
   }
   _impl_.position_ = nullptr;
+  ::memset(&_impl_.targettype_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.targetid_) -
+      reinterpret_cast<char*>(&_impl_.targettype_)) + sizeof(_impl_.targetid_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -184,19 +180,25 @@ const char* PositionUpdate::_InternalParse(const char* ptr, ::_pbi::ParseContext
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // string targetId = 1;
+      // int32 targetType = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_targetid();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.targettype_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "Protocol.PositionUpdate.targetId"));
         } else
           goto handle_unusual;
         continue;
-      // .Protocol.Vector3 position = 2;
+      // int32 targetId = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.targetid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Protocol.Vector3 position = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
           CHK_(ptr);
         } else
@@ -231,20 +233,22 @@ uint8_t* PositionUpdate::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // string targetId = 1;
-  if (!this->_internal_targetid().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_targetid().data(), static_cast<int>(this->_internal_targetid().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Protocol.PositionUpdate.targetId");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_targetid(), target);
+  // int32 targetType = 1;
+  if (this->_internal_targettype() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_targettype(), target);
   }
 
-  // .Protocol.Vector3 position = 2;
+  // int32 targetId = 2;
+  if (this->_internal_targetid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_targetid(), target);
+  }
+
+  // .Protocol.Vector3 position = 3;
   if (this->_internal_has_position()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, _Internal::position(this),
+      InternalWriteMessage(3, _Internal::position(this),
         _Internal::position(this).GetCachedSize(), target, stream);
   }
 
@@ -264,18 +268,21 @@ size_t PositionUpdate::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string targetId = 1;
-  if (!this->_internal_targetid().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_targetid());
-  }
-
-  // .Protocol.Vector3 position = 2;
+  // .Protocol.Vector3 position = 3;
   if (this->_internal_has_position()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.position_);
+  }
+
+  // int32 targetType = 1;
+  if (this->_internal_targettype() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_targettype());
+  }
+
+  // int32 targetId = 2;
+  if (this->_internal_targetid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_targetid());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -296,12 +303,15 @@ void PositionUpdate::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_targetid().empty()) {
-    _this->_internal_set_targetid(from._internal_targetid());
-  }
   if (from._internal_has_position()) {
     _this->_internal_mutable_position()->::Protocol::Vector3::MergeFrom(
         from._internal_position());
+  }
+  if (from._internal_targettype() != 0) {
+    _this->_internal_set_targettype(from._internal_targettype());
+  }
+  if (from._internal_targetid() != 0) {
+    _this->_internal_set_targetid(from._internal_targetid());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -319,14 +329,13 @@ bool PositionUpdate::IsInitialized() const {
 
 void PositionUpdate::InternalSwap(PositionUpdate* other) {
   using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.targetid_, lhs_arena,
-      &other->_impl_.targetid_, rhs_arena
-  );
-  swap(_impl_.position_, other->_impl_.position_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(PositionUpdate, _impl_.targetid_)
+      + sizeof(PositionUpdate::_impl_.targetid_)
+      - PROTOBUF_FIELD_OFFSET(PositionUpdate, _impl_.position_)>(
+          reinterpret_cast<char*>(&_impl_.position_),
+          reinterpret_cast<char*>(&other->_impl_.position_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata PositionUpdate::GetMetadata() const {

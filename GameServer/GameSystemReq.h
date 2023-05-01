@@ -12,7 +12,8 @@ namespace GameSystemReq
 
     enum REQ_ID_GLOBAL : int
     {
-        ENTER_SCENE = 1
+        ENTER_SCENE = 1,
+        NPC_LIST_REQ
     };
 
     enum REQ_ID_POSITION : int
@@ -41,6 +42,13 @@ namespace GameSystemReq
         EnterSceneReq() : BaseReq(REQ_GROUP_ID::GLOBAL, REQ_ID_GLOBAL::ENTER_SCENE){};
 
         string sceneName;
+        sptr<Player> player;
+    };
+
+    class NPCListReq : public BaseReq
+    {
+    public:
+        NPCListReq() : BaseReq(REQ_GROUP_ID::GLOBAL, REQ_ID_GLOBAL::NPC_LIST_REQ){};
         sptr<Player> player;
     };
 

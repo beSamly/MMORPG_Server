@@ -1,8 +1,13 @@
 syntax = "proto3";
 
+import "Vector3.proto";
+import "StatInfo.proto";
+import "NPCBaseInfo.proto";
+
 package Protocol;
 
-message StatInfo {
-  int32 maxHP = 1;
-  int32 maxHP = 2;
+message NPCInfo {
+  NPCBaseInfo npcBaseInfo = 1;
+  StatInfo statInfo = 2;
+  Vector3 position = 3;
 }

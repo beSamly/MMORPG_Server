@@ -16,13 +16,15 @@ enum PACKET_ID_AUTH : int {
 enum PACKET_ID_GLOBAL : int {
   ENTER_SCENE_REQ = 1,
   ENTER_SCENE_RES,
-  
+  NPC_LIST_REQ,
+  NPC_LIST_RES,
 };
 
 enum PACKET_ID_POSITION : int {
   POSITION_UPDATE = 1,
   MOVE_REQ,
   MOVE_RES,
+  NPC_SPAWNED_LIST
 };
 
 }  // namespace PacketDef

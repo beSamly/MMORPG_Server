@@ -74,7 +74,7 @@ void ServerApp::StartGameSystem()
         threadSystem->Launch(
             [&]()
             {
-                std::chrono::steady_clock::time_point lastUpdate;
+                std::chrono::steady_clock::time_point lastUpdate = std::chrono::steady_clock::now();
 
                 while (true)
                 {
