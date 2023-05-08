@@ -24,8 +24,8 @@ private:
     void ProcessSceneReqQueue(sptr<Scene>& scene);
     void SendNPCSpawnedToPlayer(sptr<NPC>& npc, vector<sptr<Player>>& players);
     void SendPositionUpdateToPlayer(sptr<TransformEntity>& transform, vector<sptr<Player>>& players);
-    
-	void SyncPlayerPosition(vector<sptr<Player>>& players);
-	void SyncNPCPosition(vector<sptr<Player>>& players, vector<sptr<TransformEntity>> npc);
-	Packet BuildUpdatePositionPacket(sptr<TransformEntity> transform);
+
+    void SyncPlayerPosition(vector<sptr<Player>>& players);
+    void SyncNPCPosition(vector<sptr<Player>>& players, vector<sptr<TransformEntity>> npcs);
+    Packet BuildUpdatePositionPacket(sptr<TransformEntity> transform);
 };

@@ -205,3 +205,52 @@ void GameSystemUpdater::SendPositionUpdateToPlayer(sptr<TransformEntity>& transf
         player->Send(packet.GetSendBuffer());
     }
 }
+
+void GameSystemUpdater::SyncPlayerPosition(vector<sptr<Player>>& players)
+{
+    for (sptr<Player>& from : players)
+    {
+        Packet packetUpdatePosition = BuildUpdatePositionPacket(from);
+
+        for (sptr<Player>& to : players)
+        {
+            to->Send(packetUpdatePosition);
+        }
+    }
+}
+
+void GameSystemUpdater::SyncNPCPosition(vector<sptr<Player>>& players, vector<sptr<TransformEntity>> npcs)
+{
+    for (sptr<TransformEntity>& from : npcs)
+    {
+        Packet packetUpdatePosition = BuildUpdatePositionPacket(from);
+
+        for (sptr<Player>& to : players)
+        {
+            to->Send(packetUpdatePosition);
+        }
+    }
+}
+
+Packet GameSystemUpdater::BuildUpdatePositionPacket(sptr<TransformEntity> transform)
+{
+    Vector3 position = transform->GetPosition();
+    Vector3 moveDirection = transform->GetMoveDirection();
+
+    Protocol::PositionUpdate positionUpdate;
+    //positionUpdate.set_transformentityid(transform->GetEntityId());
+    //positionUpdate.set_transformentitytype(transform->GetEntityType());
+
+    //positionUpdate.mutable_position()->set_x(position.x);
+    //positionUpdate.mutable_position()->set_y(position.y);
+    //positionUpdate.mutable_position()->set_z(position.z);
+
+    //positionUpdate.mutable_movedirection()->set_x(moveDirection.x);
+    //positionUpdate.mutable_movedirection()->set_y(moveDirection.y);
+    //positionUpdate.mutable_movedirection()->set_z(moveDirection.z);
+    
+    Packet packet(PACKET_GROUP_ID::POSITION, PACKET_ID_POSITION::POSITION_UPDATE);
+    packet.WriteData<Protocol::PositionUpdate>(positionUpdate);
+
+    return packet;
+}

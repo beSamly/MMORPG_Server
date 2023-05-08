@@ -302,6 +302,9 @@
     <ClInclude Include="ProjectileManager.h">
       <Filter>Source Files\GameSystem\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="simdjson.h">
+      <Filter>Source Files\Library</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -452,6 +455,9 @@
     </ClCompile>
     <ClCompile Include="ProjectileManager.cpp">
       <Filter>Source Files\GameSystem\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="simdjson.cpp">
+      <Filter>Source Files\Library</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
