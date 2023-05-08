@@ -172,6 +172,7 @@
     <ClInclude Include="PhysicalDamage.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="ProjectileManager.h" />
     <ClInclude Include="RequestValidator.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="GameSystemControllerContainer.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="PhysicalDamage.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="ProjectileManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="GameSystemControllerContainer.cpp" />
     <ClCompile Include="NavigationMeshAgentManager.cpp" />

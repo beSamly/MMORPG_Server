@@ -291,6 +291,9 @@
     <ClInclude Include="GLobalController.h">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectileManager.h">
+      <Filter>Source Files\GameSystem\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -436,6 +439,9 @@
     </ClCompile>
     <ClCompile Include="GLobalController.cpp">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileManager.cpp">
+      <Filter>Source Files\GameSystem\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
