@@ -5,14 +5,17 @@
 #include "rapidjson/document.h"
 #include "OperationCondition.h"
 #include "Operation.h"
+#include "simdjson.h"
 
 using std::ifstream;
 using std::istreambuf_iterator;
 using namespace rapidjson;
+using namespace simdjson;
 
 void SkillDataManager::LoadJsonData()
 {
 	LoadSkillData();
+	LoadExampleWithSimdjson();
 }
 
 Skill SkillDataManager::GetSkillData(int skillIndex)
@@ -60,22 +63,48 @@ void SkillDataManager::LoadSkillData()
 		const auto& listOperation = jsonSkillData["OperationList"].GetArray();
 		for (auto& jsonOperation : listOperation)
 		{
-                    /*Operation operation;
-                    operation.opereationType = jsonOperation["OperationType"].GetString();
-                    operation.operationValue = jsonOperation["OperationValue"].GetInt();
+			/*Operation operation;
+			operation.opereationType = jsonOperation["OperationType"].GetString();
+			operation.operationValue = jsonOperation["OperationValue"].GetInt();
 
-                    const auto& jsonOperationCondition = jsonOperation["OperationCondition"];
-                    OperationCondition condition;
-                    condition.conditionType = jsonOperationCondition["ConditionType"].GetString();
-                    condition.conditionValue = jsonOperationCondition["ConditionValue"].GetInt();
+			const auto& jsonOperationCondition = jsonOperation["OperationCondition"];
+			OperationCondition condition;
+			condition.conditionType = jsonOperationCondition["ConditionType"].GetString();
+			condition.conditionValue = jsonOperationCondition["ConditionValue"].GetInt();
 
-                    operation.condition = condition;
+			operation.condition = condition;
 
-                    skillData.AddOperation(operation);*/
+			skillData.AddOperation(operation);*/
 		}
 
 		mapSkillData[skillData.skillIndex] = skillData;
 	}
 
 	return;
+}
+
+void SkillDataManager::LoadExampleWithSimdjson()
+{
+	ondemand::parser parser;
+
+	padded_string json = padded_string::load(FILE_PATH);
+	simdjson_result result = parser.iterate(json);
+	if (result.error()) {
+
+		return;
+	}
+
+	for (ondemand::object jsonSkillData : result) {
+
+		Skill skillData;
+
+		skillData.skillIndex = jsonSkillData["SkillIndex"].get_int64();
+		skillData.skillName = jsonSkillData["SkillName"].get_string().value();
+		skillData.coolTime = jsonSkillData["CoolTime"].get_int64();
+		skillData.duration = jsonSkillData["Duration"].get_int64();
+
+		for (ondemand::object jsonOpereation : jsonSkillData["OperationList"]) {
+
+		}
+	}
 }

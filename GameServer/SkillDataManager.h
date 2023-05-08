@@ -15,5 +15,5 @@ public:
 	Skill GetSkillData(int skillIndex);
 private:
 	void LoadSkillData();
-
+	void LoadExampleWithSimdjson();
 };

@@ -14,7 +14,7 @@ GameSystemUpdater::GameSystemUpdater(sptr<GameSystem> gameSystem) { reqControlle
 
 void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene, vector<sptr<Player>>& playersInScene)
 {
-    elapsedTime += deltaTime;
+	elapsedTime += deltaTime;
 
     // Step 1 - Process request queue
     {
@@ -67,14 +67,14 @@ void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene, vec
     {
         if (elapsedTime - lastChecked > 2)
         {
-            // ¸ðµç ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ ¸ðµç ÇÃ·¹ÀÌ¿¡°Ô µ¿±âÈ­
+            // ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­
             for (sptr<Player>& player : playersInScene)
             {
                 sptr<TransformEntity> transform = dynamic_pointer_cast<TransformEntity>(player);
                 SendPositionUpdateToPlayer(transform, playersInScene);
             }
 
-            // ¸ðµç NPCÀÇ À§Ä¡¸¦ ¸ðµç ÇÃ·¹ÀÌ¾î¿¡°Ô µ¿±âÈ­
+            // ï¿½ï¿½ï¿½ NPCï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­
             /*for (sptr<TransformEntity>& transformEntity : vecNPC)
             {
                 SendPositionUpdateToPlayer(transformEntity, playersInScene);
@@ -87,50 +87,50 @@ void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene, vec
 
 void GameSystemUpdater::UpdateEachPlayer(float deltaTime, sptr<Scene>& scene, sptr<Player>& player, vector<sptr<Player>>& others)
 {
-    // ÇÃ·¹ÀÌ¾î Æ÷Áö¼Ç °´Ã¼ ¾÷µ¥ÀÌÆ®
-    player->Update(deltaTime);
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+	player->Update(deltaTime);
 
-    //[TODO]
-    float radius = 0.5f; // UnityÀÇ this.GetComponent<SphereCollider>().radius °ª
+	//[TODO]
+	float radius = 0.5f; // Unityï¿½ï¿½ this.GetComponent<SphereCollider>().radius ï¿½ï¿½
 
-    // ÁöÇü°ú Ãæµ¹ Ã³¸®
-    Vector3 currentPosition = player->GetPosition();
-    Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
-    player->SetPosition(newPosition);
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ Ã³ï¿½ï¿½
+	Vector3 currentPosition = player->GetPosition();
+	Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
+	player->SetPosition(newPosition);
 
-    // queue<Operation> readyOperation = player->skillController->GetReadyOperation();
+	// queue<Operation> readyOperation = player->skillController->GetReadyOperation();
 
-    // while (!readyOperation.empty())
-    //{
-    //	Operation& operation = readyOperation.front();
+	// while (!readyOperation.empty())
+	//{
+	//	Operation& operation = readyOperation.front();
 
-    //	//smt like operation->trigger()
-    //	//operation.opereationType
+	//	//smt like operation->trigger()
+	//	//operation.opereationType
 
-    //	readyOperation.pop();
-    //}
+	//	readyOperation.pop();
+	//}
 }
 
 void GameSystemUpdater::ProcessSceneReqQueue(sptr<Scene>& scene)
 {
-    // Ä¿¸Çµå ¸ÕÀú Ã³¸®
-    queue<sptr<BaseReq>> copied = scene->FlushQueue();
-    while (!copied.empty())
-    {
-        sptr<BaseReq> command = copied.front();
-        int commandId = command->GetCommandId();
+	// Ä¿ï¿½Çµï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+	queue<sptr<BaseReq>> copied = scene->FlushQueue();
+	while (!copied.empty())
+	{
+		sptr<BaseReq> command = copied.front();
+		int commandId = command->GetCommandId();
 
-        sptr<IGameSystemController> controller = reqControllerContainer->GetController(command->commandGroupId);
-        if (controller)
-        {
-            controller->Process(scene, command);
-        }
-        else
-        {
-            LOG_ERROR("GameSystemControllerContainer has no controller for commandGroupId = " + command->commandGroupId);
-        }
-        copied.pop();
-    }
+		sptr<IGameSystemController> controller = reqControllerContainer->GetController(command->commandGroupId);
+		if (controller)
+		{
+			controller->Process(scene, command);
+		}
+		else
+		{
+			LOG_ERROR("GameSystemControllerContainer has no controller for commandGroupId = " + command->commandGroupId);
+		}
+		copied.pop();
+	}
 }
 
 void GameSystemUpdater::SendNPCSpawnedToPlayer(sptr<NPC>& npc, vector<sptr<Player>>& players)
@@ -142,18 +142,18 @@ void GameSystemUpdater::SendNPCSpawnedToPlayer(sptr<NPC>& npc, vector<sptr<Playe
     npcSpawned.mutable_position()->set_y(position.y);
     npcSpawned.mutable_position()->set_z(position.z);
 
-    npcSpawned.mutable_npcinfo()->set_npcid(npc->npcId);
-    npcSpawned.mutable_npcinfo()->set_npcindex(npc->npcIndex);
-    npcSpawned.mutable_npcinfo()->set_npcname(npc->npcName);
+	npcSpawned.mutable_npcinfo()->set_npcid(npc->npcId);
+	npcSpawned.mutable_npcinfo()->set_npcindex(npc->npcIndex);
+	npcSpawned.mutable_npcinfo()->set_npcname(npc->npcName);
 
-    npcSpawned.mutable_statinfo()->set_maxhp(npc->GetStat(STAT_TYPE::MAX_HP));
-    npcSpawned.mutable_statinfo()->set_maxmp(npc->GetStat(STAT_TYPE::MAX_MP));
-    npcSpawned.mutable_statinfo()->set_armor(npc->GetStat(STAT_TYPE::ARMOR));
-    npcSpawned.mutable_statinfo()->set_attackpower(npc->GetStat(STAT_TYPE::ATTACK_POWER));
-    npcSpawned.mutable_statinfo()->set_attackspeed(npc->GetStat(STAT_TYPE::ATTACK_SPEED));
-    npcSpawned.mutable_statinfo()->set_magicpower(npc->GetStat(STAT_TYPE::MAGIC_POWER));
-    npcSpawned.mutable_statinfo()->set_magicresistance(npc->GetStat(STAT_TYPE::MAGIC_RESISTANCE));
-    npcSpawned.mutable_statinfo()->set_movespeed(npc->GetStat(STAT_TYPE::MOVE_SPEED));
+	npcSpawned.mutable_statinfo()->set_maxhp(npc->GetStat(STAT_TYPE::MAX_HP));
+	npcSpawned.mutable_statinfo()->set_maxmp(npc->GetStat(STAT_TYPE::MAX_MP));
+	npcSpawned.mutable_statinfo()->set_armor(npc->GetStat(STAT_TYPE::ARMOR));
+	npcSpawned.mutable_statinfo()->set_attackpower(npc->GetStat(STAT_TYPE::ATTACK_POWER));
+	npcSpawned.mutable_statinfo()->set_attackspeed(npc->GetStat(STAT_TYPE::ATTACK_SPEED));
+	npcSpawned.mutable_statinfo()->set_magicpower(npc->GetStat(STAT_TYPE::MAGIC_POWER));
+	npcSpawned.mutable_statinfo()->set_magicresistance(npc->GetStat(STAT_TYPE::MAGIC_RESISTANCE));
+	npcSpawned.mutable_statinfo()->set_movespeed(npc->GetStat(STAT_TYPE::MOVE_SPEED));
 
     Packet packet(PACKET_GROUP_ID::POSITION, PACKET_ID_POSITION::NPC_SPAWNED_LIST);
     packet.WriteData<Protocol::NPCSpawned>(npcSpawned);
@@ -166,7 +166,7 @@ void GameSystemUpdater::SendNPCSpawnedToPlayer(sptr<NPC>& npc, vector<sptr<Playe
 
 void GameSystemUpdater::UpdateEachNPC(float deltaTime, sptr<Scene>& scene, sptr<NPC>& npc)
 {
-    // ÇÃ·¹ÀÌ¾î Æ÷Áö¼Ç °´Ã¼ ¾÷µ¥ÀÌÆ®
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     npc->Update(deltaTime);
 
     if (npc->patrolController->NeedToSwitchMoveDirection())
@@ -174,13 +174,13 @@ void GameSystemUpdater::UpdateEachNPC(float deltaTime, sptr<Scene>& scene, sptr<
         npc->patrolController->SwitchToNextMoveDirection();
         Vector3 newDirection = npc->patrolController->GetCurrentMoveDirection();
 
-        //¸ðµç Player¿¡°Ô npcÀÇ move direction µ¿±âÈ­!
+        //ï¿½ï¿½ï¿½ Playerï¿½ï¿½ï¿½ï¿½ npcï¿½ï¿½ move direction ï¿½ï¿½ï¿½ï¿½È­!
     }
 
     //[TODO]
-    float radius = 0.5f; // UnityÀÇ this.GetComponent<SphereCollider>().radius °ª
+    float radius = 0.5f; // Unityï¿½ï¿½ this.GetComponent<SphereCollider>().radius ï¿½ï¿½
 
-    // ÁöÇü°ú Ãæµ¹ Ã³¸®
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ Ã³ï¿½ï¿½
     Vector3 currentPosition = npc->GetPosition();
     Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
     npc->SetPosition(newPosition);

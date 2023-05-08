@@ -13,7 +13,7 @@ DataSystem::DataSystem()
 
 void DataSystem::LoadJsonData()
 {
-	navigationMeshAgentManager->LoadJsonData();
+	//navigationMeshAgentManager->LoadJsonData();
 	baseStatManager->LoadJsonData();
 	sceneInfoManager->LoadJsonData();
 	spawnInfoManager->LoadJsonData();

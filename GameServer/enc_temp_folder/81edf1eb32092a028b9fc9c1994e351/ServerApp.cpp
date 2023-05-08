@@ -43,7 +43,7 @@ void ServerApp::StartSocketServer()
 		threadSystem->Launch(
 			[&]()
 			{
-				// ï¿½ï¿½Æ®ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Å¶ ï¿½Úµé·¯ ï¿½ï¿½ï¿½ï¿½
+				// ³×Æ®¿öÅ© ÀÔÃâ·Â ¹× ÆÐÅ¶ ÇÚµé·¯ ½ÇÇà
 				networkSystem->RunIoContext();
 			});
 	}
@@ -53,7 +53,7 @@ void ServerApp::InitGameSystem() {}
 
 void ServerApp::StartGameSystem()
 {
-	// TODO ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+	// TODO ³ªÁß¿¡ »èÁ¦ÇÏ±â
 	// threadSystem->Launch(
 	//    [&]()
 	//    {
@@ -68,20 +68,20 @@ void ServerApp::StartGameSystem()
 	//        }
 	//    });
 
-    //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    for (int32 i = 0; i < MAX_SCENE_UPDATE_THREAD; i++)
-    {
-        threadSystem->Launch(
-            [&]()
-            {
-                std::chrono::steady_clock::time_point lastUpdate = std::chrono::steady_clock::now();
+	//¾À ¾÷µ¥ÀÌÆ® ¾²·¹µå
+	for (int32 i = 0; i < MAX_SCENE_UPDATE_THREAD; i++)
+	{
+		threadSystem->Launch(
+			[&]()
+			{
+				std::chrono::steady_clock::time_point lastUpdate;
 
 				while (true)
 				{
 					auto now = std::chrono::steady_clock::now();
 					float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - lastUpdate).count() / 1000000.0f;
 					lastUpdate = now;
-					gameSystem->UpdateScene(i, deltaTime);
+					//gameSystem->UpdateScene(i, deltaTime);
 				}
 			});
 	}

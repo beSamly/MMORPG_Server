@@ -182,6 +182,7 @@
     <ClInclude Include="SceneInfoManager.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ServerApp.h" />
+    <ClInclude Include="simdjson.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="SkillController.h" />
     <ClInclude Include="SkillDataManager.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="SceneInfoManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ServerApp.cpp" />
+    <ClCompile Include="simdjson.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SkillController.cpp" />
     <ClCompile Include="SkillDataManager.cpp" />
