@@ -132,150 +132,88 @@ void NavigationMeshAgentManager::LoadSceneData()
 	return;
 }
 
-
 void NavigationMeshAgentManager::LoadSceneDataWithSimdjson()
 {
-	ondemand::parser parser;
+    std::chrono::steady_clock::time_point lastUpdate = std::chrono::steady_clock::now();
 
-	padded_string json = padded_string::load(FILE_PATH);
-	simdjson_result d = parser.iterate(json);
-	if (d.error()) {
-		assert(false);
-		return;
-	}
+    simdjson::dom::parser parser;
 
-	//-----
-	sptr<PhysicsEngine::NavigationMeshAgent> navigationAgent = make_shared<PhysicsEngine::NavigationMeshAgent>();
-	navigationAgent->sceneName = d["sceneName"].get_string().value();
+    // dom::parser parser;
+    simdjson::dom::element data;
+    auto error = parser.load(FILE_PATH).get(data);
 
-	int gridSize = d["gridSize"].get_int64();
-	navigationAgent->SetGridSize(gridSize);
-
-	vector<PhysicsEngine::Mesh> vecMesh;
-
-	for (ondemand::object jsonMesh : d["listMesh"]) {
-
-		sptr<PhysicsEngine::Mesh> mesh = make_shared<PhysicsEngine::Mesh>();
-		mesh->name = jsonMesh["meshName"].get_string().value();
-
-		for (ondemand::object jsonTriangle : jsonMesh["listTriangle"])
-		{
-			vector<PhysicsEngine::Vector3> vertices;
-
-			for (ondemand::object jsonVertex : jsonTriangle["vertices"])
-			{
-				PhysicsEngine::Vector3 vertex;
-				vertex.x = jsonVertex["x"].get_double();
-				vertex.y = jsonVertex["y"].get_double();
-				vertex.z = jsonVertex["z"].get_double();
-
-				vertices.push_back(vertex);
-			}
-
-			PhysicsEngine::Triangle triangle(vertices[0], vertices[1], vertices[2]);
-			triangle.name = jsonTriangle["triangleName"].get_string().value();
-
-			mesh->vecTriangle.push_back(triangle);
-		}
-
-		navigationAgent->AddMesh(mesh);
-	}
-
-	for (ondemand::object jsonGridInfo : d["listGridInfo"])
-	{
-		sptr<PhysicsEngine::GridInfo> gridInfo = make_shared<PhysicsEngine::GridInfo>();
-		gridInfo->gridIndex = jsonGridInfo["gridIndex"].get_string().value();
-
-		for (ondemand::object jsonAdjacentTriangleInfo : jsonGridInfo["listAdjacentMeshInfo"])
-		{
-			PhysicsEngine::AdjacentMeshInfo adjacentMeshInfo;
-			adjacentMeshInfo.meshName = jsonAdjacentTriangleInfo["meshName"].get_string().value();
-
-			for (int index : jsonAdjacentTriangleInfo["adjacentTriangleIndices"])
-			{
-				adjacentMeshInfo.adjacentTriangleIndices.push_back(index);
-			}
-			gridInfo->vecAdjacentMeshInfo.push_back(adjacentMeshInfo);
-		}
-
-		navigationAgent->AddGridInfo(gridInfo);
-	}
-
-	mapNavigationMeshAgent.emplace(navigationAgent->sceneName, navigationAgent);
-
-	return;
-}
-
-void NavigationMeshAgentManager::LoadSceneDataWithSimdjson()
-{
-    ondemand::parser parser;
-
-    padded_string json = padded_string::load(FILE_PATH);
-    simdjson_result d = parser.iterate(json);
-    if (d.error())
     {
-        assert(false);
-        return;
+        float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - lastUpdate).count() / 1000000.0f;
+        lastUpdate = std::chrono::steady_clock::now();
+        std::cout << "Simdjson Ver2 parsing json - elapsed time : " << deltaTime << std::endl;
     }
 
     sptr<PhysicsEngine::NavigationMeshAgent> navigationAgent = make_shared<PhysicsEngine::NavigationMeshAgent>();
-    navigationAgent->sceneName = d["sceneName"].get_string().value();
+    navigationAgent->sceneName = data["sceneName"];
 
-    int gridSize = d["gridSize"].get_int64();
+    int gridSize = data["gridSize"].get_int64();
     navigationAgent->SetGridSize(gridSize);
 
-    vector<PhysicsEngine::Mesh> vecMesh;
-
-    for (ondemand::object jsonMesh : d["listMesh"])
+    // Iterate through an array of objects
+    for (const dom::element& jsonMesh : data["listMesh"])
     {
-        /*sptr<PhysicsEngine::Mesh> mesh = make_shared<PhysicsEngine::Mesh>();
-        mesh->name = jsonMesh["meshName"].get_string().value();*/
 
-        for (ondemand::object jsonTriangle : jsonMesh["listTriangle"])
+        sptr<PhysicsEngine::Mesh> mesh = make_shared<PhysicsEngine::Mesh>();
+        mesh->name = jsonMesh["meshName"].get_string().value();
+
+        for (const auto& jsonTriangle : jsonMesh["listTriangle"])
         {
-            vector<PhysicsEngine::Vector3> vertices;
+            vector<sptr<PhysicsEngine::Vector3>> vertices;
 
-            for (ondemand::object jsonVertex : jsonTriangle["vertices"])
+            for (const auto& jsonVertex : jsonTriangle["vertices"])
             {
-                PhysicsEngine::Vector3 vertex;
-                vertex.x = jsonVertex["x"].get_double();
-                vertex.y = jsonVertex["y"].get_double();
-                vertex.z = jsonVertex["z"].get_double();
+                sptr<PhysicsEngine::Vector3> vertex = make_shared<PhysicsEngine::Vector3>();
+                vertex->x = jsonVertex["x"].get_double();
+                vertex->y = jsonVertex["y"].get_double();
+                vertex->z = jsonVertex["z"].get_double();
 
-                //vertices.push_back(vertex);
+                vertices.push_back(vertex);
             }
 
-            //PhysicsEngine::Triangle triangle(vertices[0], vertices[1], vertices[2]);
-            //triangle.name = jsonTriangle["triangleName"].get_string().value();
-
-            //mesh->vecTriangle.push_back(triangle);
+            sptr<PhysicsEngine::Triangle> triangle = make_shared<PhysicsEngine::Triangle>(*vertices[0], *vertices[1], *vertices[2]);
+            triangle->name = jsonTriangle["triangleName"].get_string().value();
+            mesh->vecTriangle.push_back(triangle);
         }
 
-        //navigationAgent->AddMesh(mesh);
+        navigationAgent->AddMesh(mesh);
     }
 
-    for (ondemand::object jsonGridInfo : d["listGridInfo"])
+    {
+        float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - lastUpdate).count() / 1000000.0f;
+        lastUpdate = std::chrono::steady_clock::now();
+        std::cout << "Simdjson Ver2 parsing listMesh - elapsed time : " << deltaTime << std::endl;
+    }
+
+    for (const auto& jsonGridInfo : data["listGridInfo"])
     {
         sptr<PhysicsEngine::GridInfo> gridInfo = make_shared<PhysicsEngine::GridInfo>();
         gridInfo->gridIndex = jsonGridInfo["gridIndex"].get_string().value();
 
-        for (ondemand::object jsonAdjacentTriangleInfo : jsonGridInfo["listAdjacentMeshInfo"])
+        for (const auto& jsonAdjacentTriangleInfo : jsonGridInfo["listAdjacentMeshInfo"])
         {
             PhysicsEngine::AdjacentMeshInfo adjacentMeshInfo;
             adjacentMeshInfo.meshName = jsonAdjacentTriangleInfo["meshName"].get_string().value();
 
-            for (auto index : jsonAdjacentTriangleInfo["adjacentTriangleIndices"])
+            for (const auto& index : jsonAdjacentTriangleInfo["adjacentTriangleIndices"])
             {
                 adjacentMeshInfo.adjacentTriangleIndices.push_back(index.get_int64());
             }
-
-            //gridInfo->vecAdjacentMeshInfo.push_back(adjacentMeshInfo);
+            gridInfo->vecAdjacentMeshInfo.push_back(adjacentMeshInfo);
         }
 
-        //navigationAgent->AddGridInfo(gridInfo);
+        navigationAgent->AddGridInfo(gridInfo);
     }
 
-    //mapNavigationMeshAgent.emplace(navigationAgent->sceneName, navigationAgent);
+    {
+        float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - lastUpdate).count() / 1000000.0f;
+        lastUpdate = std::chrono::steady_clock::now();
+        std::cout << "Simdjson ver2 parsing GridInfo - elapsed time : " << deltaTime << std::endl;
+    }
 
-    return;
+    mapNavigationMeshAgent.emplace(navigationAgent->sceneName, navigationAgent);
 }
