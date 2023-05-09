@@ -105,12 +105,6 @@
     <Filter Include="Source Files\DataSystem\StaticDataManager">
       <UniqueIdentifier>{b3b5217b-dcd2-4bfe-9596-f06b27b747da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Library">
-      <UniqueIdentifier>{e2c2cdc6-7598-4ce2-8095-6bc8ce4c7409}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Library\Simdjson">
-      <UniqueIdentifier>{6b0fd21c-2de9-40b4-86e7-b52700e963e3}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -294,16 +288,11 @@
     <ClInclude Include="PatrolController.h">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="simdjson.h">
-      <Filter>Source Files\Library\Simdjson</Filter>
     <ClInclude Include="GLobalController.h">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClInclude>
     <ClInclude Include="ProjectileManager.h">
       <Filter>Source Files\GameSystem\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="simdjson.h">
-      <Filter>Source Files\Library</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -448,16 +437,11 @@
     <ClCompile Include="PatrolController.cpp">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="simdjson.cpp">
-      <Filter>Source Files\Library\Simdjson</Filter>
     <ClCompile Include="GLobalController.cpp">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClCompile>
     <ClCompile Include="ProjectileManager.cpp">
       <Filter>Source Files\GameSystem\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="simdjson.cpp">
-      <Filter>Source Files\Library</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
