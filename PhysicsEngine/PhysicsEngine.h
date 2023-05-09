@@ -157,8 +157,8 @@ namespace PhysicsEngine
     {
     public:
         string name;
-        vector<Triangle> vecTriangle;
-        void AddTriangle(Triangle triangle) { vecTriangle.push_back(triangle); }
+        vector<sptr<Triangle>> vecTriangle;
+        void AddTriangle(sptr<Triangle> triangle) { vecTriangle.push_back(triangle); }
     };
 
     class GridInfo
@@ -174,7 +174,7 @@ namespace PhysicsEngine
         CollisionInfo(){};
 
         string fromMeshName;
-        Triangle fromTriangle;
+        sptr<Triangle> fromTriangle;
         Vector3 penetrationNormal;
         float penetrationDepth = 0.0f;
 
@@ -215,22 +215,22 @@ namespace PhysicsEngine
             return DotProductType::NONE;
         }
 
-        static CollisionInfo CheckCollision_BetweenTriangleSphere(Triangle& triangle, Vector3& target, float radius)
+        static CollisionInfo CheckCollision_BetweenTriangleSphere(sptr<Triangle>& triangle, Vector3& target, float radius)
         {
-            Vector3& first = triangle.vertices[0];
-            Vector3& second = triangle.vertices[1];
-            Vector3& third = triangle.vertices[2];
+            Vector3& first = triangle->vertices[0];
+            Vector3& second = triangle->vertices[1];
+            Vector3& third = triangle->vertices[2];
 
             // DEBUG!!
             {
-                if (triangle.name == "Ramp_Mesh_Triangle(96)")
+                if (triangle->name == "Ramp_Mesh_Triangle(96)")
                 {
                     string DEBUG_POINT = " DEBUG";
                 }
             }
 
             /*----------------------------------------------------------------------------------------
-                    아래 함수 호출을 주석친 이유는 굳이 Seperating Axe 검사를 하지
+                            아래 함수 호출을 주석친 이유는 굳이 Seperating Axe 검사를 하지
             않아도 CalculateOverlap_BetweenPointSphere, IsSphereHangingOnLineOfTriangle
             함수에서 걸러진다. 혹시 나중에 제대로 작동 안 하면 주석 풀기 History : 가끔
             Unity prefab에 이상한 vertex a,b,c 가 한 라인에 있는 mesh가 딸려올 때가
@@ -238,7 +238,7 @@ namespace PhysicsEngine
             ------------------------------------------------------------------------------------------*/
             // 확실한 Seperating Axe 찾았으면 충돌 검사할 필요가 없이 충돌하지 않은
             // 상태이다.
-            if (FindSeperatingAxe_BetweenTriangleSphere(triangle.vertices, target, radius))
+            if (FindSeperatingAxe_BetweenTriangleSphere(triangle->vertices, target, radius))
             {
                 return CollisionInfo();
             }
@@ -248,19 +248,19 @@ namespace PhysicsEngine
             // History - Terrain이 엄청 촘촘하고 울퉁불퉁한 경우에는 플레이어가 방향키
             // 이동을 했을 때 Normal의 반대방향으로 가서 땅이 뚫고 내려갈 수 있어서 주석
             // 처리.
-            if (IsTargetLocatedOppositeSideFromTriangleNormal(triangle.GetCrossProduct(), first, target))
+            if (IsTargetLocatedOppositeSideFromTriangleNormal(triangle->GetCrossProduct(), first, target))
             {
                 return CollisionInfo();
             }
 
             if (IsPointInTriangle(first, second, third, target))
             {
-                float overlap = CalculateOverlap_BetweenPointSphere(triangle.GetCrossProduct(), first, target, radius);
+                float overlap = CalculateOverlap_BetweenPointSphere(triangle->GetCrossProduct(), first, target, radius);
                 if (overlap > 0.0f)
                 {
                     CollisionInfo collisionInfo;
                     collisionInfo.penetrationDepth = overlap;
-                    collisionInfo.penetrationNormal = triangle.GetCrossProduct();
+                    collisionInfo.penetrationNormal = triangle->GetCrossProduct();
                     return collisionInfo;
                 }
             }
@@ -274,7 +274,7 @@ namespace PhysicsEngine
                     {
                         CollisionInfo collisionInfo;
                         collisionInfo.penetrationDepth = overlap;
-                        collisionInfo.penetrationNormal = triangle.GetCrossProduct();
+                        collisionInfo.penetrationNormal = triangle->GetCrossProduct();
                         return collisionInfo;
                     }
                 }
@@ -381,14 +381,14 @@ namespace PhysicsEngine
             return distanceToTargetB < distanceToTargetA ? true : false;
         }
 
-        static float IsSphereHangingOnLineOfTriangle(Triangle& t, Vector3& target, float radius)
+        static float IsSphereHangingOnLineOfTriangle(sptr<Triangle>& t, Vector3& target, float radius)
         {
-            int totalCount = t.vertices.size();
+            int totalCount = t->vertices.size();
 
             for (int i = 0; i < 3; i++)
             {
-                Vector3 A = t.vertices[i];
-                Vector3 B = t.vertices[(i + 1) % totalCount];
+                Vector3 A = t->vertices[i];
+                Vector3 B = t->vertices[(i + 1) % totalCount];
                 Vector3 normal = B - A; // vertex a => vertex b 까지의 방향 normal
 
                 // Normal 을 구할 때 - vertices[i] 해줬으니 Target 도 - vertices[i]
@@ -505,7 +505,7 @@ namespace PhysicsEngine
         void SetGridSize(int gridSize) { GRID_SIZE = gridSize; }
 
         // !!DEPRECATED!!
-        void AddTriangle(string meshName, Triangle& triangle) { mapMesh[meshName]->AddTriangle(triangle); }
+        void AddTriangle(string meshName, sptr<Triangle> triangle) { mapMesh[meshName]->AddTriangle(triangle); }
 
         void AddGridInfo(sptr<GridInfo> gridInfo) { mapGridInfo[gridInfo->gridIndex] = gridInfo; }
 
@@ -589,7 +589,7 @@ namespace PhysicsEngine
             vector<CollisionInfo> vecCollisionInfo;
             for (int triangleIndex : triangleIndicesToCheck)
             {
-                Triangle& triangle = mesh->vecTriangle[triangleIndex];
+                sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
 
                 CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
                 if (collisionInfo.IsCollided())
@@ -643,7 +643,7 @@ namespace PhysicsEngine
             // 충돌한 모든 정보를 DotProductType 기준으로 모은다.
             for (int triangleIndex : triangleIndicesToCheck)
             {
-                Triangle triangle = mesh->vecTriangle[triangleIndex];
+                sptr<Triangle> triangle = mesh->vecTriangle[triangleIndex];
 
                 CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
                 if (collisionInfo.IsCollided())
