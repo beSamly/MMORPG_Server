@@ -164,41 +164,35 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Protobuf\EnterSceneRes.pb.cc" />
-    <ClCompile Include="Protobuf\InputMovementReq.pb.cc" />
-    <ClCompile Include="Protobuf\InputMovementRes.pb.cc" />
-    <ClCompile Include="Protobuf\LoginReq.pb.cc" />
-    <ClCompile Include="Protobuf\LoginRes.pb.cc" />
-    <ClCompile Include="Protobuf\MoveReq.pb.cc" />
-    <ClCompile Include="Protobuf\MoveRes.pb.cc" />
-    <ClCompile Include="Protobuf\NPCBaseInfo.pb.cc" />
-    <ClCompile Include="Protobuf\NPCInfo.pb.cc" />
-    <ClCompile Include="Protobuf\NPCListRes.pb.cc" />
-    <ClCompile Include="Protobuf\NPCSpawned.pb.cc" />
-    <ClCompile Include="Protobuf\NPCSpawnedList.pb.cc" />
-    <ClCompile Include="Protobuf\PlayerInfo.pb.cc" />
-    <ClCompile Include="Protobuf\PositionUpdate.pb.cc" />
-    <ClCompile Include="Protobuf\StatInfo.pb.cc" />
-    <ClCompile Include="Protobuf\Vector3.pb.cc" />
+    <ClCompile Include="Protobuf\ENTER_SCENE_RES.pb.cc" />
+    <ClCompile Include="Protobuf\LOGIN_REQ.pb.cc" />
+    <ClCompile Include="Protobuf\LOGIN_RES.pb.cc" />
+    <ClCompile Include="Protobuf\MOVE_REQ.pb.cc" />
+    <ClCompile Include="Protobuf\MOVE_RES.pb.cc" />
+    <ClCompile Include="Protobuf\NPC_BASE_INFO.pb.cc" />
+    <ClCompile Include="Protobuf\NPC_INFO.pb.cc" />
+    <ClCompile Include="Protobuf\NPC_LIST_RES.pb.cc" />
+    <ClCompile Include="Protobuf\NPC_SPAWNED_LIST.pb.cc" />
+    <ClCompile Include="Protobuf\PLAYER_INFO.pb.cc" />
+    <ClCompile Include="Protobuf\POSITION_UPDATE.pb.cc" />
+    <ClCompile Include="Protobuf\STAT_INFO.pb.cc" />
+    <ClCompile Include="Protobuf\VECTOR3.pb.cc" />
     <ClCompile Include="ProxyPacketId.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Protobuf\EnterSceneRes.pb.h" />
-    <ClInclude Include="Protobuf\InputMovementReq.pb.h" />
-    <ClInclude Include="Protobuf\InputMovementRes.pb.h" />
-    <ClInclude Include="Protobuf\LoginReq.pb.h" />
-    <ClInclude Include="Protobuf\LoginRes.pb.h" />
-    <ClInclude Include="Protobuf\MoveReq.pb.h" />
-    <ClInclude Include="Protobuf\MoveRes.pb.h" />
-    <ClInclude Include="Protobuf\NPCBaseInfo.pb.h" />
-    <ClInclude Include="Protobuf\NPCInfo.pb.h" />
-    <ClInclude Include="Protobuf\NPCListRes.pb.h" />
-    <ClInclude Include="Protobuf\NPCSpawned.pb.h" />
-    <ClInclude Include="Protobuf\NPCSpawnedList.pb.h" />
-    <ClInclude Include="Protobuf\PlayerInfo.pb.h" />
-    <ClInclude Include="Protobuf\PositionUpdate.pb.h" />
-    <ClInclude Include="Protobuf\StatInfo.pb.h" />
-    <ClInclude Include="Protobuf\Vector3.pb.h" />
+    <ClInclude Include="Protobuf\ENTER_SCENE_RES.pb.h" />
+    <ClInclude Include="Protobuf\LOGIN_REQ.pb.h" />
+    <ClInclude Include="Protobuf\LOGIN_RES.pb.h" />
+    <ClInclude Include="Protobuf\MOVE_REQ.pb.h" />
+    <ClInclude Include="Protobuf\MOVE_RES.pb.h" />
+    <ClInclude Include="Protobuf\NPC_BASE_INFO.pb.h" />
+    <ClInclude Include="Protobuf\NPC_INFO.pb.h" />
+    <ClInclude Include="Protobuf\NPC_LIST_RES.pb.h" />
+    <ClInclude Include="Protobuf\NPC_SPAWNED_LIST.pb.h" />
+    <ClInclude Include="Protobuf\PLAYER_INFO.pb.h" />
+    <ClInclude Include="Protobuf\POSITION_UPDATE.pb.h" />
+    <ClInclude Include="Protobuf\STAT_INFO.pb.h" />
+    <ClInclude Include="Protobuf\VECTOR3.pb.h" />
     <ClInclude Include="ResponseCode.h" />
     <ClInclude Include="PacketDef.h" />
     <ClInclude Include="pch.h" />

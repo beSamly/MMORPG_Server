@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+import "NPC_INFO.proto";
+
+package Protocol;
+
+message NPC_LIST_RES {
+  repeated NPC_INFO NPC_INFO = 1;
+}

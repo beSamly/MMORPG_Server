@@ -1,11 +1,10 @@
 #include "pch.h"
 #include "GameSystemUpdater.h"
 #include "PacketDef.h"
-#include "Vector3.pb.h"
-#include "NPCSpawned.pb.h"
+#include "VECTOR3.pb.h"
 #include "NPC.h"
 #include "TransformEntity.h"
-#include "PositionUpdate.pb.h"
+#include "POSITION_UPDATE.pb.h"
 
 using namespace PacketDef;
 
@@ -189,7 +188,7 @@ void GameSystemUpdater::SendPositionUpdateToPlayer(sptr<TransformEntity>& transf
 {
 	Vector3 position = transform->GetPosition();
 
-	Protocol::PositionUpdate positionUpdate;
+	Protocol::POSITION_UPDATE positionUpdate;
 	positionUpdate.set_targetid(transform->GetEntityId());
 	positionUpdate.set_targettype(static_cast<int>(transform->GetEntityType()));
 	positionUpdate.mutable_position()->set_x(position.x);
@@ -197,7 +196,7 @@ void GameSystemUpdater::SendPositionUpdateToPlayer(sptr<TransformEntity>& transf
 	positionUpdate.mutable_position()->set_z(position.z);
 
 	Packet packet(REQ_GROUP_ID::GAME, REQ_ID_GAME::POSITION_UPDATE);
-	packet.WriteData<Protocol::PositionUpdate>(positionUpdate);
+	packet.WriteData<Protocol::POSITION_UPDATE>(positionUpdate);
 
 	for (sptr<Player>& player : players)
 	{
@@ -236,7 +235,7 @@ Packet GameSystemUpdater::BuildUpdatePositionPacket(sptr<TransformEntity> transf
 	Vector3 position = transform->GetPosition();
 	Vector3 moveDirection = transform->GetMoveDirection();
 
-	Protocol::PositionUpdate positionUpdate;
+	Protocol::POSITION_UPDATE positionUpdate;
 	//positionUpdate.set_transformentityid(transform->GetEntityId());
 	//positionUpdate.set_transformentitytype(transform->GetEntityType());
 
@@ -249,7 +248,7 @@ Packet GameSystemUpdater::BuildUpdatePositionPacket(sptr<TransformEntity> transf
 	//positionUpdate.mutable_movedirection()->set_z(moveDirection.z);
 
 	Packet packet(REQ_GROUP_ID::GAME, REQ_ID_GAME::POSITION_UPDATE);
-	packet.WriteData<Protocol::PositionUpdate>(positionUpdate);
+	packet.WriteData<Protocol::POSITION_UPDATE>(positionUpdate);
 
 	return packet;
 }

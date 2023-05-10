@@ -4,7 +4,7 @@
 
 struct Request
 {
-	sptr<Player> from;
+	sptr<Player> player;
 	sptr<ClientSession> session;
 	sptr<Packet> packet;
 

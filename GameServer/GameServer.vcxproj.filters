@@ -33,12 +33,6 @@
     <Filter Include="Source Files\Logger">
       <UniqueIdentifier>{9a93da21-f5f4-4a17-a87b-3955e87455a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\NetworkSystem\Controller">
-      <UniqueIdentifier>{7d9130a4-d7fe-413c-9ff5-f322dae478c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\NetworkSystem\Controller\Interface">
-      <UniqueIdentifier>{9931816c-fd5d-4d0a-b802-145fb3d7a550}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\GameSystem\Scene">
       <UniqueIdentifier>{1d432961-03d9-4109-8685-dcdd814b06b5}</UniqueIdentifier>
     </Filter>
@@ -56,24 +50,6 @@
     </Filter>
     <Filter Include="Source Files\Common">
       <UniqueIdentifier>{a41c18ee-91a8-41dc-b169-0621e1450d8d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\NetworkSystem\Controller\RequestValidator">
-      <UniqueIdentifier>{595c3109-680a-4a78-8c62-312841d9a96c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameSystem\ReqController">
-      <UniqueIdentifier>{8f89b464-0f8b-4431-8126-54e5b15c1f20}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameSystem\ReqController\Container">
-      <UniqueIdentifier>{027b61a0-023c-4d53-a1dc-50dcdd85d17d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameSystem\ReqController\Global">
-      <UniqueIdentifier>{b533e52d-594f-40a5-b961-13869709c11d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameSystem\ReqController\Input">
-      <UniqueIdentifier>{c19d7e18-dbcf-408a-8124-652a4e9ef1a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameSystem\ReqController\Interface">
-      <UniqueIdentifier>{553471d6-150d-4b72-9911-9a31fd9b05e5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\GameSystem\Player">
       <UniqueIdentifier>{8d51f56e-e598-43c1-a2f0-35042e8901b8}</UniqueIdentifier>
@@ -104,6 +80,18 @@
     </Filter>
     <Filter Include="Source Files\DataSystem\StaticDataManager">
       <UniqueIdentifier>{b3b5217b-dcd2-4bfe-9596-f06b27b747da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameSystem\RequestController">
+      <UniqueIdentifier>{7d9130a4-d7fe-413c-9ff5-f322dae478c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameSystem\RequestController\Interface">
+      <UniqueIdentifier>{9931816c-fd5d-4d0a-b802-145fb3d7a550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameSystem\RequestController\RequestValidator">
+      <UniqueIdentifier>{595c3109-680a-4a78-8c62-312841d9a96c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameSystem\Archived">
+      <UniqueIdentifier>{8f89b464-0f8b-4431-8126-54e5b15c1f20}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -171,16 +159,16 @@
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClInclude>
     <ClInclude Include="RequestControllerContainer.h">
-      <Filter>Source Files\NetworkSystem\Controller</Filter>
+      <Filter>Source Files\GameSystem\RequestController</Filter>
     </ClInclude>
     <ClInclude Include="AuthController.h">
-      <Filter>Source Files\NetworkSystem\Controller</Filter>
+      <Filter>Source Files\GameSystem\RequestController</Filter>
     </ClInclude>
     <ClInclude Include="IRequestController.h">
-      <Filter>Source Files\NetworkSystem\Controller\Interface</Filter>
+      <Filter>Source Files\GameSystem\RequestController\Interface</Filter>
     </ClInclude>
     <ClInclude Include="GameController.h">
-      <Filter>Source Files\NetworkSystem\Controller</Filter>
+      <Filter>Source Files\GameSystem\RequestController</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Source Files\GameSystem\Scene</Filter>
@@ -190,18 +178,6 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Source Files\GameSystem\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSystemControllerContainer.h">
-      <Filter>Source Files\GameSystem\ReqController\Container</Filter>
-    </ClInclude>
-    <ClInclude Include="GameGlobalController.h">
-      <Filter>Source Files\GameSystem\ReqController\Global</Filter>
-    </ClInclude>
-    <ClInclude Include="IGameSystemController.h">
-      <Filter>Source Files\GameSystem\ReqController\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="GamePositionController.h">
-      <Filter>Source Files\GameSystem\ReqController\Input</Filter>
     </ClInclude>
     <ClInclude Include="NavigationMeshAgentManager.h">
       <Filter>Source Files\DataSystem\StaticDataManager</Filter>
@@ -217,10 +193,10 @@
       <Filter>Source Files\Common</Filter>
     </ClInclude>
     <ClInclude Include="RequestValidator.h">
-      <Filter>Source Files\NetworkSystem\Controller\RequestValidator</Filter>
+      <Filter>Source Files\GameSystem\RequestController\RequestValidator</Filter>
     </ClInclude>
     <ClInclude Include="GameSystemReq.h">
-      <Filter>Source Files\GameSystem\ReqController</Filter>
+      <Filter>Source Files\GameSystem\Archived</Filter>
     </ClInclude>
     <ClInclude Include="SceneInfoManager.h">
       <Filter>Source Files\DataSystem\StaticDataManager</Filter>
@@ -352,13 +328,13 @@
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClCompile>
     <ClCompile Include="RequestControllerContainer.cpp">
-      <Filter>Source Files\NetworkSystem\Controller</Filter>
+      <Filter>Source Files\GameSystem\RequestController</Filter>
     </ClCompile>
     <ClCompile Include="AuthController.cpp">
-      <Filter>Source Files\NetworkSystem\Controller</Filter>
+      <Filter>Source Files\GameSystem\RequestController</Filter>
     </ClCompile>
     <ClCompile Include="GameController.cpp">
-      <Filter>Source Files\NetworkSystem\Controller</Filter>
+      <Filter>Source Files\GameSystem\RequestController</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files\GameSystem\Scene</Filter>
@@ -368,15 +344,6 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\GameSystem\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSystemControllerContainer.cpp">
-      <Filter>Source Files\GameSystem\ReqController\Container</Filter>
-    </ClCompile>
-    <ClCompile Include="GameGlobalController.cpp">
-      <Filter>Source Files\GameSystem\ReqController\Global</Filter>
-    </ClCompile>
-    <ClCompile Include="GamePositionController.cpp">
-      <Filter>Source Files\GameSystem\ReqController\Input</Filter>
     </ClCompile>
     <ClCompile Include="NavigationMeshAgentManager.cpp">
       <Filter>Source Files\DataSystem\StaticDataManager</Filter>

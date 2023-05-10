@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "VECTOR3.proto";
+import "STAT_INFO.proto";
+import "NPC_BASE_INFO.proto";
+
+package Protocol;
+
+message NPC_INFO {
+  NPC_BASE_INFO npcBaseInfo = 1;
+  STAT_INFO statInfo = 2;
+  VECTOR3 position = 3;
+}

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package Protocol;
+
+message STAT_INFO {
+      int32 maxHp = 1;
+      int32 maxMp = 2;
+      int32 attackPower = 3;
+      int32 magicPower = 4;
+      int32 moveSpeed = 5;
+      int32 attackSpeed = 6;
+      int32 armor = 7;
+      int32 magicResistance = 8;
+}

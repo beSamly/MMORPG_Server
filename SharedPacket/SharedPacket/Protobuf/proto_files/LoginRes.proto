@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package Protocol;
-
-message LoginRes{
-	int32 result = 1;
-	string message = 2;
-}

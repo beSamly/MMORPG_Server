@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "VECTOR3.proto";
+
+package Protocol;
+
+message MOVE_RES{
+    int32 result = 1;
+	VECTOR3 direction = 2;
+}

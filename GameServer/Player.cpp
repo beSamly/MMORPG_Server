@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Player.h"
 #include "StatController.h"
-#include "PositionUpdate.pb.h"
+#include "POSITION_UPDATE.pb.h"
 #include <Packet.h>
 #include "PacketDef.h"
 #include "Logger.h"
@@ -70,7 +70,7 @@ void Player::SendUpdatePosition()
 	Vector3 position = GetPosition();
 	Vector3 moveDirection = GetMoveDirection();
 
-	Protocol::PositionUpdate positionUpdate;
+	Protocol::POSITION_UPDATE positionUpdate;
 	positionUpdate.mutable_position()->set_x(position.x);
 	positionUpdate.mutable_position()->set_y(position.y);
 	positionUpdate.mutable_position()->set_z(position.z);
@@ -80,6 +80,6 @@ void Player::SendUpdatePosition()
 	positionUpdate.mutable_movedirection()->set_z(moveDirection.z);
 
 	Packet packet(REQ_GROUP_ID::GAME, REQ_ID_GAME::POSITION_UPDATE);
-	packet.WriteData<Protocol::PositionUpdate>(positionUpdate);
+	packet.WriteData<Protocol::POSITION_UPDATE>(positionUpdate);
 	Send(packet);
 }

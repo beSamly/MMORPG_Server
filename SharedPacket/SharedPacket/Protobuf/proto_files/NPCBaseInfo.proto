@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package Protocol;
-
-message NPCBaseInfo {
-  int32 npcIndex = 1;
-  string npcName = 2;
-  int32 npcId = 3;
-}

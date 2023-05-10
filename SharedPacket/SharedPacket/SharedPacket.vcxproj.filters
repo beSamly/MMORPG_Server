@@ -25,52 +25,43 @@
     <ClCompile Include="ProxyPacketId.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\MoveRes.pb.cc">
+    <ClCompile Include="Protobuf\ENTER_SCENE_RES.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\NPCBaseInfo.pb.cc">
+    <ClCompile Include="Protobuf\LOGIN_REQ.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\NPCListRes.pb.cc">
+    <ClCompile Include="Protobuf\LOGIN_RES.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\NPCSpawned.pb.cc">
+    <ClCompile Include="Protobuf\MOVE_REQ.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\NPCSpawnedList.pb.cc">
+    <ClCompile Include="Protobuf\MOVE_RES.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\PlayerInfo.pb.cc">
+    <ClCompile Include="Protobuf\NPC_BASE_INFO.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\PositionUpdate.pb.cc">
+    <ClCompile Include="Protobuf\NPC_INFO.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\StatInfo.pb.cc">
+    <ClCompile Include="Protobuf\NPC_LIST_RES.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\Vector3.pb.cc">
+    <ClCompile Include="Protobuf\NPC_SPAWNED_LIST.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\EnterSceneRes.pb.cc">
+    <ClCompile Include="Protobuf\PLAYER_INFO.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\InputMovementReq.pb.cc">
+    <ClCompile Include="Protobuf\POSITION_UPDATE.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\InputMovementRes.pb.cc">
+    <ClCompile Include="Protobuf\STAT_INFO.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="Protobuf\LoginReq.pb.cc">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="Protobuf\LoginRes.pb.cc">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="Protobuf\MoveReq.pb.cc">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="Protobuf\NPCInfo.pb.cc">
+    <ClCompile Include="Protobuf\VECTOR3.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
   </ItemGroup>
@@ -85,52 +76,43 @@
     <ClInclude Include="ResponseCode.h">
       <Filter>Source Files\Packet</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\MoveRes.pb.h">
+    <ClInclude Include="Protobuf\ENTER_SCENE_RES.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\NPCBaseInfo.pb.h">
+    <ClInclude Include="Protobuf\LOGIN_REQ.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\NPCListRes.pb.h">
+    <ClInclude Include="Protobuf\LOGIN_RES.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\NPCSpawned.pb.h">
+    <ClInclude Include="Protobuf\MOVE_REQ.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\NPCSpawnedList.pb.h">
+    <ClInclude Include="Protobuf\MOVE_RES.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\PlayerInfo.pb.h">
+    <ClInclude Include="Protobuf\NPC_BASE_INFO.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\PositionUpdate.pb.h">
+    <ClInclude Include="Protobuf\NPC_INFO.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\StatInfo.pb.h">
+    <ClInclude Include="Protobuf\NPC_LIST_RES.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\Vector3.pb.h">
+    <ClInclude Include="Protobuf\NPC_SPAWNED_LIST.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\EnterSceneRes.pb.h">
+    <ClInclude Include="Protobuf\PLAYER_INFO.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\InputMovementReq.pb.h">
+    <ClInclude Include="Protobuf\POSITION_UPDATE.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\InputMovementRes.pb.h">
+    <ClInclude Include="Protobuf\STAT_INFO.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
-    <ClInclude Include="Protobuf\LoginReq.pb.h">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="Protobuf\LoginRes.pb.h">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="Protobuf\MoveReq.pb.h">
-      <Filter>Source Files\Protobuf</Filter>
-    </ClInclude>
-    <ClInclude Include="Protobuf\NPCInfo.pb.h">
+    <ClInclude Include="Protobuf\VECTOR3.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
   </ItemGroup>

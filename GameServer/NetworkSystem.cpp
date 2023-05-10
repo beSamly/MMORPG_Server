@@ -67,7 +67,7 @@ void NetworkSystem::OnClientRecv(sptr<AsioSession> client, BYTE* buffer, int len
 
 	sptr<Request> request = make_shared<Request>();
 	request->packet = recvPacket;
-	request->from = player;
+	request->player = player;
 
 	sptr<Scene> mainScene = gameSystem->sceneManager->GetScene("Main");
 	mainScene->PushRequest(request);

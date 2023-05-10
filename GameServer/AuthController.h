@@ -18,5 +18,5 @@ public:
 	//virtual int Process(sptr<Request>& request) override;
 
 private:
-	int ProcessLoginReq(sptr<Request>& request);
+	int Process_LOGIN_REQ(sptr<Request>& request);
 };

@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-import "NPCInfo.proto";
-
-package Protocol;
-
-message NPCListRes {
-  repeated NPCInfo npcInfo = 1;
-}
