@@ -5,6 +5,7 @@
 struct Request
 {
 	sptr<Player> from;
+	sptr<ClientSession> session;
 	sptr<Packet> packet;
 
 	int GetRequestId() {

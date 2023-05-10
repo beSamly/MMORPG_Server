@@ -20,6 +20,5 @@ public:
 	int clientId = 0;
 	int playerId = 0;
 
-
 	void Send(Packet& packet);
 };

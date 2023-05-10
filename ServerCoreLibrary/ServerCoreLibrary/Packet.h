@@ -19,7 +19,7 @@ public:
 	void WriteData();
 	void CopyData(BYTE* src, uint32 size);
 
-	template <typename T> inline T ExtractData();
+	template <typename T> inline bool ExtractData(T& data);
 	int GetId() { return requestId; }
 	int GetGroupId() { return groupId; }
 	int GetSize() { return buffer->GetWriteSize(); }
@@ -45,14 +45,14 @@ inline void Packet::WriteData(T& pkt)
 }
 
 template <typename T>
-inline T Packet::ExtractData()
+inline bool Packet::ExtractData(T& data)
 {
-	T pkt;
-	if (pkt.ParseFromArray(buffer->GetByteBuffer() + sizeof(PacketHeader), buffer->GetWriteSize() - sizeof(PacketHeader)) == false)
+	if (data.ParseFromArray(buffer->GetByteBuffer() + sizeof(PacketHeader), buffer->GetWriteSize() - sizeof(PacketHeader)) == false)
 	{
 		//[TODO] Error
 		std::cout << "Packet::ExtractData - Packet parse error!!" << std::endl;
+		return false;
 	}
 
-	return pkt;
+	return true;
 }
