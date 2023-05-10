@@ -67,12 +67,14 @@ void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene, vec
 	{
 		if (elapsedTime - lastChecked > 2)
 		{
+			// ��� �÷��̾��� ��ġ�� ��� �÷��̿��� ����ȭ
 			for (sptr<Player>& player : playersInScene)
 			{
 				sptr<TransformEntity> transform = dynamic_pointer_cast<TransformEntity>(player);
 				SendPositionUpdateToPlayer(transform, playersInScene);
 			}
 
+			// ��� NPC�� ��ġ�� ��� �÷��̾�� ����ȭ
 			/*for (sptr<TransformEntity>& transformEntity : vecNPC)
 			{
 				SendPositionUpdateToPlayer(transformEntity, playersInScene);
@@ -85,11 +87,13 @@ void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene, vec
 
 void GameSystemUpdater::UpdateEachPlayer(float deltaTime, sptr<Scene>& scene, sptr<Player>& player, vector<sptr<Player>>& others)
 {
+	// �÷��̾� ������ ��ü ������Ʈ
 	player->Update(deltaTime);
 
 	//[TODO]
 	float radius = 0.5f; // Unity�� this.GetComponent<SphereCollider>().radius ��
 
+	// ������ �浹 ó��
 	Vector3 currentPosition = player->GetPosition();
 	Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
 	player->SetPosition(newPosition);
@@ -160,6 +164,7 @@ void GameSystemUpdater::SendNPCSpawnedToPlayer(sptr<NPC>& npc, vector<sptr<Playe
 
 void GameSystemUpdater::UpdateEachNPC(float deltaTime, sptr<Scene>& scene, sptr<NPC>& npc)
 {
+	// �÷��̾� ������ ��ü ������Ʈ
 	npc->Update(deltaTime);
 
 	if (npc->patrolController->NeedToSwitchMoveDirection())
@@ -167,11 +172,13 @@ void GameSystemUpdater::UpdateEachNPC(float deltaTime, sptr<Scene>& scene, sptr<
 		npc->patrolController->SwitchToNextMoveDirection();
 		Vector3 newDirection = npc->patrolController->GetCurrentMoveDirection();
 
+		//��� Player���� npc�� move direction ����ȭ!
 	}
 
 	//[TODO]
 	float radius = 0.5f; // Unity�� this.GetComponent<SphereCollider>().radius ��
 
+	// ������ �浹 ó��
 	Vector3 currentPosition = npc->GetPosition();
 	Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, radius);
 	npc->SetPosition(newPosition);

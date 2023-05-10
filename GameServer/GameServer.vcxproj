@@ -137,6 +137,7 @@
     <ClInclude Include="BaseStatManager.h" />
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="ClientSession.h" />
+    <ClInclude Include="TimeUtil.h" />
     <ClInclude Include="GameSystemConstant.h" />
     <ClInclude Include="GameSystemReq.h" />
     <ClInclude Include="Data.h" />

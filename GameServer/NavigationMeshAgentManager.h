@@ -15,5 +15,4 @@ public:
 
 private:
 	void LoadSceneData();
-	void LoadSceneDataWithSimdjson();
 };
