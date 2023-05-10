@@ -163,6 +163,7 @@
     <ClCompile Include="AsioSession.cpp" />
     <ClCompile Include="AsioBaseSocketServer.cpp" />
     <ClCompile Include="BaseSocketServer.cpp" />
+    <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="GlobalPch.cpp" />
     <ClCompile Include="IocpCore.cpp" />
     <ClCompile Include="IocpEvent.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="AsioSession.h" />
     <ClInclude Include="AsioBaseSocketServer.h" />
     <ClInclude Include="BaseSocketServer.h" />
+    <ClInclude Include="Buffer.h" />
     <ClInclude Include="GlobalPch.h" />
     <ClInclude Include="GlobalMacro.h" />
     <ClInclude Include="GlobalTypes.h" />

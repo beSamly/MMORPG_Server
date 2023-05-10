@@ -8,16 +8,16 @@ Scene::Scene(string paramSceneName) : sceneName(paramSceneName)
 	projectileManager = make_unique<ProjectileManager>();
 }
 
-void Scene::PushCommand(sptr<BaseReq> command)
+void Scene::PushRequest(sptr<Request> packet)
 {
 	WRITE_LOCK;
-	commandQueue.push(command);
+	requestQueue.push(packet);
 }
 
-queue<sptr<BaseReq>> Scene::FlushQueue()
+queue<sptr<Request>> Scene::FlushQueue()
 {
 	WRITE_LOCK;
-	queue<sptr<BaseReq>> copied;
-	std::swap(copied, commandQueue);
+	queue<sptr<Request>> copied;
+	std::swap(copied, requestQueue);
 	return copied;
 }

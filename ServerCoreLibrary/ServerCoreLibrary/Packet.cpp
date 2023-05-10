@@ -2,15 +2,20 @@
 #include "Packet.h"
 
 void Packet::WriteData() {
-    const int dataSize = 0;
-    const int packetSize = dataSize + sizeof(PacketHeader);
+	const int dataSize = 0;
+	const int packetSize = dataSize + sizeof(PacketHeader);
 
-    send_buffer = MakeShared<SendBuffer>(packetSize);
-    PacketHeader* header = reinterpret_cast<PacketHeader*>(send_buffer->Buffer());
+	buffer = MakeShared<Buffer>(packetSize);
+	PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer->GetByteBuffer());
 
-    header->size = packetSize;
-    header->groupId = groupId;
-    header->id = packetId;
+	header->size = packetSize;
+	header->groupId = groupId;
+	header->id = requestId;
 
-    send_buffer->Close(packetSize);
+	buffer->Close(packetSize);
+}
+
+void Packet::CopyData(BYTE* src, uint32 size)
+{
+	::memcpy(buffer->GetByteBuffer(), src, size);
 }

@@ -170,16 +170,16 @@
     <ClInclude Include="InputController.h">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="NetworkControllerContainer.h">
+    <ClInclude Include="RequestControllerContainer.h">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClInclude>
     <ClInclude Include="AuthController.h">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="INetworkController.h">
+    <ClInclude Include="IRequestController.h">
       <Filter>Source Files\NetworkSystem\Controller\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="PositionController.h">
+    <ClInclude Include="GameController.h">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
@@ -288,11 +288,12 @@
     <ClInclude Include="PatrolController.h">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="GLobalController.h">
-      <Filter>Source Files\NetworkSystem\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="ProjectileManager.h">
       <Filter>Source Files\GameSystem\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="simdjson.h" />
+    <ClInclude Include="Request.h">
+      <Filter>Source Files\NetworkSystem\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -350,13 +351,13 @@
     <ClCompile Include="InputController.cpp">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="NetworkControllerContainer.cpp">
+    <ClCompile Include="RequestControllerContainer.cpp">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClCompile>
     <ClCompile Include="AuthController.cpp">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="PositionController.cpp">
+    <ClCompile Include="GameController.cpp">
       <Filter>Source Files\NetworkSystem\Controller</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
@@ -437,11 +438,11 @@
     <ClCompile Include="PatrolController.cpp">
       <Filter>Source Files\GameSystem\Player\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="GLobalController.cpp">
-      <Filter>Source Files\NetworkSystem\Controller</Filter>
-    </ClCompile>
     <ClCompile Include="ProjectileManager.cpp">
       <Filter>Source Files\GameSystem\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="simdjson.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,14 +3,14 @@
 #include "IGameSystemController.h"
 #include "Logger.h"
 
-using GameSystemReq::REQ_GROUP_ID;
+using GameSystemReq::GAME_REQ_GROUP_ID;
 
 class GameSystemControllerContainer
 {
 private:
-	map<REQ_GROUP_ID, sptr<IGameSystemController>> mapController;
+	map<GAME_REQ_GROUP_ID, sptr<IGameSystemController>> mapController;
 
 public:
 	GameSystemControllerContainer(sptr<GameSystem> gameSystem);
-	sptr<IGameSystemController> GetController(REQ_GROUP_ID packetGroupId);
+	sptr<IGameSystemController> GetController(GAME_REQ_GROUP_ID packetGroupId);
 };

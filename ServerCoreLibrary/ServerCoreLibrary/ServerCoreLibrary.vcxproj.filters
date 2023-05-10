@@ -76,6 +76,9 @@
     <ClCompile Include="ProxyManager.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GlobalMacro.h">
@@ -133,6 +136,9 @@
       <Filter>Source Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="ProxyManager.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
       <Filter>Source Files\Network</Filter>
     </ClInclude>
   </ItemGroup>

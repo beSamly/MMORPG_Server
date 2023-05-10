@@ -6,4 +6,5 @@ message PositionUpdate {
   int32 targetType = 1;
   int32 targetId = 2;
   Vector3 position = 3;
+  Vector3 moveDirection = 4;
 }

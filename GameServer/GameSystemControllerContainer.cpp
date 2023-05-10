@@ -6,14 +6,14 @@
 
 GameSystemControllerContainer::GameSystemControllerContainer(sptr<GameSystem> gameSystem)
 {
-    sptr<GameGlobalController> globalController = make_shared<GameGlobalController>(gameSystem);
-    sptr<GamePositionController> inputController = make_shared<GamePositionController>(gameSystem);
+	sptr<GameGlobalController> globalController = make_shared<GameGlobalController>(gameSystem);
+	sptr<GamePositionController> inputController = make_shared<GamePositionController>(gameSystem);
 
-    mapController.emplace(REQ_GROUP_ID::GLOBAL, globalController);
-    mapController.emplace(REQ_GROUP_ID::POSITION, inputController);
+	mapController.emplace(GAME_REQ_GROUP_ID::GLOBAL, globalController);
+	mapController.emplace(GAME_REQ_GROUP_ID::GAME, inputController);
 }
 
-sptr<IGameSystemController> GameSystemControllerContainer::GetController(REQ_GROUP_ID groupId)
+sptr<IGameSystemController> GameSystemControllerContainer::GetController(GAME_REQ_GROUP_ID groupId)
 {
 	if (mapController.count(groupId))
 	{

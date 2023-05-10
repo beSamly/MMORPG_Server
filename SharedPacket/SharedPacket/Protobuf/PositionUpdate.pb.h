@@ -179,6 +179,7 @@ class PositionUpdate final :
 
   enum : int {
     kPositionFieldNumber = 3,
+    kMoveDirectionFieldNumber = 4,
     kTargetTypeFieldNumber = 1,
     kTargetIdFieldNumber = 2,
   };
@@ -199,6 +200,24 @@ class PositionUpdate final :
   void unsafe_arena_set_allocated_position(
       ::Protocol::Vector3* position);
   ::Protocol::Vector3* unsafe_arena_release_position();
+
+  // .Protocol.Vector3 moveDirection = 4;
+  bool has_movedirection() const;
+  private:
+  bool _internal_has_movedirection() const;
+  public:
+  void clear_movedirection();
+  const ::Protocol::Vector3& movedirection() const;
+  PROTOBUF_NODISCARD ::Protocol::Vector3* release_movedirection();
+  ::Protocol::Vector3* mutable_movedirection();
+  void set_allocated_movedirection(::Protocol::Vector3* movedirection);
+  private:
+  const ::Protocol::Vector3& _internal_movedirection() const;
+  ::Protocol::Vector3* _internal_mutable_movedirection();
+  public:
+  void unsafe_arena_set_allocated_movedirection(
+      ::Protocol::Vector3* movedirection);
+  ::Protocol::Vector3* unsafe_arena_release_movedirection();
 
   // int32 targetType = 1;
   void clear_targettype();
@@ -227,6 +246,7 @@ class PositionUpdate final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::Protocol::Vector3* position_;
+    ::Protocol::Vector3* movedirection_;
     int32_t targettype_;
     int32_t targetid_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -368,6 +388,91 @@ inline void PositionUpdate::set_allocated_position(::Protocol::Vector3* position
   }
   _impl_.position_ = position;
   // @@protoc_insertion_point(field_set_allocated:Protocol.PositionUpdate.position)
+}
+
+// .Protocol.Vector3 moveDirection = 4;
+inline bool PositionUpdate::_internal_has_movedirection() const {
+  return this != internal_default_instance() && _impl_.movedirection_ != nullptr;
+}
+inline bool PositionUpdate::has_movedirection() const {
+  return _internal_has_movedirection();
+}
+inline const ::Protocol::Vector3& PositionUpdate::_internal_movedirection() const {
+  const ::Protocol::Vector3* p = _impl_.movedirection_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::Vector3&>(
+      ::Protocol::_Vector3_default_instance_);
+}
+inline const ::Protocol::Vector3& PositionUpdate::movedirection() const {
+  // @@protoc_insertion_point(field_get:Protocol.PositionUpdate.moveDirection)
+  return _internal_movedirection();
+}
+inline void PositionUpdate::unsafe_arena_set_allocated_movedirection(
+    ::Protocol::Vector3* movedirection) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.movedirection_);
+  }
+  _impl_.movedirection_ = movedirection;
+  if (movedirection) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.PositionUpdate.moveDirection)
+}
+inline ::Protocol::Vector3* PositionUpdate::release_movedirection() {
+  
+  ::Protocol::Vector3* temp = _impl_.movedirection_;
+  _impl_.movedirection_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::Protocol::Vector3* PositionUpdate::unsafe_arena_release_movedirection() {
+  // @@protoc_insertion_point(field_release:Protocol.PositionUpdate.moveDirection)
+  
+  ::Protocol::Vector3* temp = _impl_.movedirection_;
+  _impl_.movedirection_ = nullptr;
+  return temp;
+}
+inline ::Protocol::Vector3* PositionUpdate::_internal_mutable_movedirection() {
+  
+  if (_impl_.movedirection_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::Vector3>(GetArenaForAllocation());
+    _impl_.movedirection_ = p;
+  }
+  return _impl_.movedirection_;
+}
+inline ::Protocol::Vector3* PositionUpdate::mutable_movedirection() {
+  ::Protocol::Vector3* _msg = _internal_mutable_movedirection();
+  // @@protoc_insertion_point(field_mutable:Protocol.PositionUpdate.moveDirection)
+  return _msg;
+}
+inline void PositionUpdate::set_allocated_movedirection(::Protocol::Vector3* movedirection) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.movedirection_);
+  }
+  if (movedirection) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(movedirection));
+    if (message_arena != submessage_arena) {
+      movedirection = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, movedirection, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.movedirection_ = movedirection;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.PositionUpdate.moveDirection)
 }
 
 #ifdef __GNUC__

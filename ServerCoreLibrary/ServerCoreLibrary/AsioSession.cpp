@@ -58,12 +58,12 @@ void AsioSession::DoRead()
 		});
 }
 
-void AsioSession::Send(shared_ptr<SendBuffer> sendBuffer)
+void AsioSession::Send(BYTE* byteBuffer, uint32 size)
 {
 	// TODO 일단 write_lock으로 하지만 나중에는 queue로 변경?
 	WRITE_LOCK;
 	auto self(shared_from_this());
-	asio::async_write(socket, asio::buffer(sendBuffer->GetBuffer(), sendBuffer->WriteSize()),
+	asio::async_write(socket, asio::buffer(byteBuffer, size),
 		[this, self](std::error_code ec, std::size_t /*length*/)
 		{
 			if (!ec)

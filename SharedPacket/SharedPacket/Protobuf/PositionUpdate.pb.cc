@@ -24,6 +24,7 @@ namespace Protocol {
 PROTOBUF_CONSTEXPR PositionUpdate::PositionUpdate(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.position_)*/nullptr
+  , /*decltype(_impl_.movedirection_)*/nullptr
   , /*decltype(_impl_.targettype_)*/0
   , /*decltype(_impl_.targetid_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -51,6 +52,7 @@ const uint32_t TableStruct_PositionUpdate_2eproto::offsets[] PROTOBUF_SECTION_VA
   PROTOBUF_FIELD_OFFSET(::Protocol::PositionUpdate, _impl_.targettype_),
   PROTOBUF_FIELD_OFFSET(::Protocol::PositionUpdate, _impl_.targetid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::PositionUpdate, _impl_.position_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::PositionUpdate, _impl_.movedirection_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::PositionUpdate)},
@@ -62,16 +64,17 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_PositionUpdate_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\024PositionUpdate.proto\022\010Protocol\032\rVector"
-  "3.proto\"[\n\016PositionUpdate\022\022\n\ntargetType\030"
-  "\001 \001(\005\022\020\n\010targetId\030\002 \001(\005\022#\n\010position\030\003 \001("
-  "\0132\021.Protocol.Vector3b\006proto3"
+  "3.proto\"\205\001\n\016PositionUpdate\022\022\n\ntargetType"
+  "\030\001 \001(\005\022\020\n\010targetId\030\002 \001(\005\022#\n\010position\030\003 \001"
+  "(\0132\021.Protocol.Vector3\022(\n\rmoveDirection\030\004"
+  " \001(\0132\021.Protocol.Vector3b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_PositionUpdate_2eproto_deps[1] = {
   &::descriptor_table_Vector3_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_PositionUpdate_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_PositionUpdate_2eproto = {
-    false, false, 148, descriptor_table_protodef_PositionUpdate_2eproto,
+    false, false, 191, descriptor_table_protodef_PositionUpdate_2eproto,
     "PositionUpdate.proto",
     &descriptor_table_PositionUpdate_2eproto_once, descriptor_table_PositionUpdate_2eproto_deps, 1, 1,
     schemas, file_default_instances, TableStruct_PositionUpdate_2eproto::offsets,
@@ -91,17 +94,28 @@ namespace Protocol {
 class PositionUpdate::_Internal {
  public:
   static const ::Protocol::Vector3& position(const PositionUpdate* msg);
+  static const ::Protocol::Vector3& movedirection(const PositionUpdate* msg);
 };
 
 const ::Protocol::Vector3&
 PositionUpdate::_Internal::position(const PositionUpdate* msg) {
   return *msg->_impl_.position_;
 }
+const ::Protocol::Vector3&
+PositionUpdate::_Internal::movedirection(const PositionUpdate* msg) {
+  return *msg->_impl_.movedirection_;
+}
 void PositionUpdate::clear_position() {
   if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
     delete _impl_.position_;
   }
   _impl_.position_ = nullptr;
+}
+void PositionUpdate::clear_movedirection() {
+  if (GetArenaForAllocation() == nullptr && _impl_.movedirection_ != nullptr) {
+    delete _impl_.movedirection_;
+  }
+  _impl_.movedirection_ = nullptr;
 }
 PositionUpdate::PositionUpdate(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -114,6 +128,7 @@ PositionUpdate::PositionUpdate(const PositionUpdate& from)
   PositionUpdate* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.movedirection_){nullptr}
     , decltype(_impl_.targettype_){}
     , decltype(_impl_.targetid_){}
     , /*decltype(_impl_._cached_size_)*/{}};
@@ -121,6 +136,9 @@ PositionUpdate::PositionUpdate(const PositionUpdate& from)
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_position()) {
     _this->_impl_.position_ = new ::Protocol::Vector3(*from._impl_.position_);
+  }
+  if (from._internal_has_movedirection()) {
+    _this->_impl_.movedirection_ = new ::Protocol::Vector3(*from._impl_.movedirection_);
   }
   ::memcpy(&_impl_.targettype_, &from._impl_.targettype_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.targetid_) -
@@ -134,6 +152,7 @@ inline void PositionUpdate::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.movedirection_){nullptr}
     , decltype(_impl_.targettype_){0}
     , decltype(_impl_.targetid_){0}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -152,6 +171,7 @@ PositionUpdate::~PositionUpdate() {
 inline void PositionUpdate::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.position_;
+  if (this != internal_default_instance()) delete _impl_.movedirection_;
 }
 
 void PositionUpdate::SetCachedSize(int size) const {
@@ -168,6 +188,10 @@ void PositionUpdate::Clear() {
     delete _impl_.position_;
   }
   _impl_.position_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.movedirection_ != nullptr) {
+    delete _impl_.movedirection_;
+  }
+  _impl_.movedirection_ = nullptr;
   ::memset(&_impl_.targettype_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.targetid_) -
       reinterpret_cast<char*>(&_impl_.targettype_)) + sizeof(_impl_.targetid_));
@@ -200,6 +224,14 @@ const char* PositionUpdate::_InternalParse(const char* ptr, ::_pbi::ParseContext
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Protocol.Vector3 moveDirection = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          ptr = ctx->ParseMessage(_internal_mutable_movedirection(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -252,6 +284,13 @@ uint8_t* PositionUpdate::_InternalSerialize(
         _Internal::position(this).GetCachedSize(), target, stream);
   }
 
+  // .Protocol.Vector3 moveDirection = 4;
+  if (this->_internal_has_movedirection()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(4, _Internal::movedirection(this),
+        _Internal::movedirection(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -273,6 +312,13 @@ size_t PositionUpdate::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.position_);
+  }
+
+  // .Protocol.Vector3 moveDirection = 4;
+  if (this->_internal_has_movedirection()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.movedirection_);
   }
 
   // int32 targetType = 1;
@@ -306,6 +352,10 @@ void PositionUpdate::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   if (from._internal_has_position()) {
     _this->_internal_mutable_position()->::Protocol::Vector3::MergeFrom(
         from._internal_position());
+  }
+  if (from._internal_has_movedirection()) {
+    _this->_internal_mutable_movedirection()->::Protocol::Vector3::MergeFrom(
+        from._internal_movedirection());
   }
   if (from._internal_targettype() != 0) {
     _this->_internal_set_targettype(from._internal_targettype());

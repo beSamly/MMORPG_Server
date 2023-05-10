@@ -5,7 +5,7 @@
 	SendBuffer
 -----------------*/
 
-SendBuffer::SendBuffer( BYTE* buffer, uint32 allocSize)
+SendBuffer::SendBuffer(BYTE* buffer, uint32 allocSize)
 	: _buffer(buffer), _allocSize(allocSize)
 {
 }
@@ -54,7 +54,7 @@ void SendBuffer::Close(uint32 writeSize)
 //		return nullptr;
 //
 //	_open = true;
-//	return ObjectPool<SendBuffer>::make_shared(shared_from_this(), Buffer(), allocSize);
+//	return ObjectPool<SendBuffer>::make_shared(shared_from_this(), GetBuffer(), allocSize);
 //}
 //
 //void SendBufferChunk::Close(uint32 writeSize)

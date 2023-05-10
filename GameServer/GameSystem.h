@@ -3,35 +3,33 @@
 #include "DataSystem.h"
 #include "SceneManager.h"
 #include "PlayerManager.h"
-#include "GameSystemControllerContainer.h"
 #include "GameSystemUpdater.h"
 
 using GameSystemReq::BaseReq;
 
+class GameSystemUpdater;
+
 class GameSystem : public std::enable_shared_from_this<GameSystem>
 {
 public:
-    GameSystem(sptr<DataSystem> p_dataSystem);
+	GameSystem(sptr<DataSystem> p_dataSystem);
 
 public:
-    void UpdateScene(int threadId, float deltaTime);
-    uptr<PlayerManager> playerManager;
-    uptr<SceneManager> sceneManager;
-    uptr<GameSystemUpdater> gameSystemUpdater;
+	void UpdateScene(int threadId, float deltaTime);
+	uptr<PlayerManager> playerManager;
+	uptr<SceneManager> sceneManager;
+	uptr<GameSystemUpdater> gameSystemUpdater;
 
-    void Init();
-
-private:
-    USE_LOCK;
-
-    /* Command related */
-    uptr<GameSystemControllerContainer> reqControllerContainer;
-
-    /* GameData related */
-    sptr<DataSystem> dataSystem;
-
-    /* Command related */
+	void Init();
 
 private:
-    void InitSceneManager();
+	USE_LOCK;
+
+	/* GameData related */
+	sptr<DataSystem> dataSystem;
+
+	/* Command related */
+
+private:
+	void InitSceneManager();
 };

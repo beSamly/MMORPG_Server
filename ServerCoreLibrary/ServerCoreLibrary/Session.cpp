@@ -33,7 +33,7 @@ void Session::Send(SendBufferRef sendBuffer)
 		if (_sendRegistered.exchange(true) == false)
 			registerSend = true;
 	}
-	
+
 	if (registerSend)
 		RegisterSend();
 }
@@ -138,13 +138,13 @@ void Session::RegisterRecv()
 
 	DWORD numOfBytes = 0;
 	DWORD flags = 0;
-	if (SOCKET_ERROR == ::WSARecv(_socket, &wsaBuf, 1, OUT &numOfBytes, OUT &flags, &_recvEvent, nullptr))
+	if (SOCKET_ERROR == ::WSARecv(_socket, &wsaBuf, 1, OUT & numOfBytes, OUT & flags, &_recvEvent, nullptr))
 	{
 		int32 errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			HandleError(errorCode);
-			_recvEvent.owner = nullptr; 
+			_recvEvent.owner = nullptr;
 		}
 	}
 }
@@ -155,7 +155,7 @@ void Session::RegisterSend()
 		return;
 
 	_sendEvent.Init();
-	_sendEvent.owner = shared_from_this(); 
+	_sendEvent.owner = shared_from_this();
 
 	// 보낼 데이터를 sendEvent에 등록
 	{
@@ -166,7 +166,7 @@ void Session::RegisterSend()
 		{
 			SendBufferRef sendBuffer = _sendQueue.front();
 
-			writeSize += sendBuffer->WriteSize();
+			writeSize += sendBuffer->GetWriteSize();
 			// TODO : 예외 체크
 
 			_sendQueue.pop();
@@ -180,13 +180,13 @@ void Session::RegisterSend()
 	for (SendBufferRef sendBuffer : _sendEvent.sendBuffers)
 	{
 		WSABUF wsaBuf;
-		wsaBuf.buf = reinterpret_cast<char*>(sendBuffer->Buffer());
-		wsaBuf.len = static_cast<LONG>(sendBuffer->WriteSize());
+		wsaBuf.buf = reinterpret_cast<char*>(sendBuffer->GetBuffer());
+		wsaBuf.len = static_cast<LONG>(sendBuffer->GetWriteSize());
 		wsaBufs.push_back(wsaBuf);
 	}
 
 	DWORD numOfBytes = 0;
-	if (SOCKET_ERROR == ::WSASend(_socket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT &numOfBytes, 0, &_sendEvent, nullptr))
+	if (SOCKET_ERROR == ::WSASend(_socket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT & numOfBytes, 0, &_sendEvent, nullptr))
 	{
 		int32 errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
@@ -196,12 +196,12 @@ void Session::RegisterSend()
 			_sendEvent.sendBuffers.clear(); // RELEASE_REF
 			_sendRegistered.store(false);
 		}
-	} 
+	}
 }
 
 void Session::ProcessConnect()
 {
-	_connectEvent.owner = nullptr; 
+	_connectEvent.owner = nullptr;
 
 	_connected.store(true);
 
@@ -214,7 +214,7 @@ void Session::ProcessConnect()
 
 void Session::ProcessDisconnect()
 {
-	_disconnectEvent.owner = nullptr; 
+	_disconnectEvent.owner = nullptr;
 	_server->OnDisconnected(static_pointer_cast<Session>(shared_from_this()));
 	OnDisconnected(); // 컨텐츠 코드에서 재정의
 	// 세션을 릴리즈 하는 부분도 비지니스 로직이기 구현부에서 처리 해줘야 한다고 생각하여 일단 주석처리
@@ -244,7 +244,7 @@ void Session::ProcessRecv(int32 numOfBytes)
 		Disconnect(L"OnRead Overflow");
 		return;
 	}
-	
+
 	// 커서 정리
 	_recvBuffer.Clean();
 

@@ -8,8 +8,7 @@
 #include "GameSystemConstant.h"
 
 using GameSystemConstant::GRAVITY;
-using PacketDef::PACKET_GROUP_ID;
-using PacketDef::PACKET_ID_POSITION;
+using namespace PacketDef;
 
 Player::Player() : TransformEntity()
 {
@@ -20,19 +19,11 @@ Player::Player() : TransformEntity()
 
 void Player::Init() {}
 
-void Player::Send(std::shared_ptr<SendBuffer> buffer)
-{
-	if (sptr<ClientSession> session = tcpSession.lock())
-	{
-		session->Send(buffer);
-	}
-}
-
 void Player::Send(Packet& packet)
 {
 	if (sptr<ClientSession> session = tcpSession.lock())
 	{
-		session->Send(packet.GetSendBuffer());
+		session->Send(packet);
 	}
 	else
 	{
@@ -88,7 +79,7 @@ void Player::SendUpdatePosition()
 	positionUpdate.mutable_movedirection()->set_y(moveDirection.y);
 	positionUpdate.mutable_movedirection()->set_z(moveDirection.z);
 
-	Packet packet(PACKET_GROUP_ID::POSITION, PACKET_ID_POSITION::POSITION_UPDATE);
+	Packet packet(REQ_GROUP_ID::GAME, REQ_ID_GAME::POSITION_UPDATE);
 	packet.WriteData<Protocol::PositionUpdate>(positionUpdate);
-	Send(packet.GetSendBuffer());
+	Send(packet);
 }

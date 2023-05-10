@@ -13,14 +13,12 @@ public:
 	SendBuffer(uint32 allocSize);
 	~SendBuffer();
 
-	BYTE*		Buffer() { return _buffer; }
-	BYTE*		GetBuffer() { return _buffer; }
-	uint32		AllocSize() { return _allocSize; }
-	uint32		WriteSize() { return _writeSize; }
+	BYTE* GetBuffer() { return _buffer; }
+	uint32		GetWriteSize() { return _writeSize; }
 	void		Close(uint32 writeSize);
 
 private:
-	BYTE*				_buffer;
+	BYTE* _buffer;
 	uint32				_allocSize = 0;
 	uint32				_writeSize = 0;
 
@@ -46,7 +44,7 @@ private:
 //	void				Close(uint32 writeSize);
 //
 //	bool				IsOpen() { return _open; }
-//	BYTE*				Buffer() { return &_buffer[_usedSize]; }
+//	BYTE*				GetBuffer() { return &_buffer[_usedSize]; }
 //	uint32				FreeSize() { return static_cast<uint32>(_buffer.size()) - _usedSize; }
 //
 //private:

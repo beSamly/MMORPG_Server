@@ -23,7 +23,6 @@ public:
 	Player();
 	void Init();
 	void SetSession(wptr<ClientSession> session) { tcpSession = session; }
-	void Send(std::shared_ptr<SendBuffer> buffer);
 	void Send(Packet& packet);
 	void Update(float deltaTime);
 	void UpdatePosition(float deltaTime);
