@@ -11,22 +11,23 @@ public:
 	int duration;
 
 private:
-	vector<Operation> vecOperation;
+	vector<sptr<Operation>> vecOperation;
 	vector<int> vecOperationTime;
 
 public:
 	Skill() : skillIndex(0), coolTime(0), duration(0), elapsed(0.0f) {}
 	bool IsNull() { return skillIndex == 0; }
-	void AddOperation(Operation& operation) { vecOperation.push_back(operation); }
+	void AddOperation(sptr<Operation>& operation) { vecOperation.push_back(operation); }
+	void AddOperationTime(int operationTime) { vecOperationTime.push_back(operationTime); }
 	void Update(float deltaTime);
 
 	/* Non Static Data */
 
 public:
-	queue<Operation> FlushReadyOperation();
+	queue<sptr<Operation>> FlushReadyOperation();
 private:
 	float elapsed;
-	queue<Operation> triggeredOperation;
+	queue<sptr<Operation>> triggeredOperation;
 };
 
 struct PlayerInput {
@@ -43,5 +44,5 @@ struct TriggeredSkill {
 struct TriggeredOperation
 {
 	PlayerInput playerInput;
-	Operation operation;
+	sptr<Operation> operation;
 };

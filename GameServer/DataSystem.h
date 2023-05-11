@@ -6,6 +6,7 @@
 #include "SpawnInfoManager.h"
 #include "NPCInfoManager.h"
 #include "ProjectileInfoManager.h"
+#include "SkillFactory.h"
 
 class DataSystem
 {
@@ -13,12 +14,15 @@ public:
 	uptr<NavigationMeshAgentManager> navigationMeshAgentManager;
 	uptr<SceneInfoManager> sceneInfoManager;
 	uptr<BaseStatManager> baseStatManager;
-	uptr<SkillInfoManager> skillInfoManager;
 	uptr<SpawnInfoManager> spawnInfoManager;
 	uptr<NPCInfoManager> npcInfoManager;
-	uptr<ProjectileInfoManager> projectileInfoManager;
+	sptr<SkillInfoManager> skillInfoManager;
+	sptr<ProjectileInfoManager> projectileInfoManager;
+
+	uptr<SkillFactory> skillFactory;
 
 public:
 	DataSystem();
 	void LoadJsonData();
+
 };

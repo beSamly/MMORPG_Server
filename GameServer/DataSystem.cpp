@@ -6,10 +6,12 @@ DataSystem::DataSystem()
 	navigationMeshAgentManager = make_unique<NavigationMeshAgentManager>();
 	sceneInfoManager = make_unique<SceneInfoManager>();
 	baseStatManager = make_unique<BaseStatManager>();
-	skillInfoManager = make_unique<SkillInfoManager>();
 	spawnInfoManager = make_unique<SpawnInfoManager>();
 	npcInfoManager = make_unique<NPCInfoManager>();
-	projectileInfoManager = make_unique<ProjectileInfoManager>();
+	skillInfoManager = make_shared<SkillInfoManager>();
+	projectileInfoManager = make_shared<ProjectileInfoManager>();
+
+	skillFactory = make_unique<SkillFactory>(skillInfoManager, projectileInfoManager);
 }
 
 void DataSystem::LoadJsonData()

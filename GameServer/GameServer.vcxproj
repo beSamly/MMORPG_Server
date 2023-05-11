@@ -138,9 +138,11 @@
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="ClientSession.h" />
     <ClInclude Include="OperationProcessController.h" />
+    <ClInclude Include="OperationType.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileInfo.h" />
     <ClInclude Include="ProjectileInfoManager.h" />
+    <ClInclude Include="SkillFactory.h" />
     <ClInclude Include="SkillInfo.h" />
     <ClInclude Include="TimeUtil.h" />
     <ClInclude Include="GameSystemConstant.h" />
@@ -240,6 +242,7 @@
     <ClCompile Include="simdjson.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SkillController.cpp" />
+    <ClCompile Include="SkillFactory.cpp" />
     <ClCompile Include="SkillInfoManager.cpp" />
     <ClCompile Include="SocketServer.cpp" />
     <ClCompile Include="SpawnInfoManager.cpp" />

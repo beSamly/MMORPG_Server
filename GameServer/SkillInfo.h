@@ -10,15 +10,15 @@ struct OperationConditionInfo
 
 struct OperationInfo
 {
-	string operationType;
+	std::string operationType;
 	int operationValue;
-	OperationConditionInfo conditionInfo;
+	//OperationConditionInfo conditionInfo; //일단 사용 안 함
 };
 
 struct SkillInfo
 {
 	int skillIndex;
-	string skillName;
+	std::string skillName;
 	int coolTime;
 	int duration;
 	vector<int> operationTime;

@@ -3,6 +3,10 @@
         "ProjectileIndex": 1,
         "MaxRange": 1000,
         "Speed": 10,
-        "OnCollision": "PhysicalDamageR"
+        "ProjectileType": "Penetraion",
+        "OnCollisionOperation": {
+            "OperationType": "PhysicalDamageR",
+            "OperationValue": 10
+        }
     }
 ]

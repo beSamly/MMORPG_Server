@@ -1,22 +1,24 @@
 #pragma once
 #include "OperationCondition.h"
-
-enum OperationType : int
-{
-	PhysicalDamage = 1,
-	PhysicalDamageR,
-	LaunchProjectile,
-};
+#include "OperationType.h"
 
 class Operation
 {
 public:
-	OperationType opereationType;
+	OperationType operationType;
 	int operationValue;
-	int operationDuration;
 
-	OperationCondition condition;
+	//OperationCondition condition;
 	/*vector<> vecOperation;
 	vector<> vecOperationTime;*/
 
+};
+
+class LaunchProjectileOperation :public Operation
+{
+public:
+	int projectileIndex;
+	int maxRange;
+	int speed;
+	sptr<Operation> onCollisionOperation;
 };

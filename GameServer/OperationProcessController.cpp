@@ -11,7 +11,7 @@ OperationProcessController::OperationProcessController()
 
 void OperationProcessController::ProcessOperation(sptr<Scene>& scene, TriggeredOperation& triggeredOperation)
 {
-	OperationType operationType = triggeredOperation.operation.opereationType;
+	OperationType operationType = triggeredOperation.operation->operationType;
 	auto iter = mapProcessFunc.find(operationType);
 
 	if (iter != mapProcessFunc.end()) {

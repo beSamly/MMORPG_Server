@@ -96,6 +96,12 @@
     <Filter Include="Source Files\Common\Util">
       <UniqueIdentifier>{e574ee8e-1f04-4023-96d0-3c5ed8075e74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\DataSystem\Factory">
+      <UniqueIdentifier>{96280263-1a4b-4d59-8fbd-57822dd360bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameSystem\Type">
+      <UniqueIdentifier>{7aa671e4-9b05-450b-8be4-41f780cb7ad7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -292,6 +298,12 @@
     <ClInclude Include="ProjectileInfo.h">
       <Filter>Source Files\DataSystem\Data</Filter>
     </ClInclude>
+    <ClInclude Include="SkillFactory.h">
+      <Filter>Source Files\DataSystem\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationType.h">
+      <Filter>Source Files\GameSystem\Type</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -440,6 +452,9 @@
     </ClCompile>
     <ClCompile Include="ProjectileInfoManager.cpp">
       <Filter>Source Files\DataSystem\StaticDataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillFactory.cpp">
+      <Filter>Source Files\DataSystem\Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

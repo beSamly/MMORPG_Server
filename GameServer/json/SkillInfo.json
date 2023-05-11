@@ -10,11 +10,7 @@
         "OperationList": [
             {
                 "OperationType": "LaunchProjectile",
-                "OperationValue": 1,
-                "OperationCondition": {
-                    "ConditionType": 99,
-                    "ConditionValue": 99
-                }
+                "OperationValue": 1
             }
         ]
     }

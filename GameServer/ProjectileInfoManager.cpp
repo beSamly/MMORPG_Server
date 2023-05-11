@@ -34,13 +34,28 @@ void ProjectileInfoManager::LoadProjectileInfo()
 		return;
 	}
 
-	for (const dom::element& jsonSkillInfo : data)
+	for (const dom::element& jsonProjectileInfo : data)
 	{
 		ProjectileInfo info;
-		info.projectileIndex = jsonSkillInfo["ProjectileIndex"].get_int64();
-		info.maxRange = jsonSkillInfo["MaxRange"].get_int64();
-		info.speed = jsonSkillInfo["Speed"].get_int64();
-		info.onCollision = jsonSkillInfo["OnCollision"].get_string().value();
+		info.projectileIndex = jsonProjectileInfo["ProjectileIndex"].get_int64();
+		info.maxRange = jsonProjectileInfo["MaxRange"].get_int64();
+		info.speed = jsonProjectileInfo["Speed"].get_int64();
+
+		const auto& onCollisionOperation = jsonProjectileInfo["OnCollisionOperation"];
+
+		info.onCollisionOperation.operationType = onCollisionOperation["OperationType"];
+		info.onCollisionOperation.operationValue = onCollisionOperation["OperationValue"];
+
+		/*
+		  "ProjectileIndex": 1,
+		"MaxRange": 1000,
+		"Speed": 10,
+		"ProjectileType": "Penetraion",
+		"OnCollisionOperation": {
+			"OperationType": "PhysicalDamageR",
+			"OperationValue": 10
+		}
+		*/
 
 		mapProjectileInfo[info.projectileIndex] = info;
 	}

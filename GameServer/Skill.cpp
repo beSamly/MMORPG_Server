@@ -8,7 +8,7 @@ void Skill::Update(float deltaTime)
 
 	for (int i = 0; i < vecOperation.size(); i++)
 	{
-		Operation& operation = vecOperation[i];
+		sptr<Operation>& operation = vecOperation[i];
 		int operationTime = vecOperationTime[i];
 
 		if (lastElapsed <= operationTime && operationTime <= currentElapsed)
@@ -18,9 +18,9 @@ void Skill::Update(float deltaTime)
 	}
 }
 
-queue<Operation> Skill::FlushReadyOperation()
+queue<sptr<Operation>> Skill::FlushReadyOperation()
 {
-	queue<Operation> queue;
+	queue<sptr<Operation>> queue;
 	std::swap(queue, triggeredOperation);
 	return queue;
 }

@@ -44,7 +44,7 @@ queue<TriggeredOperation> SkillController::GetReadyOperation()
 		return queue<TriggeredOperation>();
 	}
 
-	queue<Operation> operationQueue = triggeredSkill.skill.FlushReadyOperation();
+	queue<sptr<Operation>> operationQueue = triggeredSkill.skill.FlushReadyOperation();
 
 	queue<TriggeredOperation> triggeredOperationQueue;
 	while (!operationQueue.empty())
