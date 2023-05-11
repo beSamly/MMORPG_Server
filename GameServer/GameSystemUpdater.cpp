@@ -58,7 +58,7 @@ void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene, vec
 	{
 		for (sptr<Player>& player : playersInScene)
 		{
-			UpdateEachPlayer(deltaTime, scene, player, playersInScene);
+			UpdateEachPlayer(deltaTime, scene, player);
 		}
 	}
 
@@ -91,7 +91,7 @@ void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene, vec
 	}
 }
 
-void GameSystemUpdater::UpdateEachPlayer(float deltaTime, sptr<Scene>& scene, sptr<Player>& player, vector<sptr<Player>>& others)
+void GameSystemUpdater::UpdateEachPlayer(float deltaTime, sptr<Scene>& scene, sptr<Player>& player)
 {
 	player->Update(deltaTime);
 
@@ -99,16 +99,14 @@ void GameSystemUpdater::UpdateEachPlayer(float deltaTime, sptr<Scene>& scene, sp
 	Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, player->GetRadius());
 	player->SetPosition(newPosition);
 
-	queue<Operation> readyOperation = player->skillController->GetReadyOperation();
+	queue<TriggeredOperation> triggeredOperationQueue = player->skillController->GetReadyOperation();
 
-	while (!readyOperation.empty())
+	while (!triggeredOperationQueue.empty())
 	{
-		Operation& operation = readyOperation.front();
+		TriggeredOperation& triggeredOperation = triggeredOperationQueue.front();
+		operationProcessController->ProcessOperation(scene, triggeredOperation);
 
-		//smt like operation->trigger()
-		//operation.opereationType
-
-		readyOperation.pop();
+		triggeredOperationQueue.pop();
 	}
 }
 

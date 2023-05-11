@@ -23,7 +23,8 @@ namespace _pbi = _pb::internal;
 namespace Protocol {
 PROTOBUF_CONSTEXPR USE_SKILL_REQ::USE_SKILL_REQ(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.skillindex_)*/0
+    /*decltype(_impl_.direction_)*/nullptr
+  , /*decltype(_impl_.skillindex_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct USE_SKILL_REQDefaultTypeInternal {
   PROTOBUF_CONSTEXPR USE_SKILL_REQDefaultTypeInternal()
@@ -47,6 +48,7 @@ const uint32_t TableStruct_USE_5fSKILL_5fREQ_2eproto::offsets[] PROTOBUF_SECTION
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::USE_SKILL_REQ, _impl_.skillindex_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::USE_SKILL_REQ, _impl_.direction_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::USE_SKILL_REQ)},
@@ -57,14 +59,19 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_USE_5fSKILL_5fREQ_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\023USE_SKILL_REQ.proto\022\010Protocol\"#\n\rUSE_S"
-  "KILL_REQ\022\022\n\nskillIndex\030\001 \001(\005b\006proto3"
+  "\n\023USE_SKILL_REQ.proto\022\010Protocol\032\rVECTOR3"
+  ".proto\"I\n\rUSE_SKILL_REQ\022\022\n\nskillIndex\030\001 "
+  "\001(\005\022$\n\tdirection\030\002 \001(\0132\021.Protocol.VECTOR"
+  "3b\006proto3"
   ;
+static const ::_pbi::DescriptorTable* const descriptor_table_USE_5fSKILL_5fREQ_2eproto_deps[1] = {
+  &::descriptor_table_VECTOR3_2eproto,
+};
 static ::_pbi::once_flag descriptor_table_USE_5fSKILL_5fREQ_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_USE_5fSKILL_5fREQ_2eproto = {
-    false, false, 76, descriptor_table_protodef_USE_5fSKILL_5fREQ_2eproto,
+    false, false, 129, descriptor_table_protodef_USE_5fSKILL_5fREQ_2eproto,
     "USE_SKILL_REQ.proto",
-    &descriptor_table_USE_5fSKILL_5fREQ_2eproto_once, nullptr, 0, 1,
+    &descriptor_table_USE_5fSKILL_5fREQ_2eproto_once, descriptor_table_USE_5fSKILL_5fREQ_2eproto_deps, 1, 1,
     schemas, file_default_instances, TableStruct_USE_5fSKILL_5fREQ_2eproto::offsets,
     file_level_metadata_USE_5fSKILL_5fREQ_2eproto, file_level_enum_descriptors_USE_5fSKILL_5fREQ_2eproto,
     file_level_service_descriptors_USE_5fSKILL_5fREQ_2eproto,
@@ -81,8 +88,19 @@ namespace Protocol {
 
 class USE_SKILL_REQ::_Internal {
  public:
+  static const ::Protocol::VECTOR3& direction(const USE_SKILL_REQ* msg);
 };
 
+const ::Protocol::VECTOR3&
+USE_SKILL_REQ::_Internal::direction(const USE_SKILL_REQ* msg) {
+  return *msg->_impl_.direction_;
+}
+void USE_SKILL_REQ::clear_direction() {
+  if (GetArenaForAllocation() == nullptr && _impl_.direction_ != nullptr) {
+    delete _impl_.direction_;
+  }
+  _impl_.direction_ = nullptr;
+}
 USE_SKILL_REQ::USE_SKILL_REQ(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -93,10 +111,14 @@ USE_SKILL_REQ::USE_SKILL_REQ(const USE_SKILL_REQ& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   USE_SKILL_REQ* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.skillindex_){}
+      decltype(_impl_.direction_){nullptr}
+    , decltype(_impl_.skillindex_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_direction()) {
+    _this->_impl_.direction_ = new ::Protocol::VECTOR3(*from._impl_.direction_);
+  }
   _this->_impl_.skillindex_ = from._impl_.skillindex_;
   // @@protoc_insertion_point(copy_constructor:Protocol.USE_SKILL_REQ)
 }
@@ -106,7 +128,8 @@ inline void USE_SKILL_REQ::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.skillindex_){0}
+      decltype(_impl_.direction_){nullptr}
+    , decltype(_impl_.skillindex_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -122,6 +145,7 @@ USE_SKILL_REQ::~USE_SKILL_REQ() {
 
 inline void USE_SKILL_REQ::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.direction_;
 }
 
 void USE_SKILL_REQ::SetCachedSize(int size) const {
@@ -134,6 +158,10 @@ void USE_SKILL_REQ::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  if (GetArenaForAllocation() == nullptr && _impl_.direction_ != nullptr) {
+    delete _impl_.direction_;
+  }
+  _impl_.direction_ = nullptr;
   _impl_.skillindex_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -148,6 +176,14 @@ const char* USE_SKILL_REQ::_InternalParse(const char* ptr, ::_pbi::ParseContext*
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
           _impl_.skillindex_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Protocol.VECTOR3 direction = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_direction(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -187,6 +223,13 @@ uint8_t* USE_SKILL_REQ::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_skillindex(), target);
   }
 
+  // .Protocol.VECTOR3 direction = 2;
+  if (this->_internal_has_direction()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::direction(this),
+        _Internal::direction(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -202,6 +245,13 @@ size_t USE_SKILL_REQ::ByteSizeLong() const {
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // .Protocol.VECTOR3 direction = 2;
+  if (this->_internal_has_direction()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.direction_);
+  }
 
   // int32 skillIndex = 1;
   if (this->_internal_skillindex() != 0) {
@@ -226,6 +276,10 @@ void USE_SKILL_REQ::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from._internal_has_direction()) {
+    _this->_internal_mutable_direction()->::Protocol::VECTOR3::MergeFrom(
+        from._internal_direction());
+  }
   if (from._internal_skillindex() != 0) {
     _this->_internal_set_skillindex(from._internal_skillindex());
   }
@@ -246,7 +300,12 @@ bool USE_SKILL_REQ::IsInitialized() const {
 void USE_SKILL_REQ::InternalSwap(USE_SKILL_REQ* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_.skillindex_, other->_impl_.skillindex_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(USE_SKILL_REQ, _impl_.skillindex_)
+      + sizeof(USE_SKILL_REQ::_impl_.skillindex_)
+      - PROTOBUF_FIELD_OFFSET(USE_SKILL_REQ, _impl_.direction_)>(
+          reinterpret_cast<char*>(&_impl_.direction_),
+          reinterpret_cast<char*>(&other->_impl_.direction_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata USE_SKILL_REQ::GetMetadata() const {

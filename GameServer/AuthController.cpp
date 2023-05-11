@@ -55,8 +55,8 @@ int AuthController::Process_LOGIN_REQ(sptr<Request>& request)
 
 		// 스킬 세팅
 		//[TODO] 일단 SkillIndex = 1번인 애 세팅
-		Skill skill = dataSystem->skillDataManager->GetSkillData(1);
-		player->skillController->AddSkill(skill);
+		/*SkillInfo skill = dataSystem->skillDataManager->GetSkillInfo(1);
+		player->skillController->AddSkill(skill);*/
 
 		scene = gameSystem->sceneManager->GetScene("Main");
 		if (scene == nullptr)

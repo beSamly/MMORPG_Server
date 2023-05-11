@@ -1,5 +1,6 @@
 #pragma once
 #include "Operation.h"
+#include "PhysicsEngine.h"
 
 class Skill
 {
@@ -25,5 +26,22 @@ public:
 	queue<Operation> FlushReadyOperation();
 private:
 	float elapsed;
-	queue<Operation> readyOperation;
+	queue<Operation> triggeredOperation;
+};
+
+struct PlayerInput {
+	PhysicsEngine::Vector3 direction;
+};
+
+struct TriggeredSkill {
+	PlayerInput playerInput;
+	Skill skill;
+
+	bool IsNull() { return skill.IsNull(); }
+};
+
+struct TriggeredOperation
+{
+	PlayerInput playerInput;
+	Operation operation;
 };

@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "NPC.h"
 #include "RequestControllerContainer.h"
+#include "OperationProcessController.h"
 
 class GameSystem;
 class RequestControllerContainer;
@@ -14,12 +15,13 @@ private:
 	float elapsedTime = 0.0f;
 
 	uptr<RequestControllerContainer> reqControllerContainer;
+	uptr<OperationProcessController> operationProcessController;
 
 public:
 
 	GameSystemUpdater(sptr<GameSystem> gameSystem, sptr<DataSystem> dataSystem);
 	void UpdateEachScene(float deltaTime, sptr<Scene>& scene, vector<sptr<Player>>& playersInScene);
-	void UpdateEachPlayer(float deltaTime, sptr<Scene>& scene, sptr<Player>& player, vector<sptr<Player>>& others);
+	void UpdateEachPlayer(float deltaTime, sptr<Scene>& scene, sptr<Player>& player);
 	void UpdateEachNPC(float deltaTime, sptr<Scene>& scene, sptr<NPC>& npc);
 
 private:

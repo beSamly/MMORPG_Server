@@ -30,6 +30,7 @@
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
+#include "VECTOR3.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_USE_5fSKILL_5fREQ_2eproto
@@ -177,8 +178,27 @@ class USE_SKILL_REQ final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kDirectionFieldNumber = 2,
     kSkillIndexFieldNumber = 1,
   };
+  // .Protocol.VECTOR3 direction = 2;
+  bool has_direction() const;
+  private:
+  bool _internal_has_direction() const;
+  public:
+  void clear_direction();
+  const ::Protocol::VECTOR3& direction() const;
+  PROTOBUF_NODISCARD ::Protocol::VECTOR3* release_direction();
+  ::Protocol::VECTOR3* mutable_direction();
+  void set_allocated_direction(::Protocol::VECTOR3* direction);
+  private:
+  const ::Protocol::VECTOR3& _internal_direction() const;
+  ::Protocol::VECTOR3* _internal_mutable_direction();
+  public:
+  void unsafe_arena_set_allocated_direction(
+      ::Protocol::VECTOR3* direction);
+  ::Protocol::VECTOR3* unsafe_arena_release_direction();
+
   // int32 skillIndex = 1;
   void clear_skillindex();
   int32_t skillindex() const;
@@ -196,6 +216,7 @@ class USE_SKILL_REQ final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::Protocol::VECTOR3* direction_;
     int32_t skillindex_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -231,6 +252,91 @@ inline void USE_SKILL_REQ::_internal_set_skillindex(int32_t value) {
 inline void USE_SKILL_REQ::set_skillindex(int32_t value) {
   _internal_set_skillindex(value);
   // @@protoc_insertion_point(field_set:Protocol.USE_SKILL_REQ.skillIndex)
+}
+
+// .Protocol.VECTOR3 direction = 2;
+inline bool USE_SKILL_REQ::_internal_has_direction() const {
+  return this != internal_default_instance() && _impl_.direction_ != nullptr;
+}
+inline bool USE_SKILL_REQ::has_direction() const {
+  return _internal_has_direction();
+}
+inline const ::Protocol::VECTOR3& USE_SKILL_REQ::_internal_direction() const {
+  const ::Protocol::VECTOR3* p = _impl_.direction_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::VECTOR3&>(
+      ::Protocol::_VECTOR3_default_instance_);
+}
+inline const ::Protocol::VECTOR3& USE_SKILL_REQ::direction() const {
+  // @@protoc_insertion_point(field_get:Protocol.USE_SKILL_REQ.direction)
+  return _internal_direction();
+}
+inline void USE_SKILL_REQ::unsafe_arena_set_allocated_direction(
+    ::Protocol::VECTOR3* direction) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.direction_);
+  }
+  _impl_.direction_ = direction;
+  if (direction) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.USE_SKILL_REQ.direction)
+}
+inline ::Protocol::VECTOR3* USE_SKILL_REQ::release_direction() {
+  
+  ::Protocol::VECTOR3* temp = _impl_.direction_;
+  _impl_.direction_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::Protocol::VECTOR3* USE_SKILL_REQ::unsafe_arena_release_direction() {
+  // @@protoc_insertion_point(field_release:Protocol.USE_SKILL_REQ.direction)
+  
+  ::Protocol::VECTOR3* temp = _impl_.direction_;
+  _impl_.direction_ = nullptr;
+  return temp;
+}
+inline ::Protocol::VECTOR3* USE_SKILL_REQ::_internal_mutable_direction() {
+  
+  if (_impl_.direction_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::VECTOR3>(GetArenaForAllocation());
+    _impl_.direction_ = p;
+  }
+  return _impl_.direction_;
+}
+inline ::Protocol::VECTOR3* USE_SKILL_REQ::mutable_direction() {
+  ::Protocol::VECTOR3* _msg = _internal_mutable_direction();
+  // @@protoc_insertion_point(field_mutable:Protocol.USE_SKILL_REQ.direction)
+  return _msg;
+}
+inline void USE_SKILL_REQ::set_allocated_direction(::Protocol::VECTOR3* direction) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.direction_);
+  }
+  if (direction) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(direction));
+    if (message_arena != submessage_arena) {
+      direction = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, direction, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.direction_ = direction;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.USE_SKILL_REQ.direction)
 }
 
 #ifdef __GNUC__

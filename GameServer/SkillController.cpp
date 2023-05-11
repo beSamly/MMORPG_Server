@@ -3,14 +3,14 @@
 
 void SkillController::Update(float deltaTime)
 {
-	if (!usingSkill.IsNull())
+	if (!triggeredSkill.IsNull())
 	{
-		usingSkill.Update(deltaTime);
+		triggeredSkill.skill.Update(deltaTime);
 	}
 }
 
 bool SkillController::IsUsingSkill() {
-	return usingSkill.IsNull() ? false : true;
+	return triggeredSkill.IsNull() ? false : true;
 }
 
 bool SkillController::HasSkill(int skillIndex) {
@@ -19,9 +19,9 @@ bool SkillController::HasSkill(int skillIndex) {
 
 void SkillController::AddSkill(Skill skill) { mapSkill[skill.skillIndex] = skill; }
 
-void SkillController::UseSkill(int skillIndex)
+void SkillController::UseSkill(int skillIndex, PlayerInput input)
 {
-	if (!usingSkill.IsNull())
+	if (!triggeredSkill.IsNull())
 	{
 		// ERROR
 		return;
@@ -33,15 +33,29 @@ void SkillController::UseSkill(int skillIndex)
 		return;
 	}
 
-	usingSkill = mapSkill[skillIndex];
+	triggeredSkill.skill = mapSkill[skillIndex];
+	triggeredSkill.playerInput = input;
 }
 
-queue<Operation> SkillController::GetReadyOperation()
+queue<TriggeredOperation> SkillController::GetReadyOperation()
 {
-	if (!usingSkill.IsNull())
+	if (!triggeredSkill.IsNull())
 	{
-		return queue<Operation>();
+		return queue<TriggeredOperation>();
 	}
 
-	return usingSkill.FlushReadyOperation();
+	queue<Operation> operationQueue = triggeredSkill.skill.FlushReadyOperation();
+
+	queue<TriggeredOperation> triggeredOperationQueue;
+	while (!operationQueue.empty())
+	{
+		TriggeredOperation triggeredOperation;
+		triggeredOperation.operation = operationQueue.front();
+		triggeredOperation.playerInput = triggeredSkill.playerInput;
+		triggeredOperationQueue.push(triggeredOperation);
+
+		operationQueue.pop();
+	}
+
+	return triggeredOperationQueue;
 }

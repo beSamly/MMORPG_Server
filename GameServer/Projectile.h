@@ -7,7 +7,7 @@ public:
 	int projectileIndex;
 	string projectileName;
 	int projectileId;
-	int spawnCoolTime;
+	int speed;
 
 public:
 	Projectile();
@@ -18,5 +18,4 @@ public:
 
 private:
 	void UpdatePosition(float deltaTime);
-	void UpdateMoveDirection(float deltaTime);
 };

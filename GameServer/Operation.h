@@ -4,8 +4,8 @@
 enum OperationType : int
 {
 	PhysicalDamage = 1,
-	PhysicalDamageR = 1,
-	Operattion_Projectile,
+	PhysicalDamageR,
+	LaunchProjectile,
 };
 
 class Operation

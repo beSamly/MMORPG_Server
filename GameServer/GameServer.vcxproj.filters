@@ -225,7 +225,7 @@
     <ClInclude Include="OperationCondition.h">
       <Filter>Source Files\GameSystem\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="SkillDataManager.h">
+    <ClInclude Include="SkillInfoManager.h">
       <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClInclude>
     <ClInclude Include="GameSystemUpdater.h">
@@ -279,6 +279,18 @@
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Source Files\GameSystem\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationProcessController.h">
+      <Filter>Source Files\GameSystem\Updater</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillInfo.h">
+      <Filter>Source Files\DataSystem\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileInfoManager.h">
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileInfo.h">
+      <Filter>Source Files\DataSystem\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -381,7 +393,7 @@
     <ClCompile Include="OperationCondition.cpp">
       <Filter>Source Files\GameSystem\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="SkillDataManager.cpp">
+    <ClCompile Include="SkillInfoManager.cpp">
       <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClCompile>
     <ClCompile Include="GameSystemUpdater.cpp">
@@ -423,19 +435,19 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Source Files\GameSystem\Object</Filter>
     </ClCompile>
+    <ClCompile Include="OperationProcessController.cpp">
+      <Filter>Source Files\GameSystem\Updater</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileInfoManager.cpp">
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
-    <None Include="json\OperationData.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
     <None Include="json\ProjectileInfo.json">
       <Filter>Source Files\DataSystem\JsonFile</Filter>
     </None>
     <None Include="json\SpawnInfo.json">
-      <Filter>Source Files\DataSystem\JsonFile</Filter>
-    </None>
-    <None Include="json\SkillData.json">
       <Filter>Source Files\DataSystem\JsonFile</Filter>
     </None>
     <None Include="json\SkillInfo.json">

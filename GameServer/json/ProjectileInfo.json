@@ -1,7 +1,8 @@
 [
-  {
-    "ProjectileIndex": 1,
-    "MaxRange": 1000,
-    ""
-  }
+    {
+        "ProjectileIndex": 1,
+        "MaxRange": 1000,
+        "Speed": 10,
+        "OnCollision": "PhysicalDamageR"
+    }
 ]

@@ -8,6 +8,6 @@ private:
 
 public:
 	ProjectileManager();
-	void AddNPC(sptr<TransformEntity> projectile) { vecProjectile.push_back(projectile); }
+	void AddProjectile(sptr<TransformEntity> projectile) { vecProjectile.push_back(projectile); }
 	vector<sptr<TransformEntity>> getAllProjectile() { return vecProjectile; };
 };

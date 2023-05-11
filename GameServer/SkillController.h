@@ -1,10 +1,11 @@
 #pragma once
 #include "Skill.h"
+#include "PhysicsEngine.h"
 
 class SkillController
 {
 private:
-	Skill usingSkill;
+	TriggeredSkill triggeredSkill;
 
 public:
 	SkillController() {};
@@ -15,8 +16,8 @@ public:
 public:
 	/* 데이터 세팅 */
 	void AddSkill(Skill skill);
-	void UseSkill(int skillIndex);
-	queue<Operation> GetReadyOperation();
+	void UseSkill(int skillIndex, PlayerInput input);
+	queue<TriggeredOperation> GetReadyOperation();
 
 private:
 	map<int, Skill> mapSkill;

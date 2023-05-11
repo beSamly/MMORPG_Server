@@ -1,6 +1,8 @@
 syntax = "proto3";
+import "VECTOR3.proto";
 
 package Protocol;
 message USE_SKILL_REQ {
   int32 skillIndex = 1;
+  VECTOR3 direction = 2;
 }

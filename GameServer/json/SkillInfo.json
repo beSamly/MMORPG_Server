@@ -1,38 +1,21 @@
 [
-  {
-    "SkillIndex": 1,
-    "SkillName": "Archer_Base_Attack",
-    "SkillType": "Projectile",
-    "CoolTime": 10,
-    "Sub"
-
-    "ProjectileInfo": {
-
+    {
+        "SkillIndex": 1,
+        "SkillName": "Archer_BaseAttack",
+        "CoolTime": 1000,
+        "Duration": 3000,
+        "OperationTime": [
+            300
+        ],
+        "OperationList": [
+            {
+                "OperationType": "LaunchProjectile",
+                "OperationValue": 1,
+                "OperationCondition": {
+                    "ConditionType": 99,
+                    "ConditionValue": 99
+                }
+            }
+        ]
     }
-  },
-  {
-    "SkillIndex": 1,
-    "SkillName": "SubSkill_projectile",
-    "SkillType": "Projectile",
-    "CoolTime": 0,
-    "Skill"
-  },
-  {
-    "SkillIndex": 2,
-    "SkillName": "Archer_Enhance_AttackDamage",
-    "SkillType": "BuffDebuff",
-    "CoolTime": 20,
-    "OperationTargetInfo": {
-      "TargetType": "Myself",
-      "TargetNumber" : 5,
-
-    }
-    "Operation": [
-      {
-        "TriggerTime": 500,
-        "OperationType": "AddAttackDamage",
-        "OperationValue" :  50
-      }
-    ]
-  }
 ]

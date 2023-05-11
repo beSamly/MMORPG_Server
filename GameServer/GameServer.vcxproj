@@ -137,7 +137,11 @@
     <ClInclude Include="BaseStatManager.h" />
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="ClientSession.h" />
+    <ClInclude Include="OperationProcessController.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="ProjectileInfo.h" />
+    <ClInclude Include="ProjectileInfoManager.h" />
+    <ClInclude Include="SkillInfo.h" />
     <ClInclude Include="TimeUtil.h" />
     <ClInclude Include="GameSystemConstant.h" />
     <ClInclude Include="GameSystemReq.h" />
@@ -183,7 +187,7 @@
     <ClInclude Include="simdjson.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="SkillController.h" />
-    <ClInclude Include="SkillDataManager.h" />
+    <ClInclude Include="SkillInfoManager.h" />
     <ClInclude Include="SocketServer.h" />
     <ClInclude Include="SpawnInfo.h" />
     <ClInclude Include="SpawnInfoManager.h" />
@@ -209,12 +213,14 @@
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="NPCInfoManager.cpp" />
     <ClCompile Include="NPCManager.cpp" />
+    <ClCompile Include="OperationProcessController.cpp" />
     <ClCompile Include="PatrolController.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AuthController.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="ProjectileInfoManager.cpp" />
     <ClCompile Include="RequestControllerContainer.cpp" />
     <ClCompile Include="NetworkSystem.cpp" />
     <ClCompile Include="Operation.cpp" />
@@ -234,7 +240,7 @@
     <ClCompile Include="simdjson.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SkillController.cpp" />
-    <ClCompile Include="SkillDataManager.cpp" />
+    <ClCompile Include="SkillInfoManager.cpp" />
     <ClCompile Include="SocketServer.cpp" />
     <ClCompile Include="SpawnInfoManager.cpp" />
     <ClCompile Include="SpawnManager.cpp" />
@@ -250,11 +256,9 @@
     <None Include="json\BaseStatInfo.json" />
     <None Include="json\CharacterInfo.json" />
     <None Include="json\NPCInfo.json" />
-    <None Include="json\OperationData.json" />
     <None Include="json\ProjectileInfo.json" />
     <None Include="json\SceneInfo.json" />
     <None Include="json\SpawnInfo.json" />
-    <None Include="json\SkillData.json" />
     <None Include="json\SkillInfo.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

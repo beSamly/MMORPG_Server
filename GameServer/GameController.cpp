@@ -221,7 +221,12 @@ int GameController::Process_USE_SKILL_REQ(sptr<Request>& request)
 			return RES_CODE::CODE_PLAYER_ALREADY_USING_SKILL;
 		}
 
-		player->skillController->UseSkill(skillIndex);
+		PlayerInput playerInput;
+		playerInput.direction.x = reqPacket.direction().x();
+		playerInput.direction.y = reqPacket.direction().y();
+		playerInput.direction.z = reqPacket.direction().z();
+
+		player->skillController->UseSkill(skillIndex, playerInput);
 
 		return RES_CODE::CODE_SUCCESS;
 	}();

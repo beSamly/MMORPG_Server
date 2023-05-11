@@ -17,6 +17,5 @@ void Projectile::UpdatePosition(float deltaTime)
 
 }
 
-void Projectile::UpdateMoveDirection(float deltaTime) {}
 
 
