@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package Protocol;
+message USE_SKILL_REQ {
+  int32 skillIndex = 1;
+}

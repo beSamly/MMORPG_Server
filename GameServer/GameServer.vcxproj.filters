@@ -277,6 +277,9 @@
     <ClInclude Include="TimeUtil.h">
       <Filter>Source Files\Common\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Source Files\GameSystem\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -416,6 +419,9 @@
     </ClCompile>
     <ClCompile Include="simdjson.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\GameSystem\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

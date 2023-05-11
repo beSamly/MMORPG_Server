@@ -180,8 +180,8 @@ class POSITION_UPDATE final :
   enum : int {
     kPositionFieldNumber = 3,
     kMoveDirectionFieldNumber = 4,
-    kTargetTypeFieldNumber = 1,
-    kTargetIdFieldNumber = 2,
+    kTransformEntityTypeFieldNumber = 1,
+    kTransformEntityIdFieldNumber = 2,
   };
   // .Protocol.VECTOR3 position = 3;
   bool has_position() const;
@@ -219,22 +219,22 @@ class POSITION_UPDATE final :
       ::Protocol::VECTOR3* movedirection);
   ::Protocol::VECTOR3* unsafe_arena_release_movedirection();
 
-  // int32 targetType = 1;
-  void clear_targettype();
-  int32_t targettype() const;
-  void set_targettype(int32_t value);
+  // int32 transformEntityType = 1;
+  void clear_transformentitytype();
+  int32_t transformentitytype() const;
+  void set_transformentitytype(int32_t value);
   private:
-  int32_t _internal_targettype() const;
-  void _internal_set_targettype(int32_t value);
+  int32_t _internal_transformentitytype() const;
+  void _internal_set_transformentitytype(int32_t value);
   public:
 
-  // int32 targetId = 2;
-  void clear_targetid();
-  int32_t targetid() const;
-  void set_targetid(int32_t value);
+  // int32 transformEntityId = 2;
+  void clear_transformentityid();
+  int32_t transformentityid() const;
+  void set_transformentityid(int32_t value);
   private:
-  int32_t _internal_targetid() const;
-  void _internal_set_targetid(int32_t value);
+  int32_t _internal_transformentityid() const;
+  void _internal_set_transformentityid(int32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:Protocol.POSITION_UPDATE)
@@ -247,8 +247,8 @@ class POSITION_UPDATE final :
   struct Impl_ {
     ::Protocol::VECTOR3* position_;
     ::Protocol::VECTOR3* movedirection_;
-    int32_t targettype_;
-    int32_t targetid_;
+    int32_t transformentitytype_;
+    int32_t transformentityid_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -265,44 +265,44 @@ class POSITION_UPDATE final :
 #endif  // __GNUC__
 // POSITION_UPDATE
 
-// int32 targetType = 1;
-inline void POSITION_UPDATE::clear_targettype() {
-  _impl_.targettype_ = 0;
+// int32 transformEntityType = 1;
+inline void POSITION_UPDATE::clear_transformentitytype() {
+  _impl_.transformentitytype_ = 0;
 }
-inline int32_t POSITION_UPDATE::_internal_targettype() const {
-  return _impl_.targettype_;
+inline int32_t POSITION_UPDATE::_internal_transformentitytype() const {
+  return _impl_.transformentitytype_;
 }
-inline int32_t POSITION_UPDATE::targettype() const {
-  // @@protoc_insertion_point(field_get:Protocol.POSITION_UPDATE.targetType)
-  return _internal_targettype();
+inline int32_t POSITION_UPDATE::transformentitytype() const {
+  // @@protoc_insertion_point(field_get:Protocol.POSITION_UPDATE.transformEntityType)
+  return _internal_transformentitytype();
 }
-inline void POSITION_UPDATE::_internal_set_targettype(int32_t value) {
+inline void POSITION_UPDATE::_internal_set_transformentitytype(int32_t value) {
   
-  _impl_.targettype_ = value;
+  _impl_.transformentitytype_ = value;
 }
-inline void POSITION_UPDATE::set_targettype(int32_t value) {
-  _internal_set_targettype(value);
-  // @@protoc_insertion_point(field_set:Protocol.POSITION_UPDATE.targetType)
+inline void POSITION_UPDATE::set_transformentitytype(int32_t value) {
+  _internal_set_transformentitytype(value);
+  // @@protoc_insertion_point(field_set:Protocol.POSITION_UPDATE.transformEntityType)
 }
 
-// int32 targetId = 2;
-inline void POSITION_UPDATE::clear_targetid() {
-  _impl_.targetid_ = 0;
+// int32 transformEntityId = 2;
+inline void POSITION_UPDATE::clear_transformentityid() {
+  _impl_.transformentityid_ = 0;
 }
-inline int32_t POSITION_UPDATE::_internal_targetid() const {
-  return _impl_.targetid_;
+inline int32_t POSITION_UPDATE::_internal_transformentityid() const {
+  return _impl_.transformentityid_;
 }
-inline int32_t POSITION_UPDATE::targetid() const {
-  // @@protoc_insertion_point(field_get:Protocol.POSITION_UPDATE.targetId)
-  return _internal_targetid();
+inline int32_t POSITION_UPDATE::transformentityid() const {
+  // @@protoc_insertion_point(field_get:Protocol.POSITION_UPDATE.transformEntityId)
+  return _internal_transformentityid();
 }
-inline void POSITION_UPDATE::_internal_set_targetid(int32_t value) {
+inline void POSITION_UPDATE::_internal_set_transformentityid(int32_t value) {
   
-  _impl_.targetid_ = value;
+  _impl_.transformentityid_ = value;
 }
-inline void POSITION_UPDATE::set_targetid(int32_t value) {
-  _internal_set_targetid(value);
-  // @@protoc_insertion_point(field_set:Protocol.POSITION_UPDATE.targetId)
+inline void POSITION_UPDATE::set_transformentityid(int32_t value) {
+  _internal_set_transformentityid(value);
+  // @@protoc_insertion_point(field_set:Protocol.POSITION_UPDATE.transformEntityId)
 }
 
 // .Protocol.VECTOR3 position = 3;

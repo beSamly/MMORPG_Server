@@ -25,8 +25,8 @@ PROTOBUF_CONSTEXPR POSITION_UPDATE::POSITION_UPDATE(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.position_)*/nullptr
   , /*decltype(_impl_.movedirection_)*/nullptr
-  , /*decltype(_impl_.targettype_)*/0
-  , /*decltype(_impl_.targetid_)*/0
+  , /*decltype(_impl_.transformentitytype_)*/0
+  , /*decltype(_impl_.transformentityid_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct POSITION_UPDATEDefaultTypeInternal {
   PROTOBUF_CONSTEXPR POSITION_UPDATEDefaultTypeInternal()
@@ -49,8 +49,8 @@ const uint32_t TableStruct_POSITION_5fUPDATE_2eproto::offsets[] PROTOBUF_SECTION
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::POSITION_UPDATE, _impl_.targettype_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::POSITION_UPDATE, _impl_.targetid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::POSITION_UPDATE, _impl_.transformentitytype_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::POSITION_UPDATE, _impl_.transformentityid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::POSITION_UPDATE, _impl_.position_),
   PROTOBUF_FIELD_OFFSET(::Protocol::POSITION_UPDATE, _impl_.movedirection_),
 };
@@ -64,17 +64,18 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_POSITION_5fUPDATE_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\025POSITION_UPDATE.proto\022\010Protocol\032\rVECTO"
-  "R3.proto\"\206\001\n\017POSITION_UPDATE\022\022\n\ntargetTy"
-  "pe\030\001 \001(\005\022\020\n\010targetId\030\002 \001(\005\022#\n\010position\030\003"
-  " \001(\0132\021.Protocol.VECTOR3\022(\n\rmoveDirection"
-  "\030\004 \001(\0132\021.Protocol.VECTOR3b\006proto3"
+  "R3.proto\"\230\001\n\017POSITION_UPDATE\022\033\n\023transfor"
+  "mEntityType\030\001 \001(\005\022\031\n\021transformEntityId\030\002"
+  " \001(\005\022#\n\010position\030\003 \001(\0132\021.Protocol.VECTOR"
+  "3\022(\n\rmoveDirection\030\004 \001(\0132\021.Protocol.VECT"
+  "OR3b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_POSITION_5fUPDATE_2eproto_deps[1] = {
   &::descriptor_table_VECTOR3_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_POSITION_5fUPDATE_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_POSITION_5fUPDATE_2eproto = {
-    false, false, 193, descriptor_table_protodef_POSITION_5fUPDATE_2eproto,
+    false, false, 211, descriptor_table_protodef_POSITION_5fUPDATE_2eproto,
     "POSITION_UPDATE.proto",
     &descriptor_table_POSITION_5fUPDATE_2eproto_once, descriptor_table_POSITION_5fUPDATE_2eproto_deps, 1, 1,
     schemas, file_default_instances, TableStruct_POSITION_5fUPDATE_2eproto::offsets,
@@ -129,8 +130,8 @@ POSITION_UPDATE::POSITION_UPDATE(const POSITION_UPDATE& from)
   new (&_impl_) Impl_{
       decltype(_impl_.position_){nullptr}
     , decltype(_impl_.movedirection_){nullptr}
-    , decltype(_impl_.targettype_){}
-    , decltype(_impl_.targetid_){}
+    , decltype(_impl_.transformentitytype_){}
+    , decltype(_impl_.transformentityid_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -140,9 +141,9 @@ POSITION_UPDATE::POSITION_UPDATE(const POSITION_UPDATE& from)
   if (from._internal_has_movedirection()) {
     _this->_impl_.movedirection_ = new ::Protocol::VECTOR3(*from._impl_.movedirection_);
   }
-  ::memcpy(&_impl_.targettype_, &from._impl_.targettype_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.targetid_) -
-    reinterpret_cast<char*>(&_impl_.targettype_)) + sizeof(_impl_.targetid_));
+  ::memcpy(&_impl_.transformentitytype_, &from._impl_.transformentitytype_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.transformentityid_) -
+    reinterpret_cast<char*>(&_impl_.transformentitytype_)) + sizeof(_impl_.transformentityid_));
   // @@protoc_insertion_point(copy_constructor:Protocol.POSITION_UPDATE)
 }
 
@@ -153,8 +154,8 @@ inline void POSITION_UPDATE::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_.position_){nullptr}
     , decltype(_impl_.movedirection_){nullptr}
-    , decltype(_impl_.targettype_){0}
-    , decltype(_impl_.targetid_){0}
+    , decltype(_impl_.transformentitytype_){0}
+    , decltype(_impl_.transformentityid_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -192,9 +193,9 @@ void POSITION_UPDATE::Clear() {
     delete _impl_.movedirection_;
   }
   _impl_.movedirection_ = nullptr;
-  ::memset(&_impl_.targettype_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.targetid_) -
-      reinterpret_cast<char*>(&_impl_.targettype_)) + sizeof(_impl_.targetid_));
+  ::memset(&_impl_.transformentitytype_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.transformentityid_) -
+      reinterpret_cast<char*>(&_impl_.transformentitytype_)) + sizeof(_impl_.transformentityid_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -204,18 +205,18 @@ const char* POSITION_UPDATE::_InternalParse(const char* ptr, ::_pbi::ParseContex
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int32 targetType = 1;
+      // int32 transformEntityType = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.targettype_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.transformentitytype_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // int32 targetId = 2;
+      // int32 transformEntityId = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          _impl_.targetid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.transformentityid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -265,16 +266,16 @@ uint8_t* POSITION_UPDATE::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 targetType = 1;
-  if (this->_internal_targettype() != 0) {
+  // int32 transformEntityType = 1;
+  if (this->_internal_transformentitytype() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_targettype(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_transformentitytype(), target);
   }
 
-  // int32 targetId = 2;
-  if (this->_internal_targetid() != 0) {
+  // int32 transformEntityId = 2;
+  if (this->_internal_transformentityid() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_targetid(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_transformentityid(), target);
   }
 
   // .Protocol.VECTOR3 position = 3;
@@ -321,14 +322,14 @@ size_t POSITION_UPDATE::ByteSizeLong() const {
         *_impl_.movedirection_);
   }
 
-  // int32 targetType = 1;
-  if (this->_internal_targettype() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_targettype());
+  // int32 transformEntityType = 1;
+  if (this->_internal_transformentitytype() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_transformentitytype());
   }
 
-  // int32 targetId = 2;
-  if (this->_internal_targetid() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_targetid());
+  // int32 transformEntityId = 2;
+  if (this->_internal_transformentityid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_transformentityid());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -357,11 +358,11 @@ void POSITION_UPDATE::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const 
     _this->_internal_mutable_movedirection()->::Protocol::VECTOR3::MergeFrom(
         from._internal_movedirection());
   }
-  if (from._internal_targettype() != 0) {
-    _this->_internal_set_targettype(from._internal_targettype());
+  if (from._internal_transformentitytype() != 0) {
+    _this->_internal_set_transformentitytype(from._internal_transformentitytype());
   }
-  if (from._internal_targetid() != 0) {
-    _this->_internal_set_targetid(from._internal_targetid());
+  if (from._internal_transformentityid() != 0) {
+    _this->_internal_set_transformentityid(from._internal_transformentityid());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -381,8 +382,8 @@ void POSITION_UPDATE::InternalSwap(POSITION_UPDATE* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(POSITION_UPDATE, _impl_.targetid_)
-      + sizeof(POSITION_UPDATE::_impl_.targetid_)
+      PROTOBUF_FIELD_OFFSET(POSITION_UPDATE, _impl_.transformentityid_)
+      + sizeof(POSITION_UPDATE::_impl_.transformentityid_)
       - PROTOBUF_FIELD_OFFSET(POSITION_UPDATE, _impl_.position_)>(
           reinterpret_cast<char*>(&_impl_.position_),
           reinterpret_cast<char*>(&other->_impl_.position_));

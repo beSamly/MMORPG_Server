@@ -28,5 +28,6 @@ private:
 
 	void SyncPlayerPosition(vector<sptr<Player>>& players);
 	void SyncNPCPosition(vector<sptr<Player>>& players, vector<sptr<TransformEntity>> npcs);
+	void SyncProjectilePosition(vector<sptr<Player>>& players, vector<sptr<TransformEntity>> npcs);
 	Packet BuildPositionUpdatePacket(sptr<TransformEntity> transform);
 };

@@ -137,6 +137,7 @@
     <ClInclude Include="BaseStatManager.h" />
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="ClientSession.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="TimeUtil.h" />
     <ClInclude Include="GameSystemConstant.h" />
     <ClInclude Include="GameSystemReq.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AuthController.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="RequestControllerContainer.cpp" />
     <ClCompile Include="NetworkSystem.cpp" />
     <ClCompile Include="Operation.cpp" />

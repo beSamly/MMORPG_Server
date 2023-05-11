@@ -3,8 +3,8 @@ import "VECTOR3.proto";
 
 package Protocol;
 message POSITION_UPDATE {
-  int32 targetType = 1;
-  int32 targetId = 2;
+  int32 transformEntityType = 1;
+  int32 transformEntityId = 2;
   VECTOR3 position = 3;
   VECTOR3 moveDirection = 4;
 }

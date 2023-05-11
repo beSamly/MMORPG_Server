@@ -8,6 +8,7 @@ enum TransformEntityType : int
     TYPE_NONE = 0,
     TYPE_PLAYER,
     TYPE_NPC,
+    TYPE_PROJECTILE
 };
 
 class TransformEntity

@@ -64,6 +64,12 @@
     <ClCompile Include="Protobuf\VECTOR3.pb.cc">
       <Filter>Source Files\Protobuf</Filter>
     </ClCompile>
+    <ClCompile Include="Protobuf\USE_SKILL_REQ.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="Protobuf\USE_SKILL_RES.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -113,6 +119,12 @@
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
     <ClInclude Include="Protobuf\VECTOR3.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\USE_SKILL_REQ.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="Protobuf\USE_SKILL_RES.pb.h">
       <Filter>Source Files\Protobuf</Filter>
     </ClInclude>
   </ItemGroup>

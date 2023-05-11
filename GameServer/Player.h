@@ -30,6 +30,5 @@ public:
 	virtual int GetEntityId() { return playerId; };
 
 public:
-	void SendUpdatePosition();
 	int GetStat(STAT_TYPE statType);
 };

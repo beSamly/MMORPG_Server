@@ -16,4 +16,5 @@ public:
     int Process_MOVE_REQ(sptr<Request>& request);
     int Process_NPC_LIST_REQ(sptr<Request>& request);
     int Process_ENTER_SCENE_REQ(sptr<Request>& request);
+    int Process_USE_SKILL_REQ(sptr<Request>& request);
 };

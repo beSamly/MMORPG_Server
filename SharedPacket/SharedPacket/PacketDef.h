@@ -20,7 +20,9 @@ namespace PacketDef {
 		POSITION_UPDATE,
 		MOVE_REQ,
 		MOVE_RES,
-		NPC_SPAWNED_LIST
+		NPC_SPAWNED_LIST,
+		USE_SKILL_REQ,
+		USE_SKILL_RES
 	};
 
 }  // namespace PacketDef

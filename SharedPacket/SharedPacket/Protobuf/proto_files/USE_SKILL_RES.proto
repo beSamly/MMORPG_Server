@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package Protocol;
+message USE_SKILL_RES {
+  int32 result = 1;
+}

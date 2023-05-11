@@ -176,6 +176,8 @@
     <ClCompile Include="Protobuf\PLAYER_INFO.pb.cc" />
     <ClCompile Include="Protobuf\POSITION_UPDATE.pb.cc" />
     <ClCompile Include="Protobuf\STAT_INFO.pb.cc" />
+    <ClCompile Include="Protobuf\USE_SKILL_REQ.pb.cc" />
+    <ClCompile Include="Protobuf\USE_SKILL_RES.pb.cc" />
     <ClCompile Include="Protobuf\VECTOR3.pb.cc" />
     <ClCompile Include="ProxyPacketId.cpp" />
   </ItemGroup>
@@ -192,6 +194,8 @@
     <ClInclude Include="Protobuf\PLAYER_INFO.pb.h" />
     <ClInclude Include="Protobuf\POSITION_UPDATE.pb.h" />
     <ClInclude Include="Protobuf\STAT_INFO.pb.h" />
+    <ClInclude Include="Protobuf\USE_SKILL_REQ.pb.h" />
+    <ClInclude Include="Protobuf\USE_SKILL_RES.pb.h" />
     <ClInclude Include="Protobuf\VECTOR3.pb.h" />
     <ClInclude Include="ResponseCode.h" />
     <ClInclude Include="PacketDef.h" />
