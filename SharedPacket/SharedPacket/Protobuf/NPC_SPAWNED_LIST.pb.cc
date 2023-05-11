@@ -23,7 +23,7 @@ namespace _pbi = _pb::internal;
 namespace Protocol {
 PROTOBUF_CONSTEXPR NPC_SPAWNED_LIST::NPC_SPAWNED_LIST(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.npc_info_)*/{}
+    /*decltype(_impl_.npcinfo_)*/{}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct NPC_SPAWNED_LISTDefaultTypeInternal {
   PROTOBUF_CONSTEXPR NPC_SPAWNED_LISTDefaultTypeInternal()
@@ -46,7 +46,7 @@ const uint32_t TableStruct_NPC_5fSPAWNED_5fLIST_2eproto::offsets[] PROTOBUF_SECT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::NPC_SPAWNED_LIST, _impl_.npc_info_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::NPC_SPAWNED_LIST, _impl_.npcinfo_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::NPC_SPAWNED_LIST)},
@@ -58,15 +58,15 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_NPC_5fSPAWNED_5fLIST_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\026NPC_SPAWNED_LIST.proto\022\010Protocol\032\016NPC_"
-  "INFO.proto\"8\n\020NPC_SPAWNED_LIST\022$\n\010NPC_IN"
-  "FO\030\001 \003(\0132\022.Protocol.NPC_INFOb\006proto3"
+  "INFO.proto\"7\n\020NPC_SPAWNED_LIST\022#\n\007npcInf"
+  "o\030\001 \003(\0132\022.Protocol.NPC_INFOb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_NPC_5fSPAWNED_5fLIST_2eproto_deps[1] = {
   &::descriptor_table_NPC_5fINFO_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_NPC_5fSPAWNED_5fLIST_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_NPC_5fSPAWNED_5fLIST_2eproto = {
-    false, false, 116, descriptor_table_protodef_NPC_5fSPAWNED_5fLIST_2eproto,
+    false, false, 115, descriptor_table_protodef_NPC_5fSPAWNED_5fLIST_2eproto,
     "NPC_SPAWNED_LIST.proto",
     &descriptor_table_NPC_5fSPAWNED_5fLIST_2eproto_once, descriptor_table_NPC_5fSPAWNED_5fLIST_2eproto_deps, 1, 1,
     schemas, file_default_instances, TableStruct_NPC_5fSPAWNED_5fLIST_2eproto::offsets,
@@ -87,8 +87,8 @@ class NPC_SPAWNED_LIST::_Internal {
  public:
 };
 
-void NPC_SPAWNED_LIST::clear_npc_info() {
-  _impl_.npc_info_.Clear();
+void NPC_SPAWNED_LIST::clear_npcinfo() {
+  _impl_.npcinfo_.Clear();
 }
 NPC_SPAWNED_LIST::NPC_SPAWNED_LIST(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -100,7 +100,7 @@ NPC_SPAWNED_LIST::NPC_SPAWNED_LIST(const NPC_SPAWNED_LIST& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   NPC_SPAWNED_LIST* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.npc_info_){from._impl_.npc_info_}
+      decltype(_impl_.npcinfo_){from._impl_.npcinfo_}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -112,7 +112,7 @@ inline void NPC_SPAWNED_LIST::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.npc_info_){arena}
+      decltype(_impl_.npcinfo_){arena}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -128,7 +128,7 @@ NPC_SPAWNED_LIST::~NPC_SPAWNED_LIST() {
 
 inline void NPC_SPAWNED_LIST::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.npc_info_.~RepeatedPtrField();
+  _impl_.npcinfo_.~RepeatedPtrField();
 }
 
 void NPC_SPAWNED_LIST::SetCachedSize(int size) const {
@@ -141,7 +141,7 @@ void NPC_SPAWNED_LIST::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.npc_info_.Clear();
+  _impl_.npcinfo_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -151,13 +151,13 @@ const char* NPC_SPAWNED_LIST::_InternalParse(const char* ptr, ::_pbi::ParseConte
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // repeated .Protocol.NPC_INFO NPC_INFO = 1;
+      // repeated .Protocol.NPC_INFO npcInfo = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr -= 1;
           do {
             ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_npc_info(), ptr);
+            ptr = ctx->ParseMessage(_internal_add_npcinfo(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
@@ -193,10 +193,10 @@ uint8_t* NPC_SPAWNED_LIST::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // repeated .Protocol.NPC_INFO NPC_INFO = 1;
+  // repeated .Protocol.NPC_INFO npcInfo = 1;
   for (unsigned i = 0,
-      n = static_cast<unsigned>(this->_internal_npc_info_size()); i < n; i++) {
-    const auto& repfield = this->_internal_npc_info(i);
+      n = static_cast<unsigned>(this->_internal_npcinfo_size()); i < n; i++) {
+    const auto& repfield = this->_internal_npcinfo(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
         InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
   }
@@ -217,9 +217,9 @@ size_t NPC_SPAWNED_LIST::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .Protocol.NPC_INFO NPC_INFO = 1;
-  total_size += 1UL * this->_internal_npc_info_size();
-  for (const auto& msg : this->_impl_.npc_info_) {
+  // repeated .Protocol.NPC_INFO npcInfo = 1;
+  total_size += 1UL * this->_internal_npcinfo_size();
+  for (const auto& msg : this->_impl_.npcinfo_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
@@ -242,7 +242,7 @@ void NPC_SPAWNED_LIST::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.npc_info_.MergeFrom(from._impl_.npc_info_);
+  _this->_impl_.npcinfo_.MergeFrom(from._impl_.npcinfo_);
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -260,7 +260,7 @@ bool NPC_SPAWNED_LIST::IsInitialized() const {
 void NPC_SPAWNED_LIST::InternalSwap(NPC_SPAWNED_LIST* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.npc_info_.InternalSwap(&other->_impl_.npc_info_);
+  _impl_.npcinfo_.InternalSwap(&other->_impl_.npcinfo_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata NPC_SPAWNED_LIST::GetMetadata() const {

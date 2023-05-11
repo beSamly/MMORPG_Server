@@ -6,6 +6,8 @@
 #include "NPCManager.h"
 #include "ProjectileManager.h"
 #include "Request.h"
+#include "Player.h"
+#include "Packet.h"
 
 using GameSystemReq::BaseReq;
 using std::string;
@@ -13,23 +15,25 @@ using std::string;
 class Scene
 {
 private:
-	USE_LOCK;
-	queue<sptr<Request>> requestQueue;
-	std::set<int> setPlayer;
+    USE_LOCK;
+    queue<sptr<Request>> requestQueue;
+    std::set<int> setPlayerId;
+    map<int, sptr<Player>> mapPlayer;
 
 public:
-	string sceneName;
-	sptr<PhysicsEngine::NavigationMeshAgent> navigationMeshAgent;
-	uptr<SpawnManager> spawnManager;
-	uptr<NPCManager> npcManager;
-	uptr<ProjectileManager> projectileManager;
+    string sceneName;
+    sptr<PhysicsEngine::NavigationMeshAgent> navigationMeshAgent;
+    uptr<SpawnManager> spawnManager;
+    uptr<NPCManager> npcManager;
+    uptr<ProjectileManager> projectileManager;
 
 public:
-	Scene(string paramSceneName);
+    Scene(string paramSceneName);
 
-	void PushRequest(sptr<Request> request);
-	queue<sptr<Request>> FlushQueue();
+    void PushRequest(sptr<Request> request);
+    queue<sptr<Request>> FlushQueue();
 
-	std::set<int> GetPlayerIdsInScene() { return setPlayer; }
-	void AddPlayerId(int playerId) { setPlayer.insert(playerId); }
+    std::set<int> GetPlayerIdsInScene() { return setPlayerId; }
+    void AddPlayerId(int playerId) { setPlayerId.insert(playerId); }
+    void Broadcast(Packet& packet);
 };

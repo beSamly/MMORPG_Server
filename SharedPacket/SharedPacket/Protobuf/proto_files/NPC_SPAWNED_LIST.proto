@@ -5,5 +5,5 @@ import "NPC_INFO.proto";
 package Protocol;
 
 message NPC_SPAWNED_LIST {
-  repeated NPC_INFO NPC_INFO = 1;
+  repeated NPC_INFO npcInfo = 1;
 }

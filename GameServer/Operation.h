@@ -7,6 +7,7 @@ class Operation
 public:
 	OperationType operationType;
 	int operationValue;
+	virtual OperationType GetOperationType() { return operationType; }
 
 	//OperationCondition condition;
 	/*vector<> vecOperation;

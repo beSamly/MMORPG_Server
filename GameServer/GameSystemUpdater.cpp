@@ -74,7 +74,7 @@ void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene, vec
 				continue;
 			}
 
-
+			projectile->Update(deltaTime);
 		}
 	}
 

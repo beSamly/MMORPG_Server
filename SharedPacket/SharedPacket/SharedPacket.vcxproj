@@ -175,6 +175,8 @@
     <ClCompile Include="Protobuf\NPC_SPAWNED_LIST.pb.cc" />
     <ClCompile Include="Protobuf\PLAYER_INFO.pb.cc" />
     <ClCompile Include="Protobuf\POSITION_UPDATE.pb.cc" />
+    <ClCompile Include="Protobuf\PROJECTILE_INFO.pb.cc" />
+    <ClCompile Include="Protobuf\PROJECTILE_SPAWNED_LIST.pb.cc" />
     <ClCompile Include="Protobuf\STAT_INFO.pb.cc" />
     <ClCompile Include="Protobuf\USE_SKILL_REQ.pb.cc" />
     <ClCompile Include="Protobuf\USE_SKILL_RES.pb.cc" />
@@ -193,6 +195,8 @@
     <ClInclude Include="Protobuf\NPC_SPAWNED_LIST.pb.h" />
     <ClInclude Include="Protobuf\PLAYER_INFO.pb.h" />
     <ClInclude Include="Protobuf\POSITION_UPDATE.pb.h" />
+    <ClInclude Include="Protobuf\PROJECTILE_INFO.pb.h" />
+    <ClInclude Include="Protobuf\PROJECTILE_SPAWNED_LIST.pb.h" />
     <ClInclude Include="Protobuf\STAT_INFO.pb.h" />
     <ClInclude Include="Protobuf\USE_SKILL_REQ.pb.h" />
     <ClInclude Include="Protobuf\USE_SKILL_RES.pb.h" />

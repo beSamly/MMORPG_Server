@@ -89,7 +89,7 @@ int GameController::Process_NPC_LIST_REQ(sptr<Request>& request)
 
 				PhysicsEngine::Vector3 position = transformEntity->GetPosition();
 
-				Protocol::NPC_INFO* npcInfo = npcListRes.add_npc_info();
+				Protocol::NPC_INFO* npcInfo = npcListRes.add_npcinfo();
 				npcInfo->mutable_position()->set_x(position.x);
 				npcInfo->mutable_position()->set_y(position.y);
 				npcInfo->mutable_position()->set_z(position.z);

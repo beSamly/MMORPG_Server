@@ -178,25 +178,25 @@ class NPC_SPAWNED_LIST final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kNPCINFOFieldNumber = 1,
+    kNpcInfoFieldNumber = 1,
   };
-  // repeated .Protocol.NPC_INFO NPC_INFO = 1;
-  int npc_info_size() const;
+  // repeated .Protocol.NPC_INFO npcInfo = 1;
+  int npcinfo_size() const;
   private:
-  int _internal_npc_info_size() const;
+  int _internal_npcinfo_size() const;
   public:
-  void clear_npc_info();
-  ::Protocol::NPC_INFO* mutable_npc_info(int index);
+  void clear_npcinfo();
+  ::Protocol::NPC_INFO* mutable_npcinfo(int index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::NPC_INFO >*
-      mutable_npc_info();
+      mutable_npcinfo();
   private:
-  const ::Protocol::NPC_INFO& _internal_npc_info(int index) const;
-  ::Protocol::NPC_INFO* _internal_add_npc_info();
+  const ::Protocol::NPC_INFO& _internal_npcinfo(int index) const;
+  ::Protocol::NPC_INFO* _internal_add_npcinfo();
   public:
-  const ::Protocol::NPC_INFO& npc_info(int index) const;
-  ::Protocol::NPC_INFO* add_npc_info();
+  const ::Protocol::NPC_INFO& npcinfo(int index) const;
+  ::Protocol::NPC_INFO* add_npcinfo();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::NPC_INFO >&
-      npc_info() const;
+      npcinfo() const;
 
   // @@protoc_insertion_point(class_scope:Protocol.NPC_SPAWNED_LIST)
  private:
@@ -206,7 +206,7 @@ class NPC_SPAWNED_LIST final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::NPC_INFO > npc_info_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::NPC_INFO > npcinfo_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -223,41 +223,41 @@ class NPC_SPAWNED_LIST final :
 #endif  // __GNUC__
 // NPC_SPAWNED_LIST
 
-// repeated .Protocol.NPC_INFO NPC_INFO = 1;
-inline int NPC_SPAWNED_LIST::_internal_npc_info_size() const {
-  return _impl_.npc_info_.size();
+// repeated .Protocol.NPC_INFO npcInfo = 1;
+inline int NPC_SPAWNED_LIST::_internal_npcinfo_size() const {
+  return _impl_.npcinfo_.size();
 }
-inline int NPC_SPAWNED_LIST::npc_info_size() const {
-  return _internal_npc_info_size();
+inline int NPC_SPAWNED_LIST::npcinfo_size() const {
+  return _internal_npcinfo_size();
 }
-inline ::Protocol::NPC_INFO* NPC_SPAWNED_LIST::mutable_npc_info(int index) {
-  // @@protoc_insertion_point(field_mutable:Protocol.NPC_SPAWNED_LIST.NPC_INFO)
-  return _impl_.npc_info_.Mutable(index);
+inline ::Protocol::NPC_INFO* NPC_SPAWNED_LIST::mutable_npcinfo(int index) {
+  // @@protoc_insertion_point(field_mutable:Protocol.NPC_SPAWNED_LIST.npcInfo)
+  return _impl_.npcinfo_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::NPC_INFO >*
-NPC_SPAWNED_LIST::mutable_npc_info() {
-  // @@protoc_insertion_point(field_mutable_list:Protocol.NPC_SPAWNED_LIST.NPC_INFO)
-  return &_impl_.npc_info_;
+NPC_SPAWNED_LIST::mutable_npcinfo() {
+  // @@protoc_insertion_point(field_mutable_list:Protocol.NPC_SPAWNED_LIST.npcInfo)
+  return &_impl_.npcinfo_;
 }
-inline const ::Protocol::NPC_INFO& NPC_SPAWNED_LIST::_internal_npc_info(int index) const {
-  return _impl_.npc_info_.Get(index);
+inline const ::Protocol::NPC_INFO& NPC_SPAWNED_LIST::_internal_npcinfo(int index) const {
+  return _impl_.npcinfo_.Get(index);
 }
-inline const ::Protocol::NPC_INFO& NPC_SPAWNED_LIST::npc_info(int index) const {
-  // @@protoc_insertion_point(field_get:Protocol.NPC_SPAWNED_LIST.NPC_INFO)
-  return _internal_npc_info(index);
+inline const ::Protocol::NPC_INFO& NPC_SPAWNED_LIST::npcinfo(int index) const {
+  // @@protoc_insertion_point(field_get:Protocol.NPC_SPAWNED_LIST.npcInfo)
+  return _internal_npcinfo(index);
 }
-inline ::Protocol::NPC_INFO* NPC_SPAWNED_LIST::_internal_add_npc_info() {
-  return _impl_.npc_info_.Add();
+inline ::Protocol::NPC_INFO* NPC_SPAWNED_LIST::_internal_add_npcinfo() {
+  return _impl_.npcinfo_.Add();
 }
-inline ::Protocol::NPC_INFO* NPC_SPAWNED_LIST::add_npc_info() {
-  ::Protocol::NPC_INFO* _add = _internal_add_npc_info();
-  // @@protoc_insertion_point(field_add:Protocol.NPC_SPAWNED_LIST.NPC_INFO)
+inline ::Protocol::NPC_INFO* NPC_SPAWNED_LIST::add_npcinfo() {
+  ::Protocol::NPC_INFO* _add = _internal_add_npcinfo();
+  // @@protoc_insertion_point(field_add:Protocol.NPC_SPAWNED_LIST.npcInfo)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::NPC_INFO >&
-NPC_SPAWNED_LIST::npc_info() const {
-  // @@protoc_insertion_point(field_list:Protocol.NPC_SPAWNED_LIST.NPC_INFO)
-  return _impl_.npc_info_;
+NPC_SPAWNED_LIST::npcinfo() const {
+  // @@protoc_insertion_point(field_list:Protocol.NPC_SPAWNED_LIST.npcInfo)
+  return _impl_.npcinfo_;
 }
 
 #ifdef __GNUC__

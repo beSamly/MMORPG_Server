@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+import "VECTOR3.proto";
+
+package Protocol;
+
+message PROJECTILE_INFO {
+  int32 projectileId = 1;
+  int32 projectileIndex = 2;
+  int32 speed = 3;
+  int32 maxRange = 4;
+  VECTOR3 position = 5;
+  VECTOR3 moveDirection = 6;
+}

@@ -21,3 +21,10 @@ queue<sptr<Request>> Scene::FlushQueue()
 	std::swap(copied, requestQueue);
 	return copied;
 }
+
+void Scene::Broadcast(Packet& packet) {
+	for (auto& [_, player] : mapPlayer)
+    {
+		player->Send(packet);
+	}
+}

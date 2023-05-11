@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+import "PROJECTILE_INFO.proto";
+
+package Protocol;
+
+message PROJECTILE_SPAWNED_LIST {
+  repeated PROJECTILE_INFO projectileInfo = 1;
+}
