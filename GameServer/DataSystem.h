@@ -11,15 +11,18 @@
 class DataSystem
 {
 public:
-	uptr<NavigationMeshAgentManager> navigationMeshAgentManager;
-	uptr<SceneInfoManager> sceneInfoManager;
-	uptr<BaseStatManager> baseStatManager;
-	uptr<SpawnInfoManager> spawnInfoManager;
-	uptr<NPCInfoManager> npcInfoManager;
+	sptr<NavigationMeshAgentManager> navigationMeshAgentManager;
+	sptr<SceneInfoManager> sceneInfoManager;
+	sptr<BaseStatManager> baseStatManager;
+	sptr<SpawnInfoManager> spawnInfoManager;
+	sptr<NPCInfoManager> npcInfoManager;
 	sptr<SkillInfoManager> skillInfoManager;
 	sptr<ProjectileInfoManager> projectileInfoManager;
 
 	uptr<SkillFactory> skillFactory;
+
+private:
+	vector<sptr<JsonDataManager>> vecJsonDatamanager;
 
 public:
 	DataSystem();

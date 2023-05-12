@@ -2,14 +2,20 @@
 #include "pch.h"
 #include <PhysicsEngine.h>
 #include "SpawnInfo.h"
+#include "JsonDataManager.h"
 
-class SpawnInfoManager
+class SpawnInfoManager : public JsonDataManager
 {
-private:
-    map<string, SpawnInfo> mapSpawnInfo;
-
 public:
-    SpawnInfoManager(){};
-    void LoadJsonData();
-    SpawnInfo GetSpawnInfo(string sceneName);
+	SpawnInfoManager() {};
+	void LoadJsonData();
+	SpawnInfo GetSpawnInfo(string sceneName);
+
+private:
+	map<string, SpawnInfo> mapSpawnInfo;
+	void LoadDataFromPath() override;
+
+protected:
+	string GetFilePath() override { return "./json/SpawnInfo.json"; };
+
 };

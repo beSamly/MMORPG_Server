@@ -10,11 +10,6 @@
 
 using namespace simdjson;
 
-void SkillInfoManager::LoadJsonData()
-{
-	LoadSkillInfo();
-}
-
 SkillInfo SkillInfoManager::GetSkillInfo(int skillIndex)
 {
 	auto iter = mapSkillInfo.find(skillIndex);
@@ -28,18 +23,12 @@ SkillInfo SkillInfoManager::GetSkillInfo(int skillIndex)
 	}
 }
 
-void SkillInfoManager::LoadSkillInfo()
+void SkillInfoManager::LoadDataFromPath()
 {
-	simdjson::dom::parser parser;
 	simdjson::dom::element data;
+	simdjson::dom::parser parser;
+	JsonDataManager::ParseDataFromPath(data, parser);
 
-	auto error = parser.load(FILE_PATH).get(data);
-	if (error) {
-		LOG_ERROR(FILE_PATH + " Failed to parse");
-		return;
-	}
-
-	// Iterate through an array of objects
 	for (const dom::element& jsonSkillInfo : data)
 	{
 		SkillInfo skillInfo;

@@ -3,24 +3,28 @@
 
 DataSystem::DataSystem()
 {
-	navigationMeshAgentManager = make_unique<NavigationMeshAgentManager>();
-	sceneInfoManager = make_unique<SceneInfoManager>();
-	baseStatManager = make_unique<BaseStatManager>();
-	spawnInfoManager = make_unique<SpawnInfoManager>();
-	npcInfoManager = make_unique<NPCInfoManager>();
+	navigationMeshAgentManager = make_shared<NavigationMeshAgentManager>();
+	sceneInfoManager = make_shared<SceneInfoManager>();
+	baseStatManager = make_shared<BaseStatManager>();
+	spawnInfoManager = make_shared<SpawnInfoManager>();
+	npcInfoManager = make_shared<NPCInfoManager>();
 	skillInfoManager = make_shared<SkillInfoManager>();
 	projectileInfoManager = make_shared<ProjectileInfoManager>();
+
+	vecJsonDatamanager.push_back(navigationMeshAgentManager);
+	vecJsonDatamanager.push_back(sceneInfoManager);
+	vecJsonDatamanager.push_back(baseStatManager);
+	vecJsonDatamanager.push_back(spawnInfoManager);
+	vecJsonDatamanager.push_back(npcInfoManager);
+	vecJsonDatamanager.push_back(skillInfoManager);
+	vecJsonDatamanager.push_back(projectileInfoManager);
 
 	skillFactory = make_unique<SkillFactory>(skillInfoManager, projectileInfoManager);
 }
 
 void DataSystem::LoadJsonData()
 {
-	navigationMeshAgentManager->LoadJsonData();
-	baseStatManager->LoadJsonData();
-	sceneInfoManager->LoadJsonData();
-	spawnInfoManager->LoadJsonData();
-	npcInfoManager->LoadJsonData();
-	skillInfoManager->LoadJsonData();
-	projectileInfoManager->LoadJsonData();
+	for (sptr<JsonDataManager>& manager : vecJsonDatamanager) {
+		manager->LoadJsonData();
+	}
 }

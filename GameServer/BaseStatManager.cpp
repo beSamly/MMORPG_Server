@@ -4,39 +4,39 @@
 #include "nlohmann/json.hpp"
 #include "PhysicsEngine.h"
 
-using json = nlohmann::json;
+using namespace simdjson;
 
 BaseStatInfo BaseStatManager::GetBaseStat(int baseStatIndex)
 {
-    if (mapBaseStatInfo.count(baseStatIndex))
-    {
-        return mapBaseStatInfo[baseStatIndex];
-    }
-    else
-    {
-        return BaseStatInfo();
-    }
+	if (mapBaseStatInfo.count(baseStatIndex))
+	{
+		return mapBaseStatInfo[baseStatIndex];
+	}
+	else
+	{
+		return BaseStatInfo();
+	}
 }
 
-void BaseStatManager::LoadJsonData()
+void BaseStatManager::LoadDataFromPath()
 {
-    std::ifstream f("./json/BaseStatInfo.json");
+	simdjson::dom::element data;
+	simdjson::dom::parser parser;
+	JsonDataManager::ParseDataFromPath(data, parser);
 
-    json listStatInfo = json::parse(f);
+	for (const auto& jsonStatInfo : data)
+	{
+		BaseStatInfo statInfo;
+		statInfo.baseStatIndex = jsonStatInfo["BaseStatIndex"].get_int64();
+		statInfo.maxHp = jsonStatInfo["MaxHP"].get_int64();
+		statInfo.maxMp = jsonStatInfo["MaxMP"].get_int64();
+		statInfo.attackPower = jsonStatInfo["AttackPower"].get_int64();
+		statInfo.magicPower = jsonStatInfo["MagicPower"].get_int64();
+		statInfo.attackSpeed = jsonStatInfo["AttackSpeed"].get_int64();
+		statInfo.moveSpeed = jsonStatInfo["MoveSpeed"].get_int64();
+		statInfo.armor = jsonStatInfo["Armor"].get_int64();
+		statInfo.magicResistance = jsonStatInfo["MagicResistance"].get_int64();
 
-    for (auto& jsonStatInfo : listStatInfo)
-    {
-        BaseStatInfo statInfo;
-        statInfo.baseStatIndex = jsonStatInfo["BaseStatIndex"];
-        statInfo.maxHp = jsonStatInfo["MaxHP"];
-        statInfo.maxMp = jsonStatInfo["MaxMP"];
-        statInfo.attackPower = jsonStatInfo["AttackPower"];
-        statInfo.magicPower = jsonStatInfo["MagicPower"];
-        statInfo.attackSpeed = jsonStatInfo["AttackSpeed"];
-        statInfo.moveSpeed = jsonStatInfo["MoveSpeed"];
-        statInfo.armor = jsonStatInfo["Armor"];
-        statInfo.magicResistance = jsonStatInfo["MagicResistance"];
-
-        mapBaseStatInfo[statInfo.baseStatIndex] = statInfo;
-    }
+		mapBaseStatInfo[statInfo.baseStatIndex] = statInfo;
+	}
 }

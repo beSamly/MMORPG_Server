@@ -2,16 +2,21 @@
 #include "pch.h"
 #include <PhysicsEngine.h>
 #include "StatController.h"
+#include "JsonDataManager.h"
 
-class BaseStatManager
+class BaseStatManager : public JsonDataManager
 {
 private:
-    map<int, BaseStatInfo> mapBaseStatInfo;
+	map<int, BaseStatInfo> mapBaseStatInfo;
+	void LoadDataFromPath() override;
 
 public:
-    BaseStatManager(){};
-    BaseStatInfo GetBaseStat(int baseStatIndex);
+	BaseStatManager() {};
+	BaseStatInfo GetBaseStat(int baseStatIndex);
 
-    void LoadJsonData();
+	void LoadJsonData();
+
+protected:
+	string GetFilePath() override { return "./json/BaseStatInfo.json"; };
 
 };

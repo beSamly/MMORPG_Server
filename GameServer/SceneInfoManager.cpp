@@ -1,24 +1,24 @@
 #include "pch.h"
-#include <fstream>
 #include "SceneInfoManager.h"
-#include "nlohmann/json.hpp"
 #include "PhysicsEngine.h"
 #include "SceneInfo.h"
 
-using json = nlohmann::json;
+using namespace simdjson;
 
-void SceneInfoManager::LoadJsonData() { 
- std::ifstream f("./json/SceneInfo.json");
+void SceneInfoManager::LoadDataFromPath() {
 
-    json listSceneInfo = json::parse(f);
+	simdjson::dom::element data;
+	simdjson::dom::parser parser;
+	JsonDataManager::ParseDataFromPath(data, parser);
 
-    for (auto& jsonSceneInfo : listSceneInfo)
-    {
-        SceneInfo sceneInfo;
+	for (const auto& jsonSceneInfo : data)
+	{
+		SceneInfo sceneInfo;
 
-        sceneInfo.sceneName = jsonSceneInfo["SceneName"];
+		sceneInfo.sceneName = jsonSceneInfo["SceneName"].get_string().value();
 
-        vecSceneInfo.push_back(sceneInfo);
-    }
+		vecSceneInfo.push_back(sceneInfo);
+	}
 }
+
 

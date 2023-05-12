@@ -3,18 +3,19 @@
 #include "Skill.h"
 #include <PhysicsEngine.h>
 #include "SkillInfo.h"
+#include "JsonDataManager.h"
 
-class SkillInfoManager
+class SkillInfoManager : public JsonDataManager
 {
-private:
-	string FILE_PATH = "./json/SkillInfo.json";
-	map<int, SkillInfo> mapSkillInfo;
-
 public:
 	SkillInfoManager() {};
 	void LoadJsonData();
 	SkillInfo GetSkillInfo(int skillIndex);
-
 private:
-	void LoadSkillInfo();
+	map<int, SkillInfo> mapSkillInfo;
+	void LoadDataFromPath() override;
+
+protected:
+	string GetFilePath() override { return "./json/SkillInfo.json"; };
+
 };

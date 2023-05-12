@@ -4,17 +4,21 @@
 #include <PhysicsEngine.h>
 #include "SkillInfo.h"
 #include "ProjectileInfo.h"
+#include "JsonDataManager.h"
 
-class ProjectileInfoManager
+class ProjectileInfoManager : public JsonDataManager
 {
 private:
-	string FILE_PATH = "./json/ProjectileInfo.json";
 	map<int, ProjectileInfo> mapProjectileInfo;
 
 public:
 	ProjectileInfoManager() {};
-	void LoadJsonData();
 	ProjectileInfo GetProjectileInfo(int index);
+
+
+protected:
+	string GetFilePath() override { return "./json/ProjectileInfo.json"; };
+
 private:
-	void LoadProjectileInfo();
+	void LoadDataFromPath() override;
 };

@@ -5,11 +5,6 @@
 
 using namespace simdjson;
 
-void ProjectileInfoManager::LoadJsonData()
-{
-	LoadProjectileInfo();
-}
-
 ProjectileInfo ProjectileInfoManager::GetProjectileInfo(int index)
 {
 	auto iter = mapProjectileInfo.find(index);
@@ -23,16 +18,11 @@ ProjectileInfo ProjectileInfoManager::GetProjectileInfo(int index)
 	}
 }
 
-void ProjectileInfoManager::LoadProjectileInfo()
+void ProjectileInfoManager::LoadDataFromPath()
 {
-	simdjson::dom::parser parser;
 	simdjson::dom::element data;
-
-	auto error = parser.load(FILE_PATH).get(data);
-	if (error) {
-		LOG_ERROR(FILE_PATH + " Failed to parse");
-		return;
-	}
+	simdjson::dom::parser parser;
+	JsonDataManager::ParseDataFromPath(data, parser);
 
 	for (const dom::element& jsonProjectileInfo : data)
 	{
@@ -43,19 +33,8 @@ void ProjectileInfoManager::LoadProjectileInfo()
 
 		const auto& onCollisionOperation = jsonProjectileInfo["OnCollisionOperation"];
 
-		info.onCollisionOperation.operationType = onCollisionOperation["OperationType"];
-		info.onCollisionOperation.operationValue = onCollisionOperation["OperationValue"];
-
-		/*
-		  "ProjectileIndex": 1,
-		"MaxRange": 1000,
-		"Speed": 10,
-		"ProjectileType": "Penetraion",
-		"OnCollisionOperation": {
-			"OperationType": "PhysicalDamageR",
-			"OperationValue": 10
-		}
-		*/
+		info.onCollisionOperation.operationType = onCollisionOperation["OperationType"].get_string().value();
+		info.onCollisionOperation.operationValue = onCollisionOperation["OperationValue"].get_int64();
 
 		mapProjectileInfo[info.projectileIndex] = info;
 	}

@@ -4,18 +4,19 @@
 
 using std::chrono::steady_clock;
 
-namespace TimeUtil
+class TimeUtil
 {
-    steady_clock::time_point GetNow() { return steady_clock::now(); }
-    float GetElapsedInMsec(steady_clock::time_point from) { return std::chrono::duration_cast<std::chrono::microseconds>(GetNow() - from).count(); }
-    float GetElapsedInSec(steady_clock::time_point from) { return GetElapsedInMsec(from) / 1000000.0f; }
+public:
+	static steady_clock::time_point GetNow() { return steady_clock::now(); }
+	static float GetElapsedInMsec(steady_clock::time_point from) { return std::chrono::duration_cast<std::chrono::microseconds>(GetNow() - from).count(); }
+	static float GetElapsedInSec(steady_clock::time_point from) { return GetElapsedInMsec(from) / 1000000.0f; }
 
-    void LogElapsedTime(string prefix, function<void()> func)
-    {
-        steady_clock::time_point t1 = GetNow();
-        func();
-        float elpasedInSec = GetElapsedInSec(t1);
-        LOG_INFO(prefix  + " elapsed Time : " + std::to_string(elpasedInSec));
-    }
+	static void LogElapsedTime(string prefix, function<void()> func)
+	{
+		steady_clock::time_point t1 = GetNow();
+		func();
+		float elpasedInSec = GetElapsedInSec(t1);
+		LOG_INFO(std::to_string(elpasedInSec) + " elapsed Time : " + prefix);
+	}
 
-} // namespace TimeUtil
+}; // namespace TimeUtil

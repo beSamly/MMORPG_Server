@@ -304,6 +304,9 @@
     <ClInclude Include="OperationType.h">
       <Filter>Source Files\GameSystem\Type</Filter>
     </ClInclude>
+    <ClInclude Include="JsonDataManager.h">
+      <Filter>Source Files\DataSystem\StaticDataManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

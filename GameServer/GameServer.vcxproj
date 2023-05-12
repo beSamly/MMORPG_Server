@@ -137,6 +137,7 @@
     <ClInclude Include="BaseStatManager.h" />
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="ClientSession.h" />
+    <ClInclude Include="JsonDataManager.h" />
     <ClInclude Include="OperationProcessController.h" />
     <ClInclude Include="OperationType.h" />
     <ClInclude Include="Projectile.h" />

@@ -2,14 +2,21 @@
 #include "pch.h"
 #include <PhysicsEngine.h>
 #include "SceneInfo.h"
+#include "JsonDataManager.h"
 
-class SceneInfoManager
+class SceneInfoManager : public JsonDataManager
 {
-private:
-    vector<SceneInfo> vecSceneInfo;
 
 public:
-    SceneInfoManager(){};
-    void LoadJsonData();
-    vector<SceneInfo> GetAllSceneInfo() { return vecSceneInfo; }
+	SceneInfoManager() {};
+	void LoadJsonData();
+	vector<SceneInfo> GetAllSceneInfo() { return vecSceneInfo; }
+
+private:
+	vector<SceneInfo> vecSceneInfo;
+	void LoadDataFromPath() override;
+
+protected:
+	string GetFilePath() override { return "./json/SceneInfo.json"; };
+
 };
