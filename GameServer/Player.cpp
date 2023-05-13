@@ -73,7 +73,7 @@ void Player::UpdatePosition(float deltaTime)
     float moveSpeed = statValue * deltaTime;
 
     // 이동하는 방향으로 이동속도만큼 이동
-    addPosition += (GetMoveDirection() * moveSpeed);
+    addPosition += (GetMoveDirection() * statValue * deltaTime);
 
     //[TODO] 중력 - 일단 이동속도 만큼 중력 나중에 바꿔라
     addPosition += (Vector3(0.0f, -GRAVITY, 0.0f) * deltaTime);

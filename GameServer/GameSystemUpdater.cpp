@@ -7,6 +7,7 @@
 #include "POSITION_UPDATE.pb.h"
 #include "Projectile.h"
 #include <spdlog/spdlog.h>
+#include "LogMacro.h"
 
 using namespace PacketDef;
 
@@ -47,19 +48,32 @@ void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene)
 
     // NPC Update
     vector<sptr<TransformEntity>> vecNPC = scene->npcManager->getAllNpc();
-    {
-        for (sptr<TransformEntity>& transformEntity : vecNPC)
-        {
-            sptr<NPC> npc = dynamic_pointer_cast<NPC>(transformEntity);
-            if (npc == nullptr)
-            {
-                LOG_ERROR("Can not convert TransformEntity to NPC");
-                continue;
-            }
 
-            UpdateEachNPC(deltaTime, scene, npc);
+    /*for (sptr<TransformEntity>& transformEntity : vecNPC)
+    {
+        sptr<NPC> npc = dynamic_pointer_cast<NPC>(transformEntity);
+        if (npc == nullptr)
+        {
+            LOG_ERROR("Can not convert TransformEntity to NPC");
+            continue;
         }
-    }
+        UpdateEachNPC(deltaTime, scene, npc);
+    }*/
+
+    TimeUtil::LogElapsedTime("NPC Update",
+                             [&]() -> void
+                             {
+                                 for (sptr<TransformEntity>& transformEntity : vecNPC)
+                                 {
+                                     sptr<NPC> npc = dynamic_pointer_cast<NPC>(transformEntity);
+                                     if (npc == nullptr)
+                                     {
+                                         LOG_ERROR("Can not convert TransformEntity to NPC");
+                                         continue;
+                                     }
+                                     UpdateEachNPC(deltaTime, scene, npc);
+                                 }
+                             });
 
     // Player Update
     {
@@ -90,7 +104,7 @@ void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene)
         if (elapsedTime - lastChecked > 2)
         {
             SyncNPCPosition(playersInScene, vecNPC);
-            //SyncProjectilePosition(playersInScene, vecProjectile);
+            // SyncProjectilePosition(playersInScene, vecProjectile);
             SyncPlayerPosition(playersInScene);
 
             lastChecked = elapsedTime;
@@ -115,6 +129,22 @@ void GameSystemUpdater::UpdateEachPlayer(float deltaTime, sptr<Scene>& scene, sp
 
         triggeredOperationQueue.pop();
     }
+}
+
+void GameSystemUpdater::UpdateEachNPC(float deltaTime, sptr<Scene>& scene, sptr<NPC>& npc)
+{
+    npc->Update(deltaTime);
+
+    if (npc->patrolController->NeedToSwitchMoveDirection())
+    {
+        npc->patrolController->SwitchToNextMoveDirection();
+        Vector3 newMoveDirection = npc->patrolController->GetCurrentMoveDirection();
+        npc->SetMoveDirection(newMoveDirection);
+    }
+
+    Vector3 currentPosition = npc->GetPosition();
+    Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, npc->GetRadius());
+    //npc->SetPosition(newPosition);
 }
 
 void GameSystemUpdater::ProcessRequestQueue(sptr<Scene>& scene)
@@ -168,21 +198,6 @@ void GameSystemUpdater::SendNPCSpawnedToPlayer(sptr<Scene>& scene, vector<sptr<N
     }*/
 }
 
-void GameSystemUpdater::UpdateEachNPC(float deltaTime, sptr<Scene>& scene, sptr<NPC>& npc)
-{
-    npc->Update(deltaTime);
-
-    if (npc->patrolController->NeedToSwitchMoveDirection())
-    {
-        npc->patrolController->SwitchToNextMoveDirection();
-        Vector3 newDirection = npc->patrolController->GetCurrentMoveDirection();
-    }
-
-    Vector3 currentPosition = npc->GetPosition();
-    Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, npc->GetRadius());
-    npc->SetPosition(newPosition);
-}
-
 void GameSystemUpdater::SyncPlayerPosition(vector<sptr<Player>>& players)
 {
     for (sptr<Player>& from : players)
@@ -198,16 +213,17 @@ void GameSystemUpdater::SyncPlayerPosition(vector<sptr<Player>>& players)
 
 void GameSystemUpdater::SyncNPCPosition(vector<sptr<Player>>& players, vector<sptr<TransformEntity>> npcs)
 {
+    if (players.size() == 0)
+    {
+        return;
+    }
+
     for (sptr<TransformEntity>& from : npcs)
     {
         sptr<Packet> packetUpdatePosition = BuildPositionUpdatePacket(from);
 
         for (sptr<Player>& to : players)
         {
-            //PacketHeader* header = reinterpret_cast<PacketHeader*>(packetUpdatePosition->GetByteBuffer());
-            ////LOG_DEBUG("GroupId : " + header->groupId + " id : " + header->id + " size : " + header->size);
-            //spdlog::debug("GroupId = {} id = {} size = {}", header->groupId, header->id, header->size);
-
             to->Send(packetUpdatePosition);
         }
     }

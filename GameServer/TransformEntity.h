@@ -23,7 +23,6 @@ public:
     Vector3 GetPosition();
     void SetPosition(Vector3 newPositoin)
     {
-        newPositoin.Normalize();
         position = newPositoin;
     };
     void AddPosition(Vector3 addPositoin) { position += addPositoin; };

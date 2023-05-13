@@ -6,7 +6,7 @@
     "AttackPower": 10,
     "MagicPower": 10,
     "AttackSpeed": 10,
-    "MoveSpeed": 10,
+    "MoveSpeed": 5,
     "Armor": 10,
     "MagicResistance": 10
   }
