@@ -19,6 +19,7 @@ using PhysicsEngine::Vector3;
 GameSystem::GameSystem(sptr<DataSystem> p_dataSystem) : dataSystem(p_dataSystem)
 {
 	playerManager = make_unique<PlayerManager>();
+    clientManager = make_unique<ClientManager>();
 	sceneManager = make_unique<SceneManager>();
 }
 
@@ -78,10 +79,7 @@ void GameSystem::UpdateScene(int threadId, float deltaTime)
 	// LOG_DEBUG("[GameSystem] deltaTime = " + std::to_string(deltaTime));
 	for (auto& [sceneName, scene] : *sceneManager->GetAllScene())
 	{
-		vector<sptr<Player>> playersInScene = playerManager->GetPlayersById(scene->GetPlayerIdsInScene());
-
 		//¾À SpawnManager Update
-		gameSystemUpdater->UpdateEachScene(deltaTime, scene, playersInScene);
-
+		gameSystemUpdater->UpdateEachScene(deltaTime, scene);
 	};
 }

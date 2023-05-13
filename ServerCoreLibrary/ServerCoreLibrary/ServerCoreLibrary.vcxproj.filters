@@ -79,6 +79,9 @@
     <ClCompile Include="Buffer.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
+    <ClCompile Include="SendBufferQueue.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GlobalMacro.h">
@@ -139,6 +142,9 @@
       <Filter>Source Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="Buffer.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="SendBufferQueue.h">
       <Filter>Source Files\Network</Filter>
     </ClInclude>
   </ItemGroup>

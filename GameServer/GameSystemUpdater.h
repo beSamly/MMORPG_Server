@@ -11,25 +11,24 @@ class RequestControllerContainer;
 class GameSystemUpdater
 {
 private:
-	float lastChecked = 0.0f;
-	float elapsedTime = 0.0f;
+    float lastChecked = 0.0f;
+    float elapsedTime = 0.0f;
 
-	uptr<RequestControllerContainer> reqControllerContainer;
-	uptr<OperationProcessController> operationProcessController;
+    uptr<RequestControllerContainer> reqControllerContainer;
+    uptr<OperationProcessController> operationProcessController;
 
 public:
-
-	GameSystemUpdater(sptr<GameSystem> gameSystem, sptr<DataSystem> dataSystem);
-	void UpdateEachScene(float deltaTime, sptr<Scene>& scene, vector<sptr<Player>>& playersInScene);
-	void UpdateEachPlayer(float deltaTime, sptr<Scene>& scene, sptr<Player>& player);
-	void UpdateEachNPC(float deltaTime, sptr<Scene>& scene, sptr<NPC>& npc);
+    GameSystemUpdater(sptr<GameSystem> gameSystem, sptr<DataSystem> dataSystem);
+    void UpdateEachScene(float deltaTime, sptr<Scene>& scene);
+    void UpdateEachPlayer(float deltaTime, sptr<Scene>& scene, sptr<Player>& player);
+    void UpdateEachNPC(float deltaTime, sptr<Scene>& scene, sptr<NPC>& npc);
 
 private:
-	void ProcessRequestQueue(sptr<Scene>& scene);
-	void SendNPCSpawnedToPlayer(sptr<NPC>& npc, vector<sptr<Player>>& players);
+    void ProcessRequestQueue(sptr<Scene>& scene);
+    void SendNPCSpawnedToPlayer(sptr<Scene>& scene, vector<sptr<NPC>>& vecNpc);
 
-	void SyncPlayerPosition(vector<sptr<Player>>& players);
-	void SyncNPCPosition(vector<sptr<Player>>& players, vector<sptr<TransformEntity>> npcs);
-	void SyncProjectilePosition(vector<sptr<Player>>& players, vector<sptr<TransformEntity>> npcs);
-	Packet BuildPositionUpdatePacket(sptr<TransformEntity> transform);
+    void SyncPlayerPosition(vector<sptr<Player>>& players);
+    void SyncNPCPosition(vector<sptr<Player>>& players, vector<sptr<TransformEntity>> npcs);
+    void SyncProjectilePosition(vector<sptr<Player>>& players, vector<sptr<TransformEntity>> npcs);
+    sptr<Packet> BuildPositionUpdatePacket(sptr<TransformEntity> transform);
 };

@@ -180,6 +180,7 @@
     <ClCompile Include="ProxyManager.cpp" />
     <ClCompile Include="RecvBuffer.cpp" />
     <ClCompile Include="SendBuffer.cpp" />
+    <ClCompile Include="SendBufferQueue.cpp" />
     <ClCompile Include="ServerCoreLibrary.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="SharedMutexGuard.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="ProxyManager.h" />
     <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="SendBuffer.h" />
+    <ClInclude Include="SendBufferQueue.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="SharedMutexGuard.h" />
     <ClInclude Include="SocketUtils.h" />

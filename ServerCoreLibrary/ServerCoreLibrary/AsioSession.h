@@ -3,6 +3,8 @@
 #include <asio/ip/tcp.hpp>
 #include "SendBuffer.h"
 #include "RecvBuffer.h"
+#include "SendBufferQueue.h"
+#include "Buffer.h"
 
 using asio::ip::tcp;
 using std::move;
@@ -19,6 +21,8 @@ public:
 public:
 	void Start() { DoRead(); }
 	void Send(BYTE* byteBuffer, uint32 size);
+	void Send(std::shared_ptr<Buffer> buffer);
+	void RegisterSend();
 	void Connect(string address, int port);
 
 	void SetOnRecvCallback(function<void(std::shared_ptr<AsioSession>, BYTE*, int32)> callback)
@@ -35,6 +39,9 @@ private:
 	function<void(std::shared_ptr<AsioSession>, BYTE*, int32)> OnRecvCallback;
 	function<void(std::shared_ptr<AsioSession>, std::error_code err)> OnDisconnectCallback;
 	function<void(std::shared_ptr<AsioSession>)> OnConnectCallback;
+
+	SendBufferQueue sendBufferQueue;
+	Atomic<bool> atomicIsSending;
 
 	void DoRead();
 	int  OnRecv(BYTE* buffer, int len);

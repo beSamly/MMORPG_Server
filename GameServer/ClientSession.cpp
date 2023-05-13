@@ -13,8 +13,18 @@ ClientSession::~ClientSession()
 	spdlog::debug("[ClientSession] deconstructed");
 }
 
-void ClientSession::Send(Packet& packet)
+void ClientSession::Send(sptr<Packet>& packet)
 {
-	AsioSession::Send(packet.GetByteBuffer(), packet.GetSize());
+	//version 1
+	//AsioSession::Send(packet.GetByteBuffer(), packet.GetSize());
+
+	 AsioSession::Send(packet->GetBuffer());
 }
 
+void ClientSession::Send(Packet& packet)
+{
+    // version 1
+    // AsioSession::Send(packet.GetByteBuffer(), packet.GetSize());
+
+    AsioSession::Send(packet.GetBuffer());
+}

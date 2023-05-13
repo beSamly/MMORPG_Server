@@ -16,9 +16,3 @@ Buffer::~Buffer()
 {
 	delete _buffer;
 }
-
-void Buffer::Close(uint32 writeSize)
-{
-	ASSERT_CRASH(_allocSize >= writeSize);
-	_writeSize = writeSize;
-}

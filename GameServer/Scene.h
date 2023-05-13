@@ -33,7 +33,11 @@ public:
     void PushRequest(sptr<Request> request);
     queue<sptr<Request>> FlushQueue();
 
-    std::set<int> GetPlayerIdsInScene() { return setPlayerId; }
-    void AddPlayerId(int playerId) { setPlayerId.insert(playerId); }
+    /*std::set<int> GetPlayerIdsInScene() { return setPlayerId; }
+    void AddPlayerId(int playerId) { setPlayerId.insert(playerId); }*/
+
+    void AddPlayer(sptr<Player>& player) { mapPlayer[player->playerId] = player; }
+    void RemovePlayer(int playerId) { mapPlayer.erase(playerId); }
+    vector<sptr<Player>> GetAllPlayer();
     void Broadcast(Packet& packet);
 };

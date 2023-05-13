@@ -19,4 +19,5 @@ public:
 
 private:
 	int Process_LOGIN_REQ(sptr<Request>& request);
+    int Process_CLIENT_DISCONNECTED(sptr<Request>& request);
 };

@@ -17,7 +17,6 @@ private:
 	sptr<DataSystem> dataSystem;
 	sptr<GameSystem> gameSystem;
 	sptr<SocketServer> socketServer;
-	uptr<ClientManager> clientManager;
 
 private:
 	void OnClientAccept(sptr<AsioSession> client);

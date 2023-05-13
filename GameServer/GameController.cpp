@@ -12,10 +12,9 @@
 
 GameController::GameController(sptr<GameSystem> paramGameSystem) : gameSystem(paramGameSystem)
 {
-
 	AddProcessFunc(REQ_ID_GAME::MOVE_REQ, TO_REQUEST_PROCESS_FUNC(Process_MOVE_REQ));
 	AddProcessFunc(REQ_ID_GAME::ENTER_SCENE_REQ, TO_REQUEST_PROCESS_FUNC(Process_ENTER_SCENE_REQ));
-	AddProcessFunc(REQ_ID_GAME::USE_SKILL_REQ, TO_REQUEST_PROCESS_FUNC(Process_ENTER_SCENE_REQ));
+	AddProcessFunc(REQ_ID_GAME::USE_SKILL_REQ, TO_REQUEST_PROCESS_FUNC(Process_USE_SKILL_REQ));
 }
 
 int GameController::Process_MOVE_REQ(sptr<Request>& request)
@@ -169,15 +168,13 @@ int GameController::Process_ENTER_SCENE_REQ(sptr<Request>& request)
 			return RES_CODE::CODE_SCENE_NOT_FOUND;
 		}
 
-		gameSystem->playerManager->AddPlayer(player);
-		scene->AddPlayerId(player->playerId);
-
 		//기둥 충돌 테스트
 		float x = 414.779f;
 		float y = 113.919f;
 		float z = 143.360f;
 
 		player->SetPosition(Vector3(x, y, z));
+		scene->AddPlayer(player);
 
 		//씬에 접속 완료했다면 클라에게 보내준다
 		Protocol::ENTER_SCENE_RES pkt;
