@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameServer", "GameServer.vcxproj", "{37CE08DB-EB46-47BD-856F-A615DD296C0F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhysicsEngine", "..\PhysicsEngine\PhysicsEngine.vcxproj", "{6B22E5E5-3355-46B1-8E3E-E4C707BF8D04}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerCoreLibrary", "..\ServerCoreLibrary\ServerCoreLibrary\ServerCoreLibrary.vcxproj", "{CDAC0CFD-32A4-4045-83FD-02FC4717B3D8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharedPacket", "..\SharedPacket\SharedPacket\SharedPacket.vcxproj", "{BC9AE417-9C9A-4975-A51F-1B3CF8E35F7C}"
@@ -27,14 +25,6 @@ Global
 		{37CE08DB-EB46-47BD-856F-A615DD296C0F}.Release|x64.Build.0 = Release|x64
 		{37CE08DB-EB46-47BD-856F-A615DD296C0F}.Release|x86.ActiveCfg = Release|Win32
 		{37CE08DB-EB46-47BD-856F-A615DD296C0F}.Release|x86.Build.0 = Release|Win32
-		{6B22E5E5-3355-46B1-8E3E-E4C707BF8D04}.Debug|x64.ActiveCfg = Debug|x64
-		{6B22E5E5-3355-46B1-8E3E-E4C707BF8D04}.Debug|x64.Build.0 = Debug|x64
-		{6B22E5E5-3355-46B1-8E3E-E4C707BF8D04}.Debug|x86.ActiveCfg = Debug|Win32
-		{6B22E5E5-3355-46B1-8E3E-E4C707BF8D04}.Debug|x86.Build.0 = Debug|Win32
-		{6B22E5E5-3355-46B1-8E3E-E4C707BF8D04}.Release|x64.ActiveCfg = Release|x64
-		{6B22E5E5-3355-46B1-8E3E-E4C707BF8D04}.Release|x64.Build.0 = Release|x64
-		{6B22E5E5-3355-46B1-8E3E-E4C707BF8D04}.Release|x86.ActiveCfg = Release|Win32
-		{6B22E5E5-3355-46B1-8E3E-E4C707BF8D04}.Release|x86.Build.0 = Release|Win32
 		{CDAC0CFD-32A4-4045-83FD-02FC4717B3D8}.Debug|x64.ActiveCfg = Debug|x64
 		{CDAC0CFD-32A4-4045-83FD-02FC4717B3D8}.Debug|x64.Build.0 = Debug|x64
 		{CDAC0CFD-32A4-4045-83FD-02FC4717B3D8}.Debug|x86.ActiveCfg = Debug|Win32

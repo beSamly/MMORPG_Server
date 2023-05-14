@@ -144,6 +144,7 @@ void GameSystemUpdater::UpdateEachNPC(float deltaTime, sptr<Scene>& scene, sptr<
 
     Vector3 currentPosition = npc->GetPosition();
     Vector3 newPosition = scene->navigationMeshAgent->ResolveCollision(currentPosition, npc->GetRadius());
+    npc->SetPosition(newPosition);
     //npc->SetPosition(newPosition);
 }
 

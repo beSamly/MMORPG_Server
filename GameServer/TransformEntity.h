@@ -1,5 +1,5 @@
 #pragma once
-#include <PhysicsEngine.h>
+#include "PhysicsEngine.h"
 
 using PhysicsEngine::Vector3;
 
@@ -21,10 +21,12 @@ private:
 public:
     TransformEntity(){};
     Vector3 GetPosition();
-    void SetPosition(Vector3 newPositoin)
+    void SetPosition(Vector3& newPositoin)
     {
         position = newPositoin;
     };
+
+    void SetPosition(Vector3&& newPositoin) { position = newPositoin; };
     void AddPosition(Vector3 addPositoin) { position += addPositoin; };
     float GetRadius() { return radius; }
     void Update(float deltaTime);

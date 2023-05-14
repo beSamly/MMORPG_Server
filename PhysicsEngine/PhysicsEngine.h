@@ -526,60 +526,63 @@ namespace PhysicsEngine
         // DotProductType 별로 가장 정확한 정보들만 처리
         Vector3 ResolveCollision(Vector3 position, float radius, bool ignoreSlope = true)
         {
-            if (!mapMesh.count("Terrain"))
+            // HISTORY - map에서 Terrain 데이터가 있는지 없는지는 서버 구동 시 혹은 json 데이터 읽은 후 체크하도록.
+            // ResolveCollision 함수 내에서는 프레임 확보를 위해 최대한 적은 일을 해야한다.
+            /*if (!mapMesh.count("Terrain"))
             {
                 return position;
-            }
+            }*/
 
             int row = (int)(position.z / GRID_SIZE);
             int column = (int)(position.x / GRID_SIZE);
             string gridIndex = std::to_string(row) + "_" + std::to_string(column);
 
-            if (!mapGridInfo.count(gridIndex))
+            /*if (!mapGridInfo.count(gridIndex))
             {
                 std::cout << "[PhysicsEngine] gridIndex not found - " << gridIndex << std::endl;
                 return position;
             }
 
-            sptr<GridInfo> gridInfo = mapGridInfo[gridIndex];
+            sptr<GridInfo> gridInfo = mapGridInfo[gridIndex];*/
             vector<CollisionInfo> vecTotalCollisionInfo;
 
-            for (AdjacentMeshInfo& adjacentMeshInfo : gridInfo->vecAdjacentMeshInfo)
-            {
-                string meshName = adjacentMeshInfo.meshName;
-                sptr<Mesh> mesh = mapMesh[meshName];
+            //for (AdjacentMeshInfo& adjacentMeshInfo : gridInfo->vecAdjacentMeshInfo)
+            //{
+            //    string meshName = adjacentMeshInfo.meshName;
+            //    sptr<Mesh> mesh = mapMesh[meshName];
 
-                bool isTerrain = meshName.find("Terrain") != std::string::npos ? true : false;
-                if (isTerrain)
-                {
-                    // mesh, adjacentTriangleInfo, position, radius
+            //    bool isTerrain = meshName.find("Terrain") != std::string::npos ? true : false;
+            //    if (isTerrain)
+            //    {
+            //        // mesh, adjacentTriangleInfo, position, radius
 
-                    CollisionInfo terrainCollisionInfo = GetBestCollisionInfo_From_Terrain(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
+            //        CollisionInfo terrainCollisionInfo = GetBestCollisionInfo_From_Terrain(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
 
-                    if (terrainCollisionInfo.IsCollided())
-                    {
-                        vecTotalCollisionInfo.push_back(terrainCollisionInfo);
-                    }
-                }
-                else
-                {
-                    vector<CollisionInfo> vecCollisionInfo = GetBestCollisionInfo_From_Object(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
+            //        if (terrainCollisionInfo.IsCollided())
+            //        {
+            //            vecTotalCollisionInfo.push_back(terrainCollisionInfo);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        vector<CollisionInfo> vecCollisionInfo = GetBestCollisionInfo_From_Object(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
 
-                    for (CollisionInfo& collisionInfo : vecCollisionInfo)
-                    {
-                        vecTotalCollisionInfo.push_back(collisionInfo);
-                    }
-                }
-            }
+            //        for (CollisionInfo& collisionInfo : vecCollisionInfo)
+            //        {
+            //            vecTotalCollisionInfo.push_back(collisionInfo);
+            //        }
+            //    }
+            //}
 
             Vector3 addPosition;
 
-            for (CollisionInfo& collisionInfo : vecTotalCollisionInfo)
+            /*for (CollisionInfo& collisionInfo : vecTotalCollisionInfo)
             {
                 addPosition = addPosition + (collisionInfo.penetrationNormal * collisionInfo.penetrationDepth);
-            }
+            }*/
 
             return position + addPosition;
+            //return position;
         }
 
         // Terrain 과의 가장 정확한 충돌 정보 중 가장 정확한 정보 단 1개 리턴한다.
@@ -587,7 +590,7 @@ namespace PhysicsEngine
         CollisionInfo GetBestCollisionInfo_From_Terrain(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, Vector3& position, float radius)
         {
             vector<CollisionInfo> vecCollisionInfo;
-            for (int triangleIndex : triangleIndicesToCheck)
+            for (int& triangleIndex : triangleIndicesToCheck)
             {
                 sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
 

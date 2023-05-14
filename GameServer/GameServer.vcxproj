@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)..\SharedPacket\Library\Include;$(SolutionDir)..\Library\nlohmann_library;$(SolutionDir)..\SharedPacket\SharedPacket;$(SolutionDir)..\SharedPacket\SharedPacket\Protobuf;$(SolutionDir)..\Library\;$(SolutionDir)..\PhysicsEngine;$(SolutionDir)..\ServerCoreLibrary\ServerCoreLibrary;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\SharedPacket\Library\Include;$(SolutionDir)..\Library\nlohmann_library;$(SolutionDir)..\SharedPacket\SharedPacket;$(SolutionDir)..\SharedPacket\SharedPacket\Protobuf;$(SolutionDir)..\Library\;$(SolutionDir)..\ServerCoreLibrary\ServerCoreLibrary;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\Library\;$(SolutionDir)..\SharedPacket\Library\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -140,6 +140,7 @@
     <ClInclude Include="JsonDataManager.h" />
     <ClInclude Include="OperationProcessController.h" />
     <ClInclude Include="OperationType.h" />
+    <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileInfo.h" />
     <ClInclude Include="ProjectileInfoManager.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AuthController.cpp" />
+    <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ProjectileInfoManager.cpp" />
     <ClCompile Include="RequestControllerContainer.cpp" />
