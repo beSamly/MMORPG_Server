@@ -133,9 +133,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NavigationMeshAgentManager.cpp" />
+    <ClCompile Include="simdjson.cpp" />
+    <ClCompile Include="TestApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LibraryHeader.h" />
+    <ClInclude Include="NavigationMeshAgentManager.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="simdjson.h" />
+    <ClInclude Include="TestApp.h" />
+    <ClInclude Include="TimeUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

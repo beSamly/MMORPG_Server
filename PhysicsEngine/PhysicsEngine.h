@@ -559,20 +559,20 @@ namespace PhysicsEngine
 				{
 					// mesh, adjacentTriangleInfo, position, radius
 
-					//CollisionInfo terrainCollisionInfo = GetBestCollisionInfo_From_Terrain(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
-					/*if (terrainCollisionInfo.IsCollided())
+					CollisionInfo terrainCollisionInfo = GetBestCollisionInfo_From_Terrain(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
+					if (terrainCollisionInfo.IsCollided())
 					{
 						vecTotalCollisionInfo.push_back(terrainCollisionInfo);
-					}*/
+					}
 				}
 				else
 				{
-					/*vector<CollisionInfo> vecCollisionInfo = GetBestCollisionInfo_From_Object(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
+					vector<CollisionInfo> vecCollisionInfo = GetBestCollisionInfo_From_Object(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
 
 					for (CollisionInfo& collisionInfo : vecCollisionInfo)
 					{
 						vecTotalCollisionInfo.push_back(collisionInfo);
-					}*/
+					}
 				}
 			}
 
