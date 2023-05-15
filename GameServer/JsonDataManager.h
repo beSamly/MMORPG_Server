@@ -21,7 +21,8 @@ protected:
 		string file_path = GetFilePath();
 		auto error = parser.load(file_path).get(data);
 		if (error) {
-			LOG_ERROR(file_path + " Failed to parse");
+			LOG_ERROR("Failed to parse " + file_path);
+			assert(false);
 		};
 	}
 };

@@ -102,9 +102,6 @@
     <Filter Include="Source Files\GameSystem\Type">
       <UniqueIdentifier>{7aa671e4-9b05-450b-8be4-41f780cb7ad7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\PhysicsEngine">
-      <UniqueIdentifier>{97c87a2a-3f0c-48ec-b2cb-90910f541abf}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -310,9 +307,6 @@
     <ClInclude Include="JsonDataManager.h">
       <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsEngine.h">
-      <Filter>Source Files\PhysicsEngine</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -464,9 +458,6 @@
     </ClCompile>
     <ClCompile Include="SkillFactory.cpp">
       <Filter>Source Files\DataSystem\Factory</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsEngine.cpp">
-      <Filter>Source Files\PhysicsEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

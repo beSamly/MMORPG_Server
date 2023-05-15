@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{37ce08db-eb46-47bd-856f-a615dd296c0f}</ProjectGuid>
-    <RootNamespace>GameServer</RootNamespace>
+    <ProjectGuid>{59f51f1c-e05c-4bc2-8857-f6b70aa86653}</ProjectGuid>
+    <RootNamespace>PhysicsEngineTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)..\PhysicsEngine;$(SolutionDir)..\SharedPacket\Library\Include;$(SolutionDir)..\Library\nlohmann_library;$(SolutionDir)..\SharedPacket\SharedPacket;$(SolutionDir)..\SharedPacket\SharedPacket\Protobuf;$(SolutionDir)..\Library\;$(SolutionDir)..\ServerCoreLibrary\ServerCoreLibrary;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\Library\;$(SolutionDir)..\SharedPacket\Library\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\Library\;$(SolutionDir)..\PhysicsEngine\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\Library\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -80,7 +80,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,137 +132,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BaseStatInfo.h" />
-    <ClInclude Include="BaseStatManager.h" />
-    <ClInclude Include="ClientManager.h" />
-    <ClInclude Include="ClientSession.h" />
-    <ClInclude Include="JsonDataManager.h" />
-    <ClInclude Include="OperationProcessController.h" />
-    <ClInclude Include="OperationType.h" />
-    <ClInclude Include="Projectile.h" />
-    <ClInclude Include="ProjectileInfo.h" />
-    <ClInclude Include="ProjectileInfoManager.h" />
-    <ClInclude Include="SkillFactory.h" />
-    <ClInclude Include="SkillInfo.h" />
-    <ClInclude Include="TimeUtil.h" />
-    <ClInclude Include="GameSystemConstant.h" />
-    <ClInclude Include="GameSystemReq.h" />
-    <ClInclude Include="Data.h" />
-    <ClInclude Include="DataSystem.h" />
-    <ClInclude Include="GameSystem.h" />
-    <ClInclude Include="CommandProcessCommon.h" />
-    <ClInclude Include="GameSystemUpdater.h" />
-    <ClInclude Include="ILogger.h" />
-    <ClInclude Include="IRequestController.h" />
-    <ClInclude Include="InputController.h" />
-    <ClInclude Include="IOperation.h" />
-    <ClInclude Include="NPC.h" />
-    <ClInclude Include="NPCInfo.h" />
-    <ClInclude Include="NPCInfoManager.h" />
-    <ClInclude Include="NPCManager.h" />
-    <ClInclude Include="PatrolController.h" />
-    <ClInclude Include="Request.h" />
-    <ClInclude Include="GameController.h" />
-    <ClInclude Include="LibraryHeader.h" />
-    <ClInclude Include="Logger.h" />
-    <ClInclude Include="AuthController.h" />
-    <ClInclude Include="LogMacro.h" />
-    <ClInclude Include="RequestControllerContainer.h" />
-    <ClInclude Include="NetworkSystem.h" />
-    <ClInclude Include="Operation.h" />
-    <ClInclude Include="OperationCondition.h" />
-    <ClInclude Include="OperationConditionHandler.h" />
-    <ClInclude Include="OperationController.h" />
-    <ClInclude Include="OperationHandler.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="PhysicalDamage.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerManager.h" />
-    <ClInclude Include="ProjectileManager.h" />
-    <ClInclude Include="RequestValidator.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="NavigationMeshAgentManager.h" />
-    <ClInclude Include="SceneInfo.h" />
-    <ClInclude Include="SceneInfoManager.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="ServerApp.h" />
-    <ClInclude Include="simdjson.h" />
-    <ClInclude Include="Skill.h" />
-    <ClInclude Include="SkillController.h" />
-    <ClInclude Include="SkillInfoManager.h" />
-    <ClInclude Include="SocketServer.h" />
-    <ClInclude Include="SpawnInfo.h" />
-    <ClInclude Include="SpawnInfoManager.h" />
-    <ClInclude Include="SpawnManager.h" />
-    <ClInclude Include="StatController.h" />
-    <ClInclude Include="StateController.h" />
-    <ClInclude Include="StatModifier.h" />
-    <ClInclude Include="StatType.h" />
-    <ClInclude Include="ThreadSystem.h" />
-    <ClInclude Include="TLS.h" />
-    <ClInclude Include="TransformEntity.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="BaseStatManager.cpp" />
-    <ClCompile Include="ClientManager.cpp" />
-    <ClCompile Include="ClientSession.cpp" />
-    <ClCompile Include="Data.cpp" />
-    <ClCompile Include="DataSystem.cpp" />
-    <ClCompile Include="GameSystem.cpp" />
-    <ClCompile Include="GameSystemUpdater.cpp" />
-    <ClCompile Include="InputController.cpp" />
-    <ClCompile Include="IOperation.cpp" />
-    <ClCompile Include="NPC.cpp" />
-    <ClCompile Include="NPCInfoManager.cpp" />
-    <ClCompile Include="NPCManager.cpp" />
-    <ClCompile Include="OperationProcessController.cpp" />
-    <ClCompile Include="PatrolController.cpp" />
-    <ClCompile Include="GameController.cpp" />
-    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="AuthController.cpp" />
-    <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="ProjectileInfoManager.cpp" />
-    <ClCompile Include="RequestControllerContainer.cpp" />
-    <ClCompile Include="NetworkSystem.cpp" />
-    <ClCompile Include="Operation.cpp" />
-    <ClCompile Include="OperationCondition.cpp" />
-    <ClCompile Include="OperationConditionHandler.cpp" />
-    <ClCompile Include="OperationController.cpp" />
-    <ClCompile Include="OperationHandler.cpp" />
-    <ClCompile Include="PhysicalDamage.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerManager.cpp" />
-    <ClCompile Include="ProjectileManager.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="NavigationMeshAgentManager.cpp" />
-    <ClCompile Include="SceneInfoManager.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="ServerApp.cpp" />
-    <ClCompile Include="simdjson.cpp" />
-    <ClCompile Include="Skill.cpp" />
-    <ClCompile Include="SkillController.cpp" />
-    <ClCompile Include="SkillFactory.cpp" />
-    <ClCompile Include="SkillInfoManager.cpp" />
-    <ClCompile Include="SocketServer.cpp" />
-    <ClCompile Include="SpawnInfoManager.cpp" />
-    <ClCompile Include="SpawnManager.cpp" />
-    <ClCompile Include="StatController.cpp" />
-    <ClCompile Include="StateController.cpp" />
-    <ClCompile Include="StatModifier.cpp" />
-    <ClCompile Include="ThreadSystem.cpp" />
-    <ClCompile Include="TLS.cpp" />
-    <ClCompile Include="TransformEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".clang-format" />
-    <None Include="json\BaseStatInfo.json" />
-    <None Include="json\CharacterInfo.json" />
-    <None Include="json\NPCInfo.json" />
-    <None Include="json\ProjectileInfo.json" />
-    <None Include="json\SceneInfo.json" />
-    <None Include="json\SpawnInfo.json" />
-    <None Include="json\SkillInfo.json" />
+    <ClInclude Include="LibraryHeader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
