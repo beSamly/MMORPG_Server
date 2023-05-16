@@ -17,7 +17,7 @@ public:
 	TestApp();
 	void Init();
 	void Start();
-	void Once();
+	void DoResolveCollision();
 	void TestInitIntManyTime();
 	void TestInitVectorManyTime();
 	void TestInitVector3ManyTime();

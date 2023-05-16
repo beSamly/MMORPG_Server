@@ -173,8 +173,9 @@ namespace PhysicsEngine
 	public:
 		CollisionInfo() {};
 
-		string fromMeshName;
-		sptr<Triangle> fromTriangle;
+		// HISTORY - 아래 두 필드는 Unity에서 테스트 위해서 생성한 필드로 퍼포먼스 저하를 유발할 수 있다
+		//string fromMeshName;
+		//sptr<Triangle> fromTriangle;
 		Vector3 penetrationNormal;
 		float penetrationDepth = 0.0f;
 
@@ -217,17 +218,11 @@ namespace PhysicsEngine
 
 		static CollisionInfo CheckCollision_BetweenTriangleSphere(sptr<Triangle>& triangle, Vector3& target, float radius)
 		{
+			static CollisionInfo defaultCollisionInfo;
+
 			Vector3& first = triangle->vertices[0];
 			Vector3& second = triangle->vertices[1];
 			Vector3& third = triangle->vertices[2];
-
-			// DEBUG!!
-			{
-				if (triangle->name == "Ramp_Mesh_Triangle(96)")
-				{
-					string DEBUG_POINT = " DEBUG";
-				}
-			}
 
 			/*----------------------------------------------------------------------------------------
 							아래 함수 호출을 주석친 이유는 굳이 Seperating Axe 검사를 하지
@@ -240,7 +235,7 @@ namespace PhysicsEngine
 			// 상태이다.
 			if (FindSeperatingAxe_BetweenTriangleSphere(triangle->vertices, target, radius))
 			{
-				return CollisionInfo();
+				return defaultCollisionInfo;
 			}
 
 			//역방향 충돌 모두 제거 - 벽 같은 경우는 플레이어가 벽을 뚫고 지나가려고
@@ -250,7 +245,7 @@ namespace PhysicsEngine
 			// 처리.
 			if (IsTargetLocatedOppositeSideFromTriangleNormal(triangle->GetCrossProduct(), first, target))
 			{
-				return CollisionInfo();
+				return defaultCollisionInfo;
 			}
 
 			if (IsPointInTriangle(first, second, third, target))
@@ -281,7 +276,7 @@ namespace PhysicsEngine
 			}
 
 			// 충돌 안 한 경우
-			return CollisionInfo();
+			return defaultCollisionInfo;
 		}
 
 		static bool IsCollidedFromSlope(CollisionInfo& collisionInfo)
@@ -331,8 +326,8 @@ namespace PhysicsEngine
 				CollisionInfo resolved;
 				resolved.penetrationDepth = abs(newDepth);
 				resolved.penetrationNormal = Vector3(0.0f, 1.0f, 0.0f);
-				resolved.fromMeshName = collisionInfo.fromMeshName;
-				resolved.fromTriangle = collisionInfo.fromTriangle;
+				/*resolved.fromMeshName = collisionInfo.fromMeshName;
+				resolved.fromTriangle = collisionInfo.fromTriangle;*/
 
 				// 어떻게 빗변의 크기보다 클 수 있지...?
 				// newDepth 는 빗변의 길이이므로 삼각형의 그 어떠한 line의 길이도 빗변보다
@@ -539,8 +534,8 @@ namespace PhysicsEngine
 			// string gridIndex = std::to_string(row) + "_" + std::to_string(column); // 이 함수 퍼포먼스가 너무 안 좋아서 일단 static string gridIndex로 대체하고 물리엔진 성능 테스트 하자
 			static string gridIndex = "47_140";
 
-			// auto iter = mapGridInfo.find(gridIndex); // mapGridInfo에 2만 개의 데이터가 있어서 느린듯... 일단 static으로 대체해놓고 나머지 성능 테스트
-			static auto iter = mapGridInfo.find(gridIndex);
+			auto iter = mapGridInfo.find(gridIndex); // mapGridInfo에 2만 개의 데이터가 있어서 느린듯... 일단 static으로 대체해놓고 나머지 성능 테스트
+			//static auto iter = mapGridInfo.find(gridIndex);
 			if (iter == mapGridInfo.end())
 			{
 				std::cout << "[PhysicsEngine] gridIndex not found - " << gridIndex << std::endl;
@@ -558,7 +553,6 @@ namespace PhysicsEngine
 				if (isTerrain)
 				{
 					// mesh, adjacentTriangleInfo, position, radius
-
 					CollisionInfo terrainCollisionInfo = GetBestCollisionInfo_From_Terrain(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
 					if (terrainCollisionInfo.IsCollided())
 					{
@@ -578,82 +572,66 @@ namespace PhysicsEngine
 
 			Vector3 addPosition;
 
-			/*for (CollisionInfo& collisionInfo : vecTotalCollisionInfo)
+			for (CollisionInfo& collisionInfo : vecTotalCollisionInfo)
 			{
 				addPosition = addPosition + (collisionInfo.penetrationNormal * collisionInfo.penetrationDepth);
-			}*/
+			}
 
 			vecTotalCollisionInfo.clear();
 
 			return position + addPosition;
-			// return position;
 		}
 
 		// Terrain 과의 가장 정확한 충돌 정보 중 가장 정확한 정보 단 1개 리턴한다.
 	private:
 		CollisionInfo GetBestCollisionInfo_From_Terrain(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, Vector3& position, float radius)
 		{
+			static vector<CollisionInfo> vecCollisionInfo;
+			static  CollisionInfo defaultCollisionInfo;
+			vecCollisionInfo.clear();
 
-			return CollisionInfo();
+			// [TEST] triangleIndicesToCheck 전체를 돌지 말고 1개만 돌고 퍼포먼스 테스트 해보자
+			for (int& triangleIndex : triangleIndicesToCheck)
+			{
+				sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
 
-			//vector<CollisionInfo> vecCollisionInfo;
+				CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
+				//CollisionInfo collisionInfo;
+				if (collisionInfo.IsCollided())
+				{
+					/*collisionInfo.fromMeshName = mesh->name;
+					collisionInfo.fromTriangle = triangle;*/
 
-			//// [TEST] triangleIndicesToCheck 전체를 돌지 말고 1개만 돌고 퍼포먼스 테스트 해보자
-			///*for (int& triangleIndex : triangleIndicesToCheck)
-			//{
-			//    sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
+					vecCollisionInfo.push_back(collisionInfo);
+				}
+			}
 
-			//    CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
-			//    if (collisionInfo.IsCollided())
-			//    {
-			//        collisionInfo.fromMeshName = mesh->name;
-			//        collisionInfo.fromTriangle = triangle;
+			if (vecCollisionInfo.size() == 0)
+			{
+				return defaultCollisionInfo;
+			}
 
-			//        vecCollisionInfo.push_back(collisionInfo);
-			//    }
-			//}*/
+			static float maxPenetraion = (std::numeric_limits<float>::min)();
+			CollisionInfo finalCollisionInfo; // 가장 정확한 충돌 정보
 
-			////[TEST] triangleIndicesToCheck 전체를 돌지 말고 1개만 돌고 퍼포먼스 테스트 해보자
-			//{
-			//    int& triangleIndex = triangleIndicesToCheck[0];
-			//    sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
+			// 가장 정확한 충돌은 penetrationDepth 가 가장 큰 충돌이다.
+			for (CollisionInfo& collisionInfo : vecCollisionInfo)
+			{
+				if (maxPenetraion < collisionInfo.penetrationDepth)
+				{
+					maxPenetraion = collisionInfo.penetrationDepth;
+					finalCollisionInfo = collisionInfo;
+				}
+			}
 
-			//    /*CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
-			//    if (collisionInfo.IsCollided())
-			//    {
-			//        collisionInfo.fromMeshName = mesh->name;
-			//        collisionInfo.fromTriangle = triangle;
+			// 경사의 미끄러짐을 방지한다면 충돌이 경사로에서 발생했는지 체크 후 resolve
+			// 해준다
+			if (CollisionTestUtil::IsCollidedFromSlope(finalCollisionInfo))
+			{
+				finalCollisionInfo = CollisionTestUtil::ResolveSlope(finalCollisionInfo);
+			}
 
-			//        vecCollisionInfo.push_back(collisionInfo);
-			//    }*/
-			//}
-			//
-			//if (vecCollisionInfo.size() == 0)
-			//{
-			//    return CollisionInfo();
-			//}
-
-			//float maxPenetraion = (std::numeric_limits<float>::min)();
-			//CollisionInfo finalCollisionInfo; // 가장 정확한 충돌 정보
-
-			//// 가장 정확한 충돌은 penetrationDepth 가 가장 큰 충돌이다.
-			//for (CollisionInfo& collisionInfo : vecCollisionInfo)
-			//{
-			//    if (maxPenetraion < collisionInfo.penetrationDepth)
-			//    {
-			//        maxPenetraion = collisionInfo.penetrationDepth;
-			//        finalCollisionInfo = collisionInfo;
-			//    }
-			//}
-
-			//// 경사의 미끄러짐을 방지한다면 충돌이 경사로에서 발생했는지 체크 후 resolve
-			//// 해준다
-			//if (CollisionTestUtil::IsCollidedFromSlope(finalCollisionInfo))
-			//{
-			//    finalCollisionInfo = CollisionTestUtil::ResolveSlope(finalCollisionInfo);
-			//}
-
-			//return finalCollisionInfo;
+			return finalCollisionInfo;
 		}
 
 		// Object 와의 충돌한 정보 중 DotProductType 별로 가장 정확한 충돌 정보를
@@ -675,8 +653,8 @@ namespace PhysicsEngine
 				CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
 				if (collisionInfo.IsCollided())
 				{
-					collisionInfo.fromMeshName = mesh->name;
-					collisionInfo.fromTriangle = triangle;
+					/*collisionInfo.fromMeshName = mesh->name;
+					collisionInfo.fromTriangle = triangle;*/
 
 					// 여기서 2가지 방법의 장단점이 있다.
 					// 방법 1 : 충돌한 Normal 방향들 중 비슷한 방향들을 그룹으로 묶은 뒤

@@ -24,6 +24,14 @@ public:
 		steady_clock::time_point t1 = GetNow();
 		func();
 		float elpasedInSec = GetElapsedInMiilliSec(t1);
-		spdlog::info("{} elasepd MilliSecond for {}", elpasedInSec, prefix);
+		spdlog::info("{} elasepd ms for {}", elpasedInSec, prefix);
+	}
+
+	static void LogElapsedTimeMicroSec(string prefix, function<void()> func)
+	{
+		steady_clock::time_point t1 = GetNow();
+		func();
+		float mcs = GetElapsedInMicroSec(t1);
+		spdlog::info("{} elasepd micro sec for {}", mcs, prefix);
 	}
 }; // namespace TimeUtil
