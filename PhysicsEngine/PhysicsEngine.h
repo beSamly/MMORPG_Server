@@ -601,7 +601,6 @@ namespace PhysicsEngine
 				sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
 
 				CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
-				//CollisionInfo collisionInfo;
 				if (collisionInfo.IsCollided())
 				{
 					/*collisionInfo.fromMeshName = mesh->name;

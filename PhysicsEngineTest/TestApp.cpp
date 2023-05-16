@@ -68,20 +68,17 @@ void TestApp::Start()
 		현재는 0.013 ms 소요 -> 10배만 빨리지면 될 듯..
 	*/
 
-	// 5천 object 기준 30프레임을 도는데 걸리는 시간... 2초... 아직 부족
-	TimeUtil::LogElapsedTime("Calling DoResolveCollision() 10000 time",
+
+	TimeUtil::LogElapsedTime("Calling DoResolveCollision() 100000 time",
 		[&]()->void {
-			for (int j = 0; j < 30; j++)
+			for (int i = 0; i < 100000; i++)
 			{
-				for (int i = 0; i < 5000; i++)
-				{
-					DoResolveCollision();
-				}
+				DoResolveCollision();
 			}
 		}
 	);
 
-	TestPhysicsEngineFunc();
+	//TestPhysicsEngineFunc();
 }
 
 void TestApp::DoResolveCollision()
