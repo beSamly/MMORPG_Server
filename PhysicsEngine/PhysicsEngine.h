@@ -495,7 +495,6 @@ namespace PhysicsEngine
 	{
 	private:
 		int GRID_SIZE;
-		vector<CollisionInfo> vecTotalCollisionInfo;
 
 	public:
 		string sceneName;
@@ -545,6 +544,9 @@ namespace PhysicsEngine
 				std::cout << "[PhysicsEngine] gridIndex not found - " << gridIndex << std::endl;
 				return position;
 			}
+
+			static vector<CollisionInfo> vecTotalCollisionInfo;
+			vecTotalCollisionInfo.clear();
 
 			sptr<GridInfo>& gridInfo = iter->second;
 
@@ -614,7 +616,7 @@ namespace PhysicsEngine
 				return defaultCollisionInfo;
 			}
 
-			static float maxPenetraion = (std::numeric_limits<float>::min)();
+			float maxPenetraion = (std::numeric_limits<float>::min)();
 			CollisionInfo finalCollisionInfo; // 가장 정확한 충돌 정보
 
 			// 가장 정확한 충돌은 penetrationDepth 가 가장 큰 충돌이다.
