@@ -16,6 +16,9 @@ namespace PhysicsEngine
 {
 	const float PI = 3.1415926535897931;
 	const float Deg2Rad = PI / 180.0f;
+	const float FLOAT_MIN = (std::numeric_limits<float>::min)();
+	const float FLOAT_MAX = (std::numeric_limits<float>::max)();
+	const float EPSILON = std::numeric_limits<float>::epsilon();
 
 	class Vector3
 	{
@@ -85,10 +88,9 @@ namespace PhysicsEngine
 			return sqrtf(num * num + num2 * num2 + num3 * num3);
 		}
 
-		static Vector3 Project(Vector3 vector, Vector3 onNormal)
+		static Vector3 Project(Vector3& vector, Vector3& onNormal)
 		{
 			float num = DotProduct(onNormal, onNormal);
-			if (num < std::numeric_limits<float>::epsilon())
 			{
 				return Vector3(0.0f, 0.0f, 0.0f);
 			}
@@ -243,14 +245,16 @@ namespace PhysicsEngine
 			// History - Terrain이 엄청 촘촘하고 울퉁불퉁한 경우에는 플레이어가 방향키
 			// 이동을 했을 때 Normal의 반대방향으로 가서 땅이 뚫고 내려갈 수 있어서 주석
 			// 처리.
-			if (IsTargetLocatedOppositeSideFromTriangleNormal(triangle->GetCrossProduct(), first, target))
+			Vector3 cp = triangle->GetCrossProduct();
+			if (IsTargetLocatedOppositeSideFromTriangleNormal(cp, first, target))
 			{
 				return defaultCollisionInfo;
 			}
 
 			if (IsPointInTriangle(first, second, third, target))
 			{
-				float overlap = CalculateOverlap_BetweenPointSphere(triangle->GetCrossProduct(), first, target, radius);
+				Vector3 cp = triangle->GetCrossProduct();
+				float overlap = CalculateOverlap_BetweenPointSphere(cp, first, target, radius);
 				if (overlap > 0.0f)
 				{
 					CollisionInfo collisionInfo;
@@ -346,7 +350,7 @@ namespace PhysicsEngine
 		// Vector3 A와 B 를 projectTo(normal) 기준으로 overlap 계산을 하는데 정방향
 		// overlap인지 체크 normal -> A B가 정방향(forward) normal -> B A는
 		// 역방향(backward)
-		static float CalculateOverlap_BetweenPointSphere(const Vector3& projectTo, const Vector3& targetA, const Vector3& targetB, float radius)
+		static float CalculateOverlap_BetweenPointSphere(Vector3& projectTo, Vector3& targetA, Vector3& targetB, float radius)
 		{
 			// 설명
 			// crossProduct와 target 사이의 거리를 구한다
@@ -367,8 +371,8 @@ namespace PhysicsEngine
 			return radius - distanceBetween;
 		}
 
-	private:
-		static bool IsTargetLocatedOppositeSideFromTriangleNormal(const Vector3& normal, Vector3& targetA, Vector3& targetB)
+	public:
+		static bool IsTargetLocatedOppositeSideFromTriangleNormal(Vector3& normal, Vector3& targetA, Vector3& targetB)
 		{
 			float distanceToTargetA = Vector3::DotProduct(normal, targetA);
 			float distanceToTargetB = Vector3::DotProduct(normal, targetB);
@@ -382,8 +386,8 @@ namespace PhysicsEngine
 
 			for (int i = 0; i < 3; i++)
 			{
-				Vector3 A = t->vertices[i];
-				Vector3 B = t->vertices[(i + 1) % totalCount];
+				Vector3& A = t->vertices[i];
+				Vector3& B = t->vertices[(i + 1) % totalCount];
 				Vector3 normal = B - A; // vertex a => vertex b 까지의 방향 normal
 
 				// Normal 을 구할 때 - vertices[i] 해줬으니 Target 도 - vertices[i]
@@ -460,8 +464,6 @@ namespace PhysicsEngine
 
 				float targetDotProduct = Vector3::DotProduct(normal, target);
 
-				float max = (std::numeric_limits<float>::min)();
-				float min = (std::numeric_limits<float>::max)();
 				for (int j = 0; j < 3; j++)
 				{
 					float dotProduct = Vector3::DotProduct(normal, vertices[j]);
@@ -590,7 +592,6 @@ namespace PhysicsEngine
 			static  CollisionInfo defaultCollisionInfo;
 			vecCollisionInfo.clear();
 
-			// [TEST] triangleIndicesToCheck 전체를 돌지 말고 1개만 돌고 퍼포먼스 테스트 해보자
 			for (int& triangleIndex : triangleIndicesToCheck)
 			{
 				sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
@@ -646,9 +647,9 @@ namespace PhysicsEngine
 			Vector3 criteria;
 
 			// 충돌한 모든 정보를 DotProductType 기준으로 모은다.
-			for (int triangleIndex : triangleIndicesToCheck)
+			for (int& triangleIndex : triangleIndicesToCheck)
 			{
-				sptr<Triangle> triangle = mesh->vecTriangle[triangleIndex];
+				sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
 
 				CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
 				if (collisionInfo.IsCollided())

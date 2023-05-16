@@ -21,5 +21,7 @@ public:
 	void TestInitIntManyTime();
 	void TestInitVectorManyTime();
 	void TestInitVector3ManyTime();
+
+	void TestPhysicsEngineFunc();
 };
 
