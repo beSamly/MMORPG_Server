@@ -68,7 +68,6 @@ void TestApp::Start()
 		현재는 0.013 ms 소요 -> 10배만 빨리지면 될 듯..
 	*/
 
-
 	TimeUtil::LogElapsedTime("Calling DoResolveCollision() 100000 time",
 		[&]()->void {
 			for (int i = 0; i < 100000; i++)
