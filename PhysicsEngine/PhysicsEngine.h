@@ -462,6 +462,8 @@ namespace PhysicsEngine
 				Vector3 normal = target - vertices[i];
 				normal.Normalize();
 
+				float max = (std::numeric_limits<float>::min)();
+				float min = (std::numeric_limits<float>::max)();
 				float targetDotProduct = Vector3::DotProduct(normal, target);
 
 				for (int j = 0; j < 3; j++)
