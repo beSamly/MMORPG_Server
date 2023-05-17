@@ -47,30 +47,30 @@ namespace PhysicsEngine
 		bool IsNull() { return x == 0.0f && y == 0.0f && z == 0.0f ? true : false; }
 
 	public:
-		Vector3 operator-(Vector3 rhs) { return Vector3(x - rhs.x, y - rhs.y, z - rhs.z); }
+		Vector3 operator-(Vector3& rhs) { return Vector3(x - rhs.x, y - rhs.y, z - rhs.z); }
 
-		void operator+=(Vector3 rhs)
+		void operator+=(const Vector3& rhs)
 		{
 			x += rhs.x;
 			y += rhs.y;
 			z += rhs.z;
 		}
 
-		void operator-=(Vector3 rhs)
+		void operator-=(Vector3& rhs)
 		{
 			x -= rhs.x;
 			y -= rhs.y;
 			z -= rhs.z;
 		}
 
-		Vector3 operator+(Vector3 rhs) { return Vector3(x + rhs.x, y + rhs.y, z + rhs.z); }
+		Vector3 operator+(Vector3& rhs) { return Vector3(x + rhs.x, y + rhs.y, z + rhs.z); }
 		Vector3 operator*(float value) { return Vector3(x * value, y * value, z * value); }
 
-		bool operator==(Vector3 rhs) { return x == rhs.x && y == rhs.y && z == rhs.z; }
+		bool operator==(Vector3& rhs) { return x == rhs.x && y == rhs.y && z == rhs.z; }
 
 		float Magnitude() { return std::sqrt(x * x + y * y + z * z); }
 
-		static float DotProduct(Vector3 a, Vector3 b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
+		/*static float DotProduct(Vector3 a, Vector3 b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
 
 		static Vector3 CrossProduct(Vector3 a, Vector3 b)
 		{
@@ -79,9 +79,19 @@ namespace PhysicsEngine
 			float cz = a.x * b.y - a.y * b.x;
 
 			return Vector3(cx, cy, cz);
+		}*/
+
+		static float DotProduct(const Vector3& a, const Vector3& b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
+		static Vector3 CrossProduct(const Vector3& a, const Vector3& b)
+		{
+			float cx = a.y * b.z - a.z * b.y;
+			float cy = a.z * b.x - a.x * b.z;
+			float cz = a.x * b.y - a.y * b.x;
+
+			return Vector3(cx, cy, cz);
 		}
 
-		static float Distance(Vector3 a, Vector3 b)
+		static float Distance(Vector3& a, Vector3& b)
 		{
 			float num = a.x - b.x;
 			float num2 = a.y - b.y;
@@ -219,9 +229,9 @@ namespace PhysicsEngine
 			return DotProductType::NONE;
 		}
 
-		static CollisionInfo CheckCollision_BetweenTriangleSphere(sptr<Triangle>& triangle, Vector3& target, float radius)
+		static sptr<CollisionInfo> CheckCollision_BetweenTriangleSphere(sptr<Triangle>& triangle, Vector3& target, float radius)
 		{
-			static CollisionInfo defaultCollisionInfo;
+			static sptr<CollisionInfo> defaultCollisionInfo = make_shared<CollisionInfo>();
 
 			// 여기서 리턴하면 2000액터 60fps 기준 - 0.22 sec
 			//return defaultCollisionInfo;
@@ -276,9 +286,9 @@ namespace PhysicsEngine
 				float overlap = CalculateOverlap_BetweenPointSphere(cp, first, target, radius);
 				if (overlap > 0.0f)
 				{
-					CollisionInfo collisionInfo;
-					collisionInfo.penetrationDepth = overlap;
-					collisionInfo.penetrationNormal = triangle->GetCrossProduct();
+					sptr<CollisionInfo> collisionInfo = make_shared<CollisionInfo>();
+					collisionInfo->penetrationDepth = overlap;
+					collisionInfo->penetrationNormal = triangle->GetCrossProduct();
 					return collisionInfo;
 				}
 			}
@@ -287,12 +297,13 @@ namespace PhysicsEngine
 				// Sphere가 라인에 걸쳐있는 경우에는 sphere.radius - line 까지의 거리가
 				// penetraion depth가 되어야 한다.
 				{
+					//IsSphereHangingOnLineOfTriangle 호출만으로 2000액터 60fps 기준 0.5초 증가한다.
 					float overlap = IsSphereHangingOnLineOfTriangle(triangle, target, radius);
 					if (overlap > 0.0f)
 					{
-						CollisionInfo collisionInfo;
-						collisionInfo.penetrationDepth = overlap;
-						collisionInfo.penetrationNormal = triangle->GetCrossProduct();
+						sptr<CollisionInfo> collisionInfo = make_shared<CollisionInfo>();
+						collisionInfo->penetrationDepth = overlap;
+						collisionInfo->penetrationNormal = triangle->GetCrossProduct();
 						return collisionInfo;
 					}
 				}
@@ -302,9 +313,9 @@ namespace PhysicsEngine
 			return defaultCollisionInfo;
 		}
 
-		static bool IsCollidedFromSlope(CollisionInfo& collisionInfo)
+		static bool IsCollidedFromSlope(sptr<CollisionInfo>& collisionInfo)
 		{
-			if (abs(collisionInfo.penetrationNormal.y) > 0.01f && (abs(collisionInfo.penetrationNormal.x) > 0.001f || abs(collisionInfo.penetrationNormal.z) > 0.001f))
+			if (abs(collisionInfo->penetrationNormal.y) > 0.01f && (abs(collisionInfo->penetrationNormal.x) > 0.001f || abs(collisionInfo->penetrationNormal.z) > 0.001f))
 			{
 				return true;
 			}
@@ -314,7 +325,7 @@ namespace PhysicsEngine
 			}
 		}
 
-		static CollisionInfo ResolveSlope(CollisionInfo& collisionInfo)
+		static sptr<CollisionInfo> ResolveSlope(sptr<CollisionInfo>& collisionInfo)
 		{
 			// 물체가 지형과 충돌해서 발생한 Normal 중 ↖ 와 ↗ 는 경사로에서 발생하는
 			// 충돌이니 미끄럼 방지를 위해 따로 별도 처리 해준다 ↙ 하고 ↘ 방향 충돌은
@@ -322,7 +333,7 @@ namespace PhysicsEngine
 			// HISTORY - 0.01f를 적용해준 건 아주 미세한 slope은 무시하기 위함
 			if (IsCollidedFromSlope(collisionInfo))
 			{
-				Vector3 penetraionNormal = collisionInfo.penetrationNormal;
+				Vector3 penetraionNormal = collisionInfo->penetrationNormal;
 
 				// new Vector3(0f, 1f, 0f)로 해도 되고 new Vector3(0f, temp.y, 0f) 로 해도
 				// 같은 값이 나와야한다
@@ -344,18 +355,18 @@ namespace PhysicsEngine
 				// 함수는 degree가 아닌 radian을 인자로 받으므로 Mathf.Deg2Rad 를
 				// 곱해준다.
 				float divider = sin(anotherAngleInDegree * Deg2Rad);
-				float newDepth = (collisionInfo.penetrationDepth / divider); // Sin(90도)는 무조건 1이니 생략
+				float newDepth = (collisionInfo->penetrationDepth / divider); // Sin(90도)는 무조건 1이니 생략
 
-				CollisionInfo resolved;
-				resolved.penetrationDepth = abs(newDepth);
-				resolved.penetrationNormal = Vector3(0.0f, 1.0f, 0.0f);
+				sptr<CollisionInfo> resolved = make_shared<CollisionInfo>();
+				resolved->penetrationDepth = abs(newDepth);
+				resolved->penetrationNormal = Vector3(0.0f, 1.0f, 0.0f);
 				/*resolved.fromMeshName = collisionInfo.fromMeshName;
 				resolved.fromTriangle = collisionInfo.fromTriangle;*/
 
 				// 어떻게 빗변의 크기보다 클 수 있지...?
 				// newDepth 는 빗변의 길이이므로 삼각형의 그 어떠한 line의 길이도 빗변보다
 				// 클 수가 없다.
-				if (collisionInfo.penetrationDepth > newDepth)
+				if (collisionInfo->penetrationDepth > newDepth)
 				{
 					//!!MATHMETICAL ERROR!!!
 				}
@@ -555,6 +566,7 @@ namespace PhysicsEngine
 					return position;
 			}*/
 
+
 			int row = (int)(position.z / GRID_SIZE);
 			int column = (int)(position.x / GRID_SIZE);
 			// string gridIndex = std::to_string(row) + "_" + std::to_string(column); // 이 함수 퍼포먼스가 너무 안 좋아서 일단 static string gridIndex로 대체하고 물리엔진 성능 테스트 하자
@@ -568,7 +580,7 @@ namespace PhysicsEngine
 				return position;
 			}
 
-			static vector<CollisionInfo> vecTotalCollisionInfo;
+			static vector<sptr<CollisionInfo>> vecTotalCollisionInfo;
 			vecTotalCollisionInfo.clear();
 
 			sptr<GridInfo>& gridInfo = iter->second;
@@ -576,23 +588,24 @@ namespace PhysicsEngine
 			for (AdjacentMeshInfo& adjacentMeshInfo : gridInfo->vecAdjacentMeshInfo)
 			{
 				string& meshName = adjacentMeshInfo.meshName;
-				sptr<Mesh>& mesh = mapMesh[meshName];
+				sptr<Mesh>& mesh = mapMesh[adjacentMeshInfo.meshName];
 
 				bool isTerrain = meshName.find("Terrain") != std::string::npos ? true : false;
 				if (isTerrain)
 				{
 					// mesh, adjacentTriangleInfo, position, radius
-					CollisionInfo terrainCollisionInfo = GetBestCollisionInfo_From_Terrain(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
-					if (terrainCollisionInfo.IsCollided())
+					//sptr<CollisionInfo> terrainCollisionInfo = make_shared<CollisionInfo>();
+					sptr<CollisionInfo> terrainCollisionInfo = GetBestCollisionInfo_From_Terrain(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
+					if (terrainCollisionInfo->IsCollided())
 					{
 						vecTotalCollisionInfo.push_back(terrainCollisionInfo);
 					}
 				}
 				else
 				{
-					vector<CollisionInfo> vecCollisionInfo = GetBestCollisionInfo_From_Object(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
+					vector<sptr<CollisionInfo>> vecCollisionInfo = GetBestCollisionInfo_From_Object(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
 
-					for (CollisionInfo& collisionInfo : vecCollisionInfo)
+					for (sptr<CollisionInfo>& collisionInfo : vecCollisionInfo)
 					{
 						vecTotalCollisionInfo.push_back(collisionInfo);
 					}
@@ -601,9 +614,9 @@ namespace PhysicsEngine
 
 			Vector3 addPosition;
 
-			for (CollisionInfo& collisionInfo : vecTotalCollisionInfo)
+			for (sptr<CollisionInfo>& collisionInfo : vecTotalCollisionInfo)
 			{
-				addPosition = addPosition + (collisionInfo.penetrationNormal * collisionInfo.penetrationDepth);
+				addPosition += (collisionInfo->penetrationNormal * collisionInfo->penetrationDepth);
 			}
 
 			vecTotalCollisionInfo.clear();
@@ -613,10 +626,10 @@ namespace PhysicsEngine
 
 		// Terrain 과의 가장 정확한 충돌 정보 중 가장 정확한 정보 단 1개 리턴한다.
 	private:
-		CollisionInfo GetBestCollisionInfo_From_Terrain(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, Vector3& position, float radius)
+		sptr<CollisionInfo> GetBestCollisionInfo_From_Terrain(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, Vector3& position, float radius)
 		{
-			static vector<CollisionInfo> vecCollisionInfo;
-			static CollisionInfo defaultCollisionInfo;
+			static vector<sptr<CollisionInfo>> vecCollisionInfo;
+			static sptr<CollisionInfo> defaultCollisionInfo = make_shared<CollisionInfo>();
 			vecCollisionInfo.clear();
 
 			int count = 0;
@@ -628,9 +641,10 @@ namespace PhysicsEngine
 				}*/
 				sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
 
-				CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
-				// CollisionInfo collisionInfo;
-				if (collisionInfo.IsCollided())
+				//sptr<CollisionInfo> collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
+				sptr<CollisionInfo> collisionInfo = make_shared<CollisionInfo>();
+
+				if (collisionInfo->IsCollided())
 				{
 					/*collisionInfo.fromMeshName = mesh->name;
 					collisionInfo.fromTriangle = triangle;*/
@@ -641,6 +655,7 @@ namespace PhysicsEngine
 				count++;
 			}
 
+
 			if (vecCollisionInfo.size() == 0)
 			{
 				return defaultCollisionInfo;
@@ -648,14 +663,14 @@ namespace PhysicsEngine
 
 			//float maxPenetraion = (std::numeric_limits<float>::min)();
 			float maxPenetraion = FLOAT_MIN;
-			CollisionInfo finalCollisionInfo; // 가장 정확한 충돌 정보
+			sptr<CollisionInfo> finalCollisionInfo; // 가장 정확한 충돌 정보
 
 			// 가장 정확한 충돌은 penetrationDepth 가 가장 큰 충돌이다.
-			for (CollisionInfo& collisionInfo : vecCollisionInfo)
+			for (sptr<CollisionInfo>& collisionInfo : vecCollisionInfo)
 			{
-				if (maxPenetraion < collisionInfo.penetrationDepth)
+				if (maxPenetraion < collisionInfo->penetrationDepth)
 				{
-					maxPenetraion = collisionInfo.penetrationDepth;
+					maxPenetraion = collisionInfo->penetrationDepth;
 					finalCollisionInfo = collisionInfo;
 				}
 			}
@@ -672,12 +687,13 @@ namespace PhysicsEngine
 
 		// Object 와의 충돌한 정보 중 DotProductType 별로 가장 정확한 충돌 정보를
 		// 리턴한다.
-		vector<CollisionInfo> GetBestCollisionInfo_From_Object(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, Vector3 position, float radius)
+		vector<sptr<CollisionInfo>> GetBestCollisionInfo_From_Object(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, Vector3 position, float radius)
 		{
 			// Ver1 - Vector3(1,0,0) 와 DotProduct를 계산해서 음수, 0, 양수에 해당하는
 			// normal들의 충돌 정보를 vec 에 모은다.(비슷한 방향에서 발생한 충돌 정보
 			// 중 가장 정확한 것만 적용하기 위함
-			map<DotProductType, vector<CollisionInfo>> map_direction_to_vecCollision;
+			static map<DotProductType, vector<sptr<CollisionInfo>>> map_direction_to_vecCollision;
+			map_direction_to_vecCollision.clear();
 
 			Vector3 criteria;
 
@@ -686,8 +702,8 @@ namespace PhysicsEngine
 			{
 				sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
 
-				CollisionInfo collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
-				if (collisionInfo.IsCollided())
+				sptr<CollisionInfo> collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
+				if (collisionInfo->IsCollided())
 				{
 					/*collisionInfo.fromMeshName = mesh->name;
 					collisionInfo.fromTriangle = triangle;*/
@@ -708,16 +724,17 @@ namespace PhysicsEngine
 
 					if (criteria.IsNull())
 					{
-						criteria = collisionInfo.penetrationNormal;
+						criteria = collisionInfo->penetrationNormal;
 					}
 
-					DotProductType type = CollisionTestUtil::GetDotProductTypeBetween(criteria, collisionInfo.penetrationNormal);
+					DotProductType type = CollisionTestUtil::GetDotProductTypeBetween(criteria, collisionInfo->penetrationNormal);
 
 					map_direction_to_vecCollision[type].push_back(collisionInfo);
 				}
 			}
 
-			vector<CollisionInfo> vecFinalCollisionInfo;
+			static vector<sptr<CollisionInfo>> vecFinalCollisionInfo;
+			vecFinalCollisionInfo.clear();
 
 			// 같은 방향(normal)으로 충돌한 정보 중 가장 정확한 정보만 찾는다.(같은
 			// 방향(normal)으로 충돌이 발생 했을 경우 가장 정확한 충돌 방향은
@@ -726,14 +743,14 @@ namespace PhysicsEngine
 			{
 				//float maxPenetraion = (std::numeric_limits<float>::min)();
 				float maxPenetraion = FLOAT_MIN;
-				CollisionInfo finalCollisionInfo; // 가장 정확한 충돌 정보
+				sptr<CollisionInfo> finalCollisionInfo; // 가장 정확한 충돌 정보
 
 				// 이 normal의 충돌 정보 중 가장 정확한 정보만 찾는다.
-				for (CollisionInfo& collisionInfo : vecCollisionInfo)
+				for (sptr<CollisionInfo>& collisionInfo : vecCollisionInfo)
 				{
-					if (maxPenetraion < collisionInfo.penetrationDepth)
+					if (maxPenetraion < collisionInfo->penetrationDepth)
 					{
-						maxPenetraion = collisionInfo.penetrationDepth;
+						maxPenetraion = collisionInfo->penetrationDepth;
 						finalCollisionInfo = collisionInfo;
 					}
 				}
