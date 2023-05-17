@@ -223,9 +223,15 @@ namespace PhysicsEngine
 		{
 			static CollisionInfo defaultCollisionInfo;
 
+			// 여기서 리턴하면 2000액터 60fps 기준 - 0.22 sec
+			//return defaultCollisionInfo;
+
 			Vector3& first = triangle->vertices[0];
 			Vector3& second = triangle->vertices[1];
 			Vector3& third = triangle->vertices[2];
+
+			// 여기서 리턴하면 2000액터 60fps 기준 - 0.28 sec
+			//return defaultCollisionInfo;
 
 			/*----------------------------------------------------------------------------------------
 											아래 함수 호출을 주석친 이유는 굳이 Seperating Axe 검사를 하지
@@ -233,13 +239,20 @@ namespace PhysicsEngine
 			함수에서 걸러진다. 혹시 나중에 제대로 작동 안 하면 주석 풀기 History : 가끔
 			Unity prefab에 이상한 vertex a,b,c 가 한 라인에 있는 mesh가 딸려올 때가
 			있다. 이경우 seperating axe 검사를 해주면 일단 걸러진다..
+
+			2023.05.17
+			PhysicsEngine 로직을 변경 이후 근처에 있는 Triangle 들만 체크할거여서 굳이 Seperating Axe를 찾을 필요 없을 것 같다.
 			------------------------------------------------------------------------------------------*/
 			// 확실한 Seperating Axe 찾았으면 충돌 검사할 필요가 없이 충돌하지 않은
 			// 상태이다.
-			if (FindSeperatingAxe_BetweenTriangleSphere(triangle->vertices, target, radius))
+			/*if (FindSeperatingAxe_BetweenTriangleSphere(triangle->vertices, target, radius))
 			{
 				return defaultCollisionInfo;
-			}
+			}*/
+
+			// 여기서 리턴하면 2000액터 60fps 기준 - 0.60 sec
+			// FindSeperatingAxe_BetweenTriangleSphere 호출 안 하면 0.26sec
+			//return defaultCollisionInfo;
 
 			//역방향 충돌 모두 제거 - 벽 같은 경우는 플레이어가 벽을 뚫고 지나가려고
 			//하면 역방향 충돌이 발생해서 벽 건너편으로 순간이동 현상 발생
@@ -252,6 +265,11 @@ namespace PhysicsEngine
 				return defaultCollisionInfo;
 			}
 
+			// 여기서 리턴하면 2000액터 60fps 기준 - 0.3sec 즉 
+			// IsTargetLocatedOppositeSideFromTriangleNormal 함수는 오래걸리지 않는다
+			//return defaultCollisionInfo;
+
+			//IsPointInTriangle 호출만으로 2000액터 60fps 기준 0.5초 증가한다.
 			if (IsPointInTriangle(first, second, third, target))
 			{
 				Vector3 cp = triangle->GetCrossProduct();
@@ -429,7 +447,7 @@ namespace PhysicsEngine
 		static bool IsPointInTriangle(Vector3& A, Vector3& B, Vector3& C, Vector3& P)
 		{
 			// 방향 백터 [A-B, B-C, C-A]와 방향 백터[A-P, B-P, C-P] 가 같은 방향을
-			// 가르키는지 체크 모든 방향 백터가 같은 방향을 가르킨다면 점 P는 Triangle
+			// 가르키는지 체크. 모든 방향 백터가 같은 방향을 가르킨다면 점 P는 Triangle
 			// 안에 있다
 			if (SameSide(P, A, B, C) && SameSide(P, B, A, C) && SameSide(P, C, A, B))
 			{
