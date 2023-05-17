@@ -255,10 +255,10 @@ namespace PhysicsEngine
 			------------------------------------------------------------------------------------------*/
 			// 확실한 Seperating Axe 찾았으면 충돌 검사할 필요가 없이 충돌하지 않은
 			// 상태이다.
-			/*if (FindSeperatingAxe_BetweenTriangleSphere(triangle->vertices, target, radius))
+			if (FindSeperatingAxe_BetweenTriangleSphere(triangle->vertices, target, radius))
 			{
 				return defaultCollisionInfo;
-			}*/
+			}
 
 			// 여기서 리턴하면 2000액터 60fps 기준 - 0.60 sec
 			// FindSeperatingAxe_BetweenTriangleSphere 호출 안 하면 0.26sec
@@ -641,9 +641,7 @@ namespace PhysicsEngine
 				}*/
 				sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
 
-				//sptr<CollisionInfo> collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
-				sptr<CollisionInfo> collisionInfo = make_shared<CollisionInfo>();
-
+				sptr<CollisionInfo> collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
 				if (collisionInfo->IsCollided())
 				{
 					/*collisionInfo.fromMeshName = mesh->name;
