@@ -19,7 +19,7 @@ namespace PhysicsEngine
 
 	const float FLOAT_MIN = (std::numeric_limits<float>::min)();
 	const float FLOAT_MAX = (std::numeric_limits<float>::max)();
-	const float EPSILON = std::numeric_limits<float>::epsilon();
+	const float FLOAT_EPSILON = std::numeric_limits<float>::epsilon();
 
 	class Vector3
 	{
@@ -70,6 +70,12 @@ namespace PhysicsEngine
 
 		float Magnitude() { return std::sqrt(x * x + y * y + z * z); }
 
+		void Add(sptr<Vector3>& vector) {
+			x += vector->x;
+			y += vector->y;
+			z += vector->z;
+		}
+
 		/*static float DotProduct(Vector3 a, Vector3 b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
 
 		static Vector3 CrossProduct(Vector3 a, Vector3 b)
@@ -81,7 +87,29 @@ namespace PhysicsEngine
 			return Vector3(cx, cy, cz);
 		}*/
 
-		static float DotProduct(const Vector3& a, const Vector3& b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
+		static sptr<Vector3> Subtract(sptr<Vector3>& lhs, sptr<Vector3>& rhs)
+		{
+			return make_shared<Vector3>(lhs->x - rhs->x, lhs->y - rhs->y, lhs->z - rhs->z);
+		}
+
+		static sptr<Vector3> Add(sptr<Vector3>& lhs, sptr<Vector3>& rhs)
+		{
+			return make_shared<Vector3>(lhs->x + rhs->x, lhs->y + rhs->y, lhs->z + rhs->z);
+		}
+
+		static sptr<Vector3> Multiply(sptr<Vector3>& lhs, sptr<Vector3>& rhs)
+		{
+			return make_shared<Vector3>(lhs->x * rhs->x, lhs->y * rhs->y, lhs->z * rhs->z);
+		}
+
+		static sptr<Vector3> Multiply(sptr<Vector3>& lhs, float value)
+		{
+			return make_shared<Vector3>(lhs->x * value, lhs->y * value, lhs->z * value);
+		}
+
+		//static float DotProduct(const Vector3& a, const Vector3& b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
+		//static float DotProduct(const sptr<Vector3>& a, const Vector3& b) { return a->x * b.x + a->y * b.y + a->z * b.z; }
+		static float DotProduct(const sptr<Vector3>& a, const sptr<Vector3>& b) { return a->x * b->x + a->y * b->y + a->z * b->z; }
 		static Vector3 CrossProduct(const Vector3& a, const Vector3& b)
 		{
 			float cx = a.y * b.z - a.z * b.y;
@@ -91,23 +119,34 @@ namespace PhysicsEngine
 			return Vector3(cx, cy, cz);
 		}
 
-		static float Distance(Vector3& a, Vector3& b)
+		static shared_ptr<Vector3> CrossProduct(const shared_ptr<Vector3>& a, const shared_ptr<Vector3>& b)
 		{
-			float num = a.x - b.x;
-			float num2 = a.y - b.y;
-			float num3 = a.z - b.z;
+			float cx = a->y * b->z - a->z * b->y;
+			float cy = a->z * b->x - a->x * b->z;
+			float cz = a->x * b->y - a->y * b->x;
+
+			return make_shared<Vector3>(cx, cy, cz);
+		}
+
+		static float Distance(sptr<Vector3>& a, sptr<Vector3>& b)
+		{
+			float num = a->x - b->x;
+			float num2 = a->y - b->y;
+			float num3 = a->z - b->z;
 			return sqrtf(num * num + num2 * num2 + num3 * num3);
 		}
 
-		static Vector3 Project(Vector3& vector, Vector3& onNormal)
+		static sptr<Vector3> Project(sptr<Vector3>& vector, sptr<Vector3>& onNormal)
 		{
 			float num = DotProduct(onNormal, onNormal);
+
+			if (num < FLOAT_EPSILON)
 			{
-				return Vector3(0.0f, 0.0f, 0.0f);
+				return make_shared<Vector3>(0.0f, 0.0f, 0.0f);
 			}
 
 			float num2 = DotProduct(vector, onNormal);
-			return Vector3(onNormal.x * num2 / num, onNormal.y * num2 / num, onNormal.z * num2 / num);
+			return make_shared<Vector3>(onNormal->x * num2 / num, onNormal->y * num2 / num, onNormal->z * num2 / num);
 		}
 
 		static Vector3 UP() { return Vector3(0.0f, 0.0f, 1.0f); }
@@ -120,11 +159,11 @@ namespace PhysicsEngine
 	{
 	public:
 		string name;
-		vector<Vector3> vertices;
-		Vector3 crossProduct;
-		Vector3 centroid;
+		vector<shared_ptr<Vector3>> vertices;
+		shared_ptr<Vector3> crossProduct;
+		shared_ptr<Vector3> centroid;
 
-		Triangle(Vector3 a, Vector3 b, Vector3 c)
+		Triangle(shared_ptr<Vector3> a, shared_ptr<Vector3> b, shared_ptr<Vector3> c)
 		{
 			vertices.push_back(a);
 			vertices.push_back(b);
@@ -135,27 +174,28 @@ namespace PhysicsEngine
 
 		Triangle() {};
 
-		Vector3 GetCrossProduct() { return crossProduct; }
-		Vector3 GetCentroid() { return centroid; }
+		shared_ptr<Vector3> GetCrossProduct() { return crossProduct; }
+		shared_ptr<Vector3> GetCentroid() { return centroid; }
 
 	private:
 		void CalculateCrossProduct()
 		{
-			Vector3 a = vertices[0] - vertices[1];
-			Vector3 b = vertices[1] - vertices[2];
+			Vector3 a = *vertices[0] - *vertices[1];
+			Vector3 b = *vertices[1] - *vertices[2];
+			Vector3 cp = Vector3::CrossProduct(a, b);
 
-			crossProduct = Vector3::CrossProduct(a, b);
-			crossProduct.Normalize();
+			crossProduct = make_shared<Vector3>(cp.x, cp.y, cp.z);
+			crossProduct->Normalize();
 		}
 
 		void CalculateCentroid()
 		{
-			Vector3 temp = vertices[0] + vertices[1] + vertices[2];
-			temp.x /= 3;
-			temp.y /= 3;
-			temp.z /= 3;
+			Vector3 temp = *vertices[0] + *vertices[1] + *vertices[2];
 
-			centroid = temp;
+			centroid = make_shared<Vector3>(temp.x, temp.y, temp.z);
+			centroid->x /= 3;
+			centroid->y /= 3;
+			centroid->z /= 3;
 		}
 	};
 
@@ -189,7 +229,7 @@ namespace PhysicsEngine
 		// HISTORY - 아래 두 필드는 Unity에서 테스트 위해서 생성한 필드로 퍼포먼스 저하를 유발할 수 있다
 		// string fromMeshName;
 		// sptr<Triangle> fromTriangle;
-		Vector3 penetrationNormal;
+		sptr<Vector3> penetrationNormal;
 		float penetrationDepth = 0.0f;
 
 		bool IsCollided() { return penetrationDepth != 0.0f; }
@@ -206,7 +246,7 @@ namespace PhysicsEngine
 	class CollisionTestUtil
 	{
 	public:
-		static DotProductType GetDotProductTypeBetween(Vector3 a, Vector3 b)
+		static DotProductType GetDotProductTypeBetween(sptr<Vector3>& a, sptr<Vector3>& b)
 		{
 			float value = Vector3::DotProduct(a, b);
 
@@ -229,16 +269,16 @@ namespace PhysicsEngine
 			return DotProductType::NONE;
 		}
 
-		static sptr<CollisionInfo> CheckCollision_BetweenTriangleSphere(sptr<Triangle>& triangle, Vector3& target, float radius)
+		static sptr<CollisionInfo> CheckCollision_BetweenTriangleSphere(sptr<Triangle>& triangle, sptr<Vector3>& target, float radius)
 		{
 			static sptr<CollisionInfo> defaultCollisionInfo = make_shared<CollisionInfo>();
 
 			// 여기서 리턴하면 2000액터 60fps 기준 - 0.22 sec
 			//return defaultCollisionInfo;
 
-			Vector3& first = triangle->vertices[0];
-			Vector3& second = triangle->vertices[1];
-			Vector3& third = triangle->vertices[2];
+			sptr<Vector3>& first = triangle->vertices[0];
+			sptr<Vector3>& second = triangle->vertices[1];
+			sptr<Vector3>& third = triangle->vertices[2];
 
 			// 여기서 리턴하면 2000액터 60fps 기준 - 0.28 sec
 			//return defaultCollisionInfo;
@@ -269,7 +309,7 @@ namespace PhysicsEngine
 			// History - Terrain이 엄청 촘촘하고 울퉁불퉁한 경우에는 플레이어가 방향키
 			// 이동을 했을 때 Normal의 반대방향으로 가서 땅이 뚫고 내려갈 수 있어서 주석
 			// 처리.
-			Vector3 cp = triangle->GetCrossProduct();
+			sptr<Vector3> cp = triangle->GetCrossProduct();
 			if (IsTargetLocatedOppositeSideFromTriangleNormal(cp, first, target))
 			{
 				return defaultCollisionInfo;
@@ -282,7 +322,7 @@ namespace PhysicsEngine
 			//IsPointInTriangle 호출만으로 2000액터 60fps 기준 0.5초 증가한다.
 			if (IsPointInTriangle(first, second, third, target))
 			{
-				Vector3 cp = triangle->GetCrossProduct();
+				sptr<Vector3> cp = triangle->GetCrossProduct();
 				float overlap = CalculateOverlap_BetweenPointSphere(cp, first, target, radius);
 				if (overlap > 0.0f)
 				{
@@ -315,7 +355,7 @@ namespace PhysicsEngine
 
 		static bool IsCollidedFromSlope(sptr<CollisionInfo>& collisionInfo)
 		{
-			if (abs(collisionInfo->penetrationNormal.y) > 0.01f && (abs(collisionInfo->penetrationNormal.x) > 0.001f || abs(collisionInfo->penetrationNormal.z) > 0.001f))
+			if (abs(collisionInfo->penetrationNormal->y) > 0.01f && (abs(collisionInfo->penetrationNormal->x) > 0.001f || abs(collisionInfo->penetrationNormal->z) > 0.001f))
 			{
 				return true;
 			}
@@ -333,7 +373,7 @@ namespace PhysicsEngine
 			// HISTORY - 0.01f를 적용해준 건 아주 미세한 slope은 무시하기 위함
 			if (IsCollidedFromSlope(collisionInfo))
 			{
-				Vector3 penetraionNormal = collisionInfo->penetrationNormal;
+				sptr<Vector3> penetraionNormal = collisionInfo->penetrationNormal;
 
 				// new Vector3(0f, 1f, 0f)로 해도 되고 new Vector3(0f, temp.y, 0f) 로 해도
 				// 같은 값이 나와야한다
@@ -341,8 +381,8 @@ namespace PhysicsEngine
 				// float angle = Vector3::AngleBetween(new Vector3(0.0f, 1.0f, 0.0f), new
 				// Vector3(penetraionNormal.x, penetraionNormal.y, penetraionNormal.z));
 				// // In c# float angle = atan2(diff.x, diff.y, diff.z); // In c++
-				Vector3 upVector = Vector3(0.0f, 1.0f, 0.0f);
-				float angleInDegree = std::acos(Vector3::DotProduct(upVector, penetraionNormal) / (upVector.Magnitude()) * penetraionNormal.Magnitude());
+				static sptr<Vector3> upVector = make_shared<Vector3>(0.0f, 1.0f, 0.0f);
+				float angleInDegree = std::acos(Vector3::DotProduct(upVector, penetraionNormal) / (upVector->Magnitude()) * penetraionNormal->Magnitude());
 
 				// float angleInDegree = angle * 180 / PI;
 				float anotherAngleInDegree = 90.0f - angleInDegree;
@@ -359,7 +399,7 @@ namespace PhysicsEngine
 
 				sptr<CollisionInfo> resolved = make_shared<CollisionInfo>();
 				resolved->penetrationDepth = abs(newDepth);
-				resolved->penetrationNormal = Vector3(0.0f, 1.0f, 0.0f);
+				resolved->penetrationNormal = make_shared<Vector3>(0.0f, 1.0f, 0.0f);
 				/*resolved.fromMeshName = collisionInfo.fromMeshName;
 				resolved.fromTriangle = collisionInfo.fromTriangle;*/
 
@@ -380,7 +420,7 @@ namespace PhysicsEngine
 		// Vector3 A와 B 를 projectTo(normal) 기준으로 overlap 계산을 하는데 정방향
 		// overlap인지 체크 normal -> A B가 정방향(forward) normal -> B A는
 		// 역방향(backward)
-		static float CalculateOverlap_BetweenPointSphere(Vector3& projectTo, Vector3& targetA, Vector3& targetB, float radius)
+		static float CalculateOverlap_BetweenPointSphere(sptr<Vector3>& projectTo, sptr<Vector3>& targetA, sptr<Vector3>& targetB, float radius)
 		{
 			// 설명
 			// crossProduct와 target 사이의 거리를 구한다
@@ -402,7 +442,7 @@ namespace PhysicsEngine
 		}
 
 	public:
-		static bool IsTargetLocatedOppositeSideFromTriangleNormal(Vector3& normal, Vector3& targetA, Vector3& targetB)
+		static bool IsTargetLocatedOppositeSideFromTriangleNormal(sptr<Vector3>& normal, sptr<Vector3>& targetA, sptr<Vector3>& targetB)
 		{
 			float distanceToTargetA = Vector3::DotProduct(normal, targetA);
 			float distanceToTargetB = Vector3::DotProduct(normal, targetB);
@@ -410,22 +450,22 @@ namespace PhysicsEngine
 			return distanceToTargetB < distanceToTargetA ? true : false;
 		}
 
-		static float IsSphereHangingOnLineOfTriangle(sptr<Triangle>& t, Vector3& target, float radius)
+		static float IsSphereHangingOnLineOfTriangle(sptr<Triangle>& t, sptr<Vector3>& target, float radius)
 		{
 			int totalCount = t->vertices.size();
 
 			for (int i = 0; i < 3; i++)
 			{
-				Vector3& A = t->vertices[i];
-				Vector3& B = t->vertices[(i + 1) % totalCount];
-				Vector3 normal = B - A; // vertex a => vertex b 까지의 방향 normal
+				sptr<Vector3>& A = t->vertices[i];
+				sptr<Vector3>& B = t->vertices[(i + 1) % totalCount];
+				sptr<Vector3> normal = make_shared<Vector3>(B->x - A->x, B->y - A->y, B->z - A->z); // vertex a => vertex b 까지의 방향 normal
 
 				// Normal 을 구할 때 - vertices[i] 해줬으니 Target 도 - vertices[i]
 				// 해줘야하고 Perpendicular 구한 뒤 + vertices[i] 해줘야한다.
 				{
-					Vector3 newTarget = target - A;
-					Vector3 perpendicular = Vector3::Project(newTarget, normal);
-					Vector3 newPern = perpendicular + A;
+					sptr<Vector3> newTarget = make_shared<Vector3>(target->x - A->x, target->y - A->y, target->z - A->z);
+					sptr<Vector3> perpendicular = Vector3::Project(newTarget, normal);
+					sptr<Vector3> newPern = make_shared<Vector3>(perpendicular->x + A->x, perpendicular->y + A->y, perpendicular->z + A->z);
 
 					float A_Dot = Vector3::DotProduct(normal, A);
 					float B_Dot = Vector3::DotProduct(normal, B);
@@ -455,7 +495,7 @@ namespace PhysicsEngine
 			return 0.0f;
 		}
 
-		static bool IsPointInTriangle(Vector3& A, Vector3& B, Vector3& C, Vector3& P)
+		static bool IsPointInTriangle(sptr<Vector3>& A, sptr<Vector3>& B, sptr<Vector3>& C, sptr<Vector3>& P)
 		{
 			// 방향 백터 [A-B, B-C, C-A]와 방향 백터[A-P, B-P, C-P] 가 같은 방향을
 			// 가르키는지 체크. 모든 방향 백터가 같은 방향을 가르킨다면 점 P는 Triangle
@@ -470,10 +510,10 @@ namespace PhysicsEngine
 		}
 
 		// 두 방향 백터가 같은 방향을 가르키는지 체크
-		static bool SameSide(Vector3& p1, Vector3& p2, Vector3& A, Vector3& B)
+		static bool SameSide(sptr<Vector3>& p1, sptr<Vector3>& p2, sptr<Vector3>& A, sptr<Vector3>& B)
 		{
-			Vector3 cp1 = Vector3::CrossProduct(B - A, p1 - A); // 방향 백터 1
-			Vector3 cp2 = Vector3::CrossProduct(B - A, p2 - A); // 방향 백터 2
+			sptr<Vector3> cp1 = Vector3::CrossProduct(Vector3::Subtract(B, A), Vector3::Subtract(p1, A)); // 방향 백터 1
+			sptr<Vector3> cp2 = Vector3::CrossProduct(Vector3::Subtract(B, A), Vector3::Subtract(p2, A)); // 방향 백터 2
 
 			// 방향 백터 1과 2의 Dot product가 0 이상이면 같은 방향
 			if (Vector3::DotProduct(cp1, cp2) >= 0.0f)
@@ -485,12 +525,14 @@ namespace PhysicsEngine
 			return false;
 		}
 
-		static bool FindSeperatingAxe_BetweenTriangleSphere(vector<Vector3>& vertices, Vector3& target, float radius)
+		static bool FindSeperatingAxe_BetweenTriangleSphere(vector<sptr<Vector3>>& vertices, sptr<Vector3>& target, float radius)
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				Vector3 normal = target - vertices[i];
-				normal.Normalize();
+				sptr<Vector3>& vertex = vertices[i];
+				sptr<Vector3> normal = make_shared<Vector3>(target->x - vertex->x, target->y - vertex->y, target->z - vertex->z);
+				//sptr<Vector3>& normal = target - vertices[i];
+				normal->Normalize();
 
 
 				float max = FLOAT_MIN;
@@ -557,7 +599,7 @@ namespace PhysicsEngine
 		// GetBestCollisionInfo_From_Terrain : 충돌한 정보 중 가장 정확한 정보만 처리
 		// Dependency 2 - GetBestCollisionInfo_From_Object : 충돌한 정보 중
 		// DotProductType 별로 가장 정확한 정보들만 처리
-		Vector3 ResolveCollision(Vector3 position, float radius, bool ignoreSlope = true)
+		sptr<Vector3> ResolveCollision(sptr<Vector3>& position, float radius, bool ignoreSlope = true)
 		{
 			// HISTORY - map에서 Terrain 데이터가 있는지 없는지는 서버 구동 시 혹은 json 데이터 읽은 후 체크하도록.
 			// ResolveCollision 함수 내에서는 프레임 확보를 위해 최대한 적은 일을 해야한다.
@@ -567,8 +609,8 @@ namespace PhysicsEngine
 			}*/
 
 
-			int row = (int)(position.z / GRID_SIZE);
-			int column = (int)(position.x / GRID_SIZE);
+			int row = (int)(position->z / GRID_SIZE);
+			int column = (int)(position->x / GRID_SIZE);
 			// string gridIndex = std::to_string(row) + "_" + std::to_string(column); // 이 함수 퍼포먼스가 너무 안 좋아서 일단 static string gridIndex로 대체하고 물리엔진 성능 테스트 하자
 			static string gridIndex = "47_140";
 
@@ -612,21 +654,22 @@ namespace PhysicsEngine
 				}
 			}
 
-			Vector3 addPosition;
+			sptr<Vector3> addPosition = make_shared<Vector3>();
 
 			for (sptr<CollisionInfo>& collisionInfo : vecTotalCollisionInfo)
 			{
-				addPosition += (collisionInfo->penetrationNormal * collisionInfo->penetrationDepth);
+				sptr<Vector3> add = Vector3::Multiply(collisionInfo->penetrationNormal, collisionInfo->penetrationDepth);
+				addPosition->Add(add);
 			}
 
 			vecTotalCollisionInfo.clear();
 
-			return position + addPosition;
+			return Vector3::Add(position, addPosition);
 		}
 
 		// Terrain 과의 가장 정확한 충돌 정보 중 가장 정확한 정보 단 1개 리턴한다.
 	private:
-		sptr<CollisionInfo> GetBestCollisionInfo_From_Terrain(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, Vector3& position, float radius)
+		sptr<CollisionInfo> GetBestCollisionInfo_From_Terrain(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, sptr<Vector3>& position, float radius)
 		{
 			static vector<sptr<CollisionInfo>> vecCollisionInfo;
 			static sptr<CollisionInfo> defaultCollisionInfo = make_shared<CollisionInfo>();
@@ -685,7 +728,7 @@ namespace PhysicsEngine
 
 		// Object 와의 충돌한 정보 중 DotProductType 별로 가장 정확한 충돌 정보를
 		// 리턴한다.
-		vector<sptr<CollisionInfo>> GetBestCollisionInfo_From_Object(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, Vector3 position, float radius)
+		vector<sptr<CollisionInfo>> GetBestCollisionInfo_From_Object(sptr<Mesh>& mesh, vector<int>& triangleIndicesToCheck, sptr<Vector3>& position, float radius)
 		{
 			// Ver1 - Vector3(1,0,0) 와 DotProduct를 계산해서 음수, 0, 양수에 해당하는
 			// normal들의 충돌 정보를 vec 에 모은다.(비슷한 방향에서 발생한 충돌 정보
@@ -693,7 +736,7 @@ namespace PhysicsEngine
 			static map<DotProductType, vector<sptr<CollisionInfo>>> map_direction_to_vecCollision;
 			map_direction_to_vecCollision.clear();
 
-			Vector3 criteria;
+			sptr<Vector3> criteria;
 
 			// 충돌한 모든 정보를 DotProductType 기준으로 모은다.
 			for (int& triangleIndex : triangleIndicesToCheck)
@@ -720,7 +763,7 @@ namespace PhysicsEngine
 					// Mesh에서 발생한 단 하나의 Collision Info만 체크해줘보자
 					// DotProductType type = DotProductType::NONE;
 
-					if (criteria.IsNull())
+					if (criteria->IsNull())
 					{
 						criteria = collisionInfo->penetrationNormal;
 					}
