@@ -34,7 +34,8 @@ void ServerApp::StartSystems()
 
 void ServerApp::StartSocketServer()
 {
-	spdlog::set_level(spdlog::level::debug); // Set global log level to debug
+	// Set global log level to debug
+	spdlog::set_level(spdlog::level::debug);
 
 	networkSystem->StartSocketServer();
 
@@ -43,7 +44,6 @@ void ServerApp::StartSocketServer()
 		threadSystem->Launch(
 			[&]()
 			{
-				// ��Ʈ��ũ ����� �� ��Ŷ �ڵ鷯 ����
 				networkSystem->RunIoContext();
 			});
 	}
@@ -53,22 +53,6 @@ void ServerApp::InitGameSystem() {}
 
 void ServerApp::StartGameSystem()
 {
-	// TODO ���߿� �����ϱ�
-	// threadSystem->Launch(
-	//    [&]()
-	//    {
-	//        while (true)
-	//        {
-	//            int keyPressed;
-	//            debugInputHandler->PrintInstruction();
-	//            std::cin >> keyPressed;
-	//            debugInputHandler->HandleInput(keyPressed);
-	//            // GInputHandler->HandleInput(socketClient, keyPressed);
-	//            cout << "Key pressed is " << keyPressed << endl;
-	//        }
-	//    });
-
-	//�� ������Ʈ ������
 	for (int32 i = 0; i < MAX_SCENE_UPDATE_THREAD; i++)
 	{
 		threadSystem->Launch(

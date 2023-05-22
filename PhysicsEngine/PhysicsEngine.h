@@ -575,11 +575,11 @@ namespace PhysicsEngine
 
 			int row = (int)(position.z / GRID_SIZE);
 			int column = (int)(position.x / GRID_SIZE);
-			// string gridIndex = std::to_string(row) + "_" + std::to_string(column); // 이 함수 퍼포먼스가 너무 안 좋아서 일단 static string gridIndex로 대체하고 물리엔진 성능 테스트 하자
+			int int_gridIndex = row * 100000000 + column;
+			//string gridIndex = std::to_string(row) + "_" + std::to_string(column); // 이 함수 퍼포먼스가 너무 안 좋아서 일단 static string gridIndex로 대체하고 물리엔진 성능 테스트 하자
 			static string gridIndex = "47_140";
 
 			auto iter = mapGridInfo.find(gridIndex); // mapGridInfo에 2만 개의 데이터가 있어서 느린듯... 일단 static으로 대체해놓고 나머지 성능 테스트
-			// static auto iter = mapGridInfo.find(gridIndex);
 			if (iter == mapGridInfo.end())
 			{
 				std::cout << "[PhysicsEngine] gridIndex not found - " << gridIndex << std::endl;

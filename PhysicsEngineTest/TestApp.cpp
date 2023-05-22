@@ -57,16 +57,11 @@ void TestApp::Start() {
 			}
 		});
 
-	// TimeUtil::LogElapsedTime("Once", [&]()->void {
-	//	Once();
-	//	});
-
-
 	// 5000 엑터 기준 60프레임 도는데 소요된느 시간
 	TimeUtil::LogElapsedTime("Calling DoResolveCollision() 5000 actor 60fps ",
 		[&]() -> void {
 			for (int j = 0; j < 30; j++) {
-				for (int i = 0; i < 5000; i++) {
+				for (int i = 0; i < 4000; i++) {
 					DoResolveCollision();
 				}
 			}
