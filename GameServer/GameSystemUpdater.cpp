@@ -60,7 +60,7 @@ void GameSystemUpdater::UpdateEachScene(float deltaTime, sptr<Scene>& scene)
 		UpdateEachNPC(deltaTime, scene, npc);
 	}*/
 
-	TimeUtil::LogElapsedTime("NPC Update",
+	TimeUtil::LogElapsedTimeOnExceed("NPC Update", 0.033f,
 		[&]() -> void
 		{
 			for (sptr<TransformEntity>& transformEntity : vecNPC)

@@ -64,6 +64,7 @@ namespace PhysicsEngine
 		}
 
 		Vector3 operator+(Vector3& rhs) { return Vector3(x + rhs.x, y + rhs.y, z + rhs.z); }
+
 		Vector3 operator*(float value) { return Vector3(x * value, y * value, z * value); }
 
 		bool operator==(Vector3& rhs) { return x == rhs.x && y == rhs.y && z == rhs.z; }
@@ -114,6 +115,12 @@ namespace PhysicsEngine
 		static Vector3 DOWN() { return Vector3(0.0f, 0.0f, -1.0f); }
 		static Vector3 LEFT() { return Vector3(-1.0f, 0.0f, 0.0f); }
 		static Vector3 RIGHT() { return Vector3(1.0f, 0.0f, 0.0f); }
+
+		static Vector3 UP_LEFT() { return Vector3(-0.7f, 0.0f, 0.7f); }
+		static Vector3 UP_RIGHT() { return Vector3(0.7f, 0.0f, 0.7f); }
+
+		static Vector3 DOWN_LEFT() { return Vector3(-0.7f, 0.0f, -0.7f); }
+		static Vector3 DOWN_RIGHT() { return Vector3(0.7f, 0.0f, -0.7f); }
 	};
 
 	class Triangle
