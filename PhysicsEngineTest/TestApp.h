@@ -9,7 +9,7 @@ private:
 	uptr<NavigationMeshAgentManager> manager;
 	sptr<PhysicsEngine::NavigationMeshAgent> navigationMeshAgent;
 
-	sptr<Vector3> position;
+	Vector3 position;
 	float radius;
 
 

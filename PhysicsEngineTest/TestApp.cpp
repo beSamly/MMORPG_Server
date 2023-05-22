@@ -20,7 +20,7 @@ void TestApp::Init() {
 	float x = 419.619f;
 	float y = 113.919f;
 	float z = 143.360f;
-	position = make_shared<Vector3>(x, y, z);
+	position = Vector3(x, y, z);
 
 	radius = 0.5f;
 }
@@ -76,7 +76,7 @@ void TestApp::Start() {
 }
 
 void TestApp::DoResolveCollision() {
-	sptr<Vector3> newPosition = navigationMeshAgent->ResolveCollision(position, radius);
+	Vector3 newPosition = navigationMeshAgent->ResolveCollision(position, radius);
 }
 
 void TestApp::TestInitVectorManyTime() {
@@ -98,15 +98,15 @@ void TestApp::TestInitVector3ManyTime() {
 }
 
 void TestApp::TestPhysicsEngineFunc() {
-	sptr<Vector3> a = make_shared<Vector3>(423.026f, 111.655f, 142.275f);
-	sptr<Vector3> b = make_shared<Vector3>(418.557f, 111.342f, 143.776f);
-	sptr<Vector3> c = make_shared<Vector3>(421.719f, 111.125f, 144.219f);
+	Vector3 a(423.026f, 111.655f, 142.275f);
+	Vector3 b(418.557f, 111.342f, 143.776f);
+	Vector3 c(421.719f, 111.125f, 144.219f);
 
 	sptr<Triangle> triangle = make_shared<Triangle>(a, b, c);
 
-	sptr<Vector3>& first = triangle->vertices[0];
-	sptr<Vector3>& second = triangle->vertices[1];
-	sptr<Vector3>& third = triangle->vertices[2];
+	Vector3& first = triangle->vertices[0];
+	Vector3& second = triangle->vertices[1];
+	Vector3& third = triangle->vertices[2];
 
 	int loop_time = 150000;
 
@@ -129,7 +129,7 @@ void TestApp::TestPhysicsEngineFunc() {
 	TimeUtil::LogElapsedTime(
 		"Calling IsTargetLocatedOppositeSideFromTriangleNormal()", [&]() -> void {
 			for (int i = 0; i < loop_time; i++) {
-				sptr<Vector3> cp = triangle->GetCrossProduct();
+				Vector3 cp = triangle->GetCrossProduct();
 				CollisionTestUtil::IsTargetLocatedOppositeSideFromTriangleNormal(
 					cp, first, position);
 			}
@@ -144,7 +144,7 @@ void TestApp::TestPhysicsEngineFunc() {
 	TimeUtil::LogElapsedTime(
 		"Calling CalculateOverlap_BetweenPointSphere()", [&]() -> void {
 			for (int i = 0; i < loop_time; i++) {
-				sptr<Vector3> cp = triangle->GetCrossProduct();
+				Vector3 cp = triangle->GetCrossProduct();
 				CollisionTestUtil::CalculateOverlap_BetweenPointSphere(
 					cp, first, position, radius);
 			}
