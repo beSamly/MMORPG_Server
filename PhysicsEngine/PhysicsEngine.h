@@ -566,7 +566,6 @@ namespace PhysicsEngine
 					return position;
 			}*/
 
-
 			int row = (int)(position.z / GRID_SIZE);
 			int column = (int)(position.x / GRID_SIZE);
 			// string gridIndex = std::to_string(row) + "_" + std::to_string(column); // 이 함수 퍼포먼스가 너무 안 좋아서 일단 static string gridIndex로 대체하고 물리엔진 성능 테스트 하자
@@ -594,7 +593,6 @@ namespace PhysicsEngine
 				if (isTerrain)
 				{
 					// mesh, adjacentTriangleInfo, position, radius
-					//sptr<CollisionInfo> terrainCollisionInfo = make_shared<CollisionInfo>();
 					sptr<CollisionInfo> terrainCollisionInfo = GetBestCollisionInfo_From_Terrain(mesh, adjacentMeshInfo.adjacentTriangleIndices, position, radius);
 					if (terrainCollisionInfo->IsCollided())
 					{
@@ -632,13 +630,8 @@ namespace PhysicsEngine
 			static sptr<CollisionInfo> defaultCollisionInfo = make_shared<CollisionInfo>();
 			vecCollisionInfo.clear();
 
-			int count = 0;
 			for (int& triangleIndex : triangleIndicesToCheck)
 			{
-				/*if (count > 5)
-				{
-					break;
-				}*/
 				sptr<Triangle>& triangle = mesh->vecTriangle[triangleIndex];
 
 				sptr<CollisionInfo> collisionInfo = CollisionTestUtil::CheckCollision_BetweenTriangleSphere(triangle, position, radius);
@@ -649,10 +642,7 @@ namespace PhysicsEngine
 
 					vecCollisionInfo.push_back(collisionInfo);
 				}
-
-				count++;
 			}
-
 
 			if (vecCollisionInfo.size() == 0)
 			{
