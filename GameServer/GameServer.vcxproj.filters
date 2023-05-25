@@ -102,6 +102,9 @@
     <Filter Include="Source Files\GameSystem\Type">
       <UniqueIdentifier>{7aa671e4-9b05-450b-8be4-41f780cb7ad7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dump">
+      <UniqueIdentifier>{2ff3c133-c198-4960-97ab-af08fffa5a4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -307,6 +310,9 @@
     <ClInclude Include="JsonDataManager.h">
       <Filter>Source Files\DataSystem\StaticDataManager</Filter>
     </ClInclude>
+    <ClInclude Include="MinidumpHelp.h">
+      <Filter>Source Files\Dump</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -458,6 +464,9 @@
     </ClCompile>
     <ClCompile Include="SkillFactory.cpp">
       <Filter>Source Files\DataSystem\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="MinidumpHelp.cpp">
+      <Filter>Source Files\Dump</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
